@@ -391,9 +391,11 @@ public class Initialisation {
 		// INSERER LES LOCATIONS
 		
 		// INSERER LES FORFAITS !!!!
+		// Test de location au pif
 		
-		
-		
+		// AUTO INCREMENTATION A RAJOUTEEEEEEEEEEEEEEEER 
+		req.insertLocations(1, "20131025", 5, 1, 7, "Patate");
+		req.finLocation(1, 12, "Navet");
 	
 		req.commit();
 		

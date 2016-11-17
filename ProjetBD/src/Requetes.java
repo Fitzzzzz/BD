@@ -101,7 +101,7 @@ public class Requetes {
 				+ "nomStationArrivee varchar(20),"
 				+ "primary key (NumLoc),"
 				+ "constraint IdVehiculeForeign foreign key (IdVehicule) references Vehicules(IdVehicule),"
-				+ "constraint NumCarteBancaireForeign foreign key (numCarteBancaire) references Abonne(NumCarteBancaire), "
+				+ "constraint NumCarteBancaireForeign foreign key (numCarteBancaire) references Abonnes(NumCarteBancaire), "
 				+ "constraint NomStationDepartForeign foreign key (nomStationDepart) references Stations(NomStation),"
 				+ "constraint NomStationArriveeForeign foreign key (nomStationArrivee) references Stations(NomStation)"
 				+ ")";
@@ -302,26 +302,6 @@ public class Requetes {
 										String prenomAbonne, 
 										String dateNaissance, 
 										String adresseAbonne) throws SQLException {
-		/**
-			java.sql.Date date;
-			try {
-				date = Tools.parseDate(dateNaissance);
-				Statement sttable = conn.createStatement() ;
-			    String request = "insert into Abonnes values (" 
-							+ numCarteBancaire + ", '" 
-							+ nomAbonne + "','" 
-							+ prenomAbonne + "'," 
-							+ date + ",'" 
-							+ adresseAbonne + "')";
-			    System.out.println(request);
-				sttable.executeUpdate(request);
-				sttable.close() ; 
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			*/
 		
 		String request = "insert into Abonnes values (" 
 				+ numCarteBancaire + ", '" 
@@ -351,24 +331,51 @@ public class Requetes {
 	 * @param numCarteBancaire : number if the paycard used by the client for the rent 
 	 */
 	public void insertLocations(int numLoc, 
-									   String nomStationDepart, 
-									   String nomStationArrivee, 
-									   Date dateLocation,
-									   int heureDebut, 
-									   int heureFin, 
-									   int idVehicule, 
-									   int numCarteBancaire) throws SQLException {
-			Statement sttable = conn.createStatement();       
-			sttable.executeUpdate("insert into Vehicules values ('" 
-				+ nomStationDepart + "', '" 
-				+ nomStationDepart + "', " 
-				+ dateLocation + ", " 
-				+ heureDebut + ", " 
-				+ heureFin + ", " 
+								String dateLocation,
+								int heureDebut, 
+								int idVehicule, 
+								int numCarteBancaire,
+								String nomStationDepart)
+									    throws SQLException {
+		
+		String request = "insert into Locations values (" 
+				+ numLoc + ", "
+				+ "to_date('" + dateLocation + "', 'yyyymmdd')" + ", " 				
+				+ heureDebut + ", "
+				+ "null" + ", "
 				+ idVehicule + ", "
-				+ numCarteBancaire + ")"
-					); 	
-			sttable.close();
+				+ numCarteBancaire + ", '"
+				+ nomStationDepart + "', " 
+				+ "null" 
+				+ ")";
+	    	System.out.println(request);
+		
+		
+		Statement sttable = conn.createStatement() ;
+		sttable.executeUpdate(request);	
+		
+		
+		// on recupere d'abord la categorie
+		ResultSet rs = sttable.executeQuery ("Select Vehicules.CategorieVehicule From Vehicules Where Vehicules.IdVehicule ="+ idVehicule);
+		rs.next();
+		String categorie = rs.getString(1);
+		
+		// on recupere le nombre de place libre dans la station ou l'on veut rendre le vehicule
+		
+		rs = sttable.executeQuery("Select PlacesLibres.Places from PlacesLibres Where (PlacesLibres.NomStation = '" + nomStationDepart
+				+ "' and PlacesLibres.CategorieVehicule = '" + categorie + "' )");
+		rs.next();
+		int placeLibre = rs.getInt(1);
+		placeLibre++;
+					// on incremente le nbre de place libre dans cette station et dans cette categorie
+		
+		String ajoutPlace = "UPDATE PlacesLibres SET Places=" + placeLibre + " Where (NomStation ='" + nomStationDepart
+				+ "' AND CategorieVehicule ='" + categorie + "')";
+		System.out.println(ajoutPlace);
+		sttable.executeUpdate(ajoutPlace);
+		sttable.close() ; 	
+			
+		
 			// rajouter une fonction qui enleve un vehicule ds la station concernee et qui rajoute une place libre
 	}
 
@@ -435,11 +442,15 @@ public class Requetes {
 	public void insertEstDans (int IdVehicule, String NomStation) throws SQLException {
 
 	Statement sttable = conn.createStatement() ; 
-	sttable.executeUpdate(" insert into EstDans values ("
+	/*
+	String update = " insert into EstDans values ("
 			+ IdVehicule + ", '"
 			+ NomStation
-			+ "')"
-			) ;
+			+ "')";
+			*/
+	String update = "UPDATE EstDans SET NomStation='" + NomStation + "' WHERE (IdVehicule = " + IdVehicule + ")" ;
+	System.out.println(update);
+	sttable.executeUpdate(update) ;
 	//  A FAIRE!! : recuperer le nbre de place libre de la catgorie de IdVehic ds la station 
 				// 
 	sttable.close();
@@ -457,23 +468,57 @@ public class Requetes {
 		sttable.close();
 	}
 	
-	public void finLocation (int numCB, int idVehicule, String nomStation) throws SQLException {
-		Statement sttable = conn.createStatement() ; 
+	public void finLocation (int numLoc, int heureArrivee, String nomStationArrivee) throws SQLException {
+		
+		
+		
+		Statement sttable = conn.createStatement();
+		
+		// On récupère l'id du véhicule 
+		
+		ResultSet rs = sttable.executeQuery("Select IdVehicule FROM Locations WHERE (NUMLOC = " + numLoc + ")");
+		rs.next();
+		int idVehicule = rs.getInt(1);
 		// on recupere d'abord la categorie
-		ResultSet rs = sttable.executeQuery ("Select Vehicules.CategorieVehicule From Vehicules Where Vehicules.IdVehicule ="+ idVehicule);
+		
+		
+		rs = sttable.executeQuery ("Select Vehicules.CategorieVehicule From Vehicules Where Vehicules.IdVehicule ="+ idVehicule);
+		rs.next();
+
 		String categorie = rs.getString(1);
 		// on recupere le nombre de place libre dans la station ou l'on veut rendre le vehicule
-		rs = sttable.executeQuery("Select PlacesLibres.Places from PlacesLibres Where PlacesLibres.NomStation = " + nomStation
-				+ "and PlacesLibres.CategorieVehicule = "+categorie );
+		String query = "SELECT PlacesLibres.Places from PlacesLibres Where (PlacesLibres.NomStation = '" + nomStationArrivee
+				+ "' AND PlacesLibres.CategorieVehicule = '" + categorie + "')";
+		System.out.println(query);
+		
+		
+		rs = sttable.executeQuery(query);
 		// on verifie qu'il y a de la place:
+		rs.next();
 		int placeLibre = rs.getInt(1);
+		
 		if (placeLibre > 0) {
+			
 			// on met le vehicule dedans 
-			insertEstDans(idVehicule, nomStation);
+			insertEstDans(idVehicule, nomStationArrivee);
+			
 			// on decremente le nbre de place libre dans cette station et dans cette categorie
-			sttable.executeUpdate("udpate PlacesLibres set Places = Places - 1 where PlacesLibres.NomStation = " + nomStation
-				+ "and PlacesLibres.CategorieVehicule = "+categorie );
+			placeLibre--;
+			String minusPlace = "UPDATE PlacesLibres SET Places=" + placeLibre + " WHERE (NomStation='" + nomStationArrivee + "' AND CategorieVehicule = '" + categorie + "')";
+			System.out.println(minusPlace);
+			sttable.executeUpdate(minusPlace);
 		}
+		else  {
+			
+			// TODO !
+			
+		}
+		/*
+		 * 
+		String ajoutPlace = "UPDATE PlacesLibres SET Places=" + placeLibre + " Where (NomStation ='" + nomStationDepart
+				+ "' AND CategorieVehicule ='" + categorie + "')";
+		 */
+		
 		sttable.close();
 	}
 	
