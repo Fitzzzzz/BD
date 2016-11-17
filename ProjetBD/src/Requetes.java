@@ -443,21 +443,22 @@ public class Requetes {
 	
 	public static void finLocation (Connection conn, int numCB, int idVehicule, String nomStation) throws SQLException {
 		Statement sttable = conn.createStatement() ; 
+		// on recupere d'abord la categorie
+		ResultSet rs = sttable.executeQuery ("Select Vehicules.CategorieVehicule From Vehicules Where Vehicules.IdVehicule ="+ idVehicule);
+		String categorie = rs.getString(1);
 		// on recupere le nombre de place libre dans la station ou l'on veut rendre le vehicule
-		ResultSet rs = sttable.executeQuery("Select PlacesLibres.Places from PlacesLibres Where PlacesLibres.NomStation = " + nomStation );
-		
+		rs = sttable.executeQuery("Select PlacesLibres.Places from PlacesLibres Where PlacesLibres.NomStation = " + nomStation
+				+ "and PlacesLibres.CategorieVehicule = "+categorie );
 		// on verifie qu'il y a de la place:
 		int placeLibre = rs.getInt(1);
 		if (placeLibre > 0) {
 			// on met le vehicule dedans 
 			insertEstDans(conn, idVehicule, nomStation);
 			// on decremente le nbre de place libre dans cette station et dans cette categorie
-			// on recupere d'abord la categorie
-			ResultSet catVehicule = sttable.executeQuery ("Select Vehicules.CategorieVehicule From Vehicules Where Vehicules.IdVehicule ="+ idVehicule);
+			sttable.executeUpdate("udpate PlacesLibres set Places = Places - 1 where PlacesLibres.NomStation = " + nomStation
+				+ "and PlacesLibres.CategorieVehicule = "+categorie );
 		}
 		sttable.close();
-		// mettre le vehicule dedans
-		// decrementer le nbre de place libre de cette categorie
 	}
 	
 
