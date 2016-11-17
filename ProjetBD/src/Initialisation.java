@@ -5,8 +5,7 @@ public class Initialisation {
 		Requetes req = new Requetes(conn);
 		
 		Requetes.setautocommit(conn);
-		if (!Requetes.tableExists("Categories", conn)) {
-			System.out.println("caca");
+		if (!Requetes.tableExists("CategoriesVehicules", conn)) {
 			Requetes.createTableCategories(conn);
 		}
 		if (!Requetes.tableExists("Stations", conn)) {
@@ -51,13 +50,13 @@ public class Initialisation {
 		
 		
 		
-		Requetes.insertCategorie(conn, "Velo", 5, 1, 10);
-		Requetes.insertCategorie(conn, "VeloElec", 5, 2, 20);
-		Requetes.insertCategorie(conn, "VoitureElec", 5, 4, 40);
-		Requetes.insertCategorie(conn, "VeloRemork", 5, 3, 30);
-		Requetes.insertCategorie(conn, "Utilitaire", 5, 5, 50);
+		Requetes.insertCategorieVehicule(conn, "Velo", 5, 1, 10);
+		Requetes.insertCategorieVehicule(conn, "VeloElec", 5, 2, 20);
+		Requetes.insertCategorieVehicule(conn, "VoitureElec", 5, 4, 40);
+		Requetes.insertCategorieVehicule(conn, "VeloRemork", 5, 3, 30);
+		Requetes.insertCategorieVehicule(conn, "Utilitaire", 5, 5, 50);
 		 
-		Requetes.insertStation(conn, "Patate", "3 avenue de l'Empereur Le Net");
+		Requetes.insertStation(conn, "Patate", "3 avenue de l Empereur Le Net");
 		Requetes.insertStation(conn, "Navet", "7 ruelle du Bagou");
 		Requetes.insertStation(conn, "Carotte", "6 rue de la Princesse Nicolas");
 		Requetes.insertStation(conn, "Radis", "144 rue du Pape Gaunet");

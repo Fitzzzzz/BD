@@ -29,7 +29,7 @@ public class Requetes {
 	public static void createTableCategories (Connection conn) throws SQLException {
 		Statement sttable = conn.createStatement();       
 		sttable.executeUpdate(
-				"create table Categories (CategorieVehicule varchar(20) primary key,"
+				"create table Categories (CategorieVehicules varchar(20) primary key,"
 						+ " DureeMax int constraint dureePos check (DureeMax >= 0),"
 						+ "PrixHoraire int constraint prixPos check (PrixHoraire >= 0),"
 						+ "MontantCaution int constraint CautionPos check (MontantCaution >= 0))"
@@ -60,7 +60,7 @@ public class Requetes {
 				"CREATE TABLE VEHICULES (IdVehicule int CONSTRAINT IdPos CHECK (IdVehicule >= 0),"
 						+ "NbPlaces int CONSTRAINT PlacesPos CHECK (NbPlaces >= 0), "
 						+ "CategorieVehicule varchar(20), "
-						+ "CONSTRAINT CatVehicule FOREIGN KEY (CategorieVehicule) REFERENCES CATEGORIES(CategorieVehicule),"
+						+ "CONSTRAINT CatVehicule FOREIGN KEY (CategorieVehicule) REFERENCES CATEGORIESVEHICULES(CategorieVehicule),"
 						+ "PRIMARY KEY (IdVehicule))" 
 				);
 		sttable.close();
@@ -124,7 +124,7 @@ public class Requetes {
 				+ "NumCarteBancaire int,"
 				+ "primary key (IdForfait),"
 				+ "CONSTRAINT NumCarteBancaireForeign FOREIGN KEY (NumCarteBancaire) REFERENCES CATEGORIES(NumCarteBancaire)"
-				+ "CONSTRAINT CatVehiculeRoreign FOREIGN KEY (CategorieVehicule) REFERENCES CATEGORIES(CategorieVehicule)"
+				+ "CONSTRAINT CatVehiculeRoreign FOREIGN KEY (CategorieVehicule) REFERENCES CATEGORIESVEHICULES(CategorieVehicule)"
 				+ ")"
 				);
 		sttable.close();
@@ -187,7 +187,7 @@ public class Requetes {
 				+ "CategorieVehicule varchar(20), "
 				+ "Places int constraint PlacesPosL check (Places >= 0), "
 				+ "constraint NomStationForeign foreign key (NomStation) references Stations(Nomstation), "
-				+ "constraint CatVehiculeForeign2 foreign key (CategorieVehicule) references Categories(CategorieVehicule), "
+				+ "constraint CatVehiculeForeign2 foreign key (CategorieVehicule) references CategoriesVehicules(CategorieVehicule), "
 				+ "primary key (NomStation, CategorieVehicule))";
 		sttable.executeUpdate(query); 
 		sttable.close(); 
@@ -265,12 +265,10 @@ public class Requetes {
 	public static void insertStation(Connection conn, 
 									String nomStation, 
 									String adresseStation) throws SQLException {
-			Statement sttable = conn.createStatement();       
-			sttable.executeUpdate("insert into Stations values ('" 
-					+ nomStation + "', '" 
-					+ adresseStation + "', " 
-					+ ")"
-					);
+			Statement sttable = conn.createStatement();  
+			String request = "insert into Stations values ('"+nomStation+"', '"+adresseStation+"')";
+			System.out.println(request);
+			sttable.executeUpdate(request);
 			sttable.close();
 	}
 	
