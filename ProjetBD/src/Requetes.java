@@ -309,20 +309,23 @@ public class Requetes {
 				date = formatJour.parse(dateNaissance);
 				Calendar myCal = new GregorianCalendar();
 		    	myCal.setTime(date);
+		    	Statement sttable = conn.createStatement() ;
+		    	String request = "insert into Abonnes values (" 
+						+ numCarteBancaire + ", '" 
+						+ nomAbonne + "','" 
+						+ prenomAbonne + "'," 
+						+ date + ",'" 
+						+ adresseAbonne + "')";
+		    	System.out.println(request);
+				sttable.executeUpdate(request);
+				sttable.close() ; 
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 	    	
-			Statement sttable = conn.createStatement() ; 
-			sttable.executeUpdate("insert into Abonnes values (" 
-					+ numCarteBancaire + ", '" 
-					+ nomAbonne + "','" 
-					+ prenomAbonne + "'," 
-					+ dateNaissance + ",'" 
-					+ adresseAbonne + "')" 
-					);
-			sttable.close() ; 
+			
+			
 		
 		
 	}
