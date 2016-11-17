@@ -18,7 +18,7 @@ public class Requetes {
 				"create table Categories (CategorieVehicule varchar(20) primary key,"
 						+ " DureeMax int constraint dureePos check (DureeMax >= 0),"
 						+ "PrixHoraire int constraint prixPos check (PrixHoraire >= 0),"
-						+ "MontantCaution int constraint CautionPos check (MontantCaution >= 0));"
+						+ "MontantCaution int constraint CautionPos check (MontantCaution >= 0))"
 				);
 		sttable.close();
 	}
@@ -31,7 +31,7 @@ public class Requetes {
 		Statement sttable = conn.createStatement();       
 		sttable.executeUpdate(
 				"create table Stations (NomStation varchar(20) primary key,"
-				+ "AdresseStation varchar(40));"
+				+ "AdresseStation varchar(40))"
 				);
 		sttable.close();
 	}
@@ -47,7 +47,7 @@ public class Requetes {
 						+ "NbPlaces int CONSTRAINT PlacesPos CHECK (NbPlaces >= 0), "
 						+ "CategorieVehicule varchar(20), "
 						+ "CONSTRAINT CatVehicule FOREIGN KEY (CategorieVehicule) REFERENCES CATEGORIES(CategorieVehicule),"
-						+ "PRIMARY KEY (IdVehicule));" 
+						+ "PRIMARY KEY (IdVehicule))" 
 				);
 		sttable.close();
 	}
@@ -64,7 +64,7 @@ public class Requetes {
 				+ "PrenomAbonne VARCHAR(20), "
 				+ "DateNaissance DATE,"
 				+ "AdresseAbonne VARCHAR(100), "
-				+ "primary key (NumCarteBancaire));"
+				+ "primary key (NumCarteBancaire))"
 				);
 		sttable.close();
 	}
@@ -90,7 +90,7 @@ public class Requetes {
 						+ "constraint NumCarteBancaireForeign foreign key (numCarteBancaire) references Abonne(NumCarteBancaire)"
 						+ "constraint NomStationDepartForeign foreign key (NomStation) references Stations(NomStation),"
 						+ "constraint NomStationArriveeForeign foreign key (NomStation) references Stations(NomStation)"
-						+ ");"
+						+ ")"
 				);
 		sttable.close();
 	}
@@ -110,7 +110,7 @@ public class Requetes {
 				+ "primary key (IdForfait),"
 				+ "CONSTRAINT NumCarteBancaireForeign FOREIGN KEY (NumCarteBancaire) REFERENCES CATEGORIES(NumCarteBancaire)"
 				+ "CONSTRAINT CatVehiculeRoreign FOREIGN KEY (CategorieVehicule) REFERENCES CATEGORIES(CategorieVehicule)"
-				+ ");"
+				+ ")"
 				);
 		sttable.close();
 	}
@@ -126,7 +126,7 @@ public class Requetes {
 				+ "NbMaxLocations int constraint dureeForf2Pos check (NbMaxLocations >= 0),"
 				+ "NbLocationsGratuites int constraint nbLocGratuite2 check (NbLocationsGratuites >= 0),"
 				+ "PrixForfait int constraint prixForf2Pos check (PrixForfait >= 0), "
-				+ "constraint IdForfait2Foreign foreign key (IdForfait) references Forfaits(IdForfait)); "
+				+ "constraint IdForfait2Foreign foreign key (IdForfait) references Forfaits(IdForfait)) "
 				);
 		sttable.close();
 	}	
@@ -142,7 +142,7 @@ public class Requetes {
 				"create table Forfait1 (IdForfait int primary key,"
 				+ "DureeForfait int constraint dureeForfPos check (DureeForfait >= 0),"
 				+ "DebutValidite date, PrixForfait int constraint prixForfPos check (PrixForfait >= 0),"
-				+ " constraint IdForfaitForeign foreign key (IdForfait) references Forfaits(IdForfait));"
+				+ " constraint IdForfaitForeign foreign key (IdForfait) references Forfaits(IdForfait))"
 				);
 		sttable.close();
 	}
@@ -156,7 +156,7 @@ public class Requetes {
 		Statement sttable = conn.createStatement();       
 		sttable.executeUpdate(
 				"create table EstDans (IdVehicule int primary key,"
-				+ "NomStation varchar(20));"
+				+ "NomStation varchar(20))"
 				);
 		sttable.close();
 	}
@@ -174,7 +174,7 @@ public class Requetes {
 				+ "Places int constraint PlacesPos check (Places >= 0), "
 				+ "constraint NomStationForeign foreign key (NomStation) references Stations(Nomstation), "
 				+ "constraint CatVehiculeForeign2 foreign key (CategorieVehicule) references Categories(CategorieVehicule), "
-				+ "primary key (NomStation, CategorieVehicule));"
+				+ "primary key (NomStation, CategorieVehicule))"
 				); 
 		sttable.close(); 
 	}
@@ -189,7 +189,7 @@ public class Requetes {
 	public static void dropTable(Connection conn,String NomTable) throws SQLException {
 		Statement sttable = conn.createStatement();
 		
-		String request = "DROP TABLE " + NomTable + " ;";
+		String request = "DROP TABLE " + NomTable + " ";
 		System.out.println(request);
 		sttable.executeUpdate(request);
 		sttable.close();
@@ -200,7 +200,7 @@ public class Requetes {
 	 */
 	public static void commit(Connection conn) throws SQLException {
 		Statement sttable = conn.createStatement();       
-		sttable.executeUpdate("commit;");
+		sttable.executeUpdate("commit");
 		sttable.close();
 	}
 	
@@ -235,7 +235,7 @@ public class Requetes {
 				+ catVehic + "', "
 				+ dureeMax + ", "
 				+ prixHoraire + ", "
-				+ caution + ");";
+				+ caution + ")";
 		
 		System.out.println(update);
 		sttable.executeUpdate(update) ; 
@@ -255,7 +255,7 @@ public class Requetes {
 			sttable.executeUpdate("insert into Stations values ('" 
 					+ nomStation + "', '" 
 					+ adresseStation + "', " 
-					+ ");"
+					+ ")"
 					);
 			sttable.close();
 	}
@@ -275,7 +275,7 @@ public class Requetes {
 			sttable.executeUpdate("insert into Vehicules values (" 
 			+ idVehicule+ ", " 
 			+ nbPlaces + ", '" 
-			+ categorieVehicule+ "' ); "
+			+ categorieVehicule+ "' ) "
 			);
 			sttable.close();
 	}
@@ -313,7 +313,7 @@ public class Requetes {
 					+ nomAbonne + "','" 
 					+ prenomAbonne + "'," 
 					+ dateNaissance + ",'" 
-					+ adresseAbonne + "');" 
+					+ adresseAbonne + "')" 
 					);
 			sttable.close() ; 
 		
@@ -349,7 +349,7 @@ public class Requetes {
 				+ heureDebut + ", " 
 				+ heureFin + ", " 
 				+ idVehicule + ", "
-				+ numCarteBancaire + ");"
+				+ numCarteBancaire + ")"
 					); 	
 			sttable.close();
 			// rajouter une fonction qui enleve un vehicule ds la station concernee et qui rajoute une place libre
@@ -362,7 +362,7 @@ public class Requetes {
 				+ IdForfait + "', '" 
 				+ TypeForfait + "', " 
 				+ CatVehicule + ", " 
-				+ NumCarteBancaire + ");"
+				+ NumCarteBancaire + ")"
 				); 	
 		sttable.close();
 	}
@@ -386,7 +386,7 @@ public class Requetes {
 					+ idForfait + ", " 
 					+ dureeForfait + ", "
 					+ debutValidite + "," 
-					+ prixForfait + ");"
+					+ prixForfait + ")"
 					);
 			sttable.close();
 	}
@@ -411,7 +411,7 @@ public class Requetes {
 					+ idForfait + ", "
 					+ nbMaxLocations + ", "
 					+ nbLocationsGratuites + ","
-					+ prixForfait + ");"
+					+ prixForfait + ")"
 					) ;
 			sttable.close() ; 
 	}
@@ -422,7 +422,7 @@ public class Requetes {
 	sttable.executeUpdate(" insert into Forfaits1 values ("
 			+ IdVehicule + ", "
 			+ NomStation
-			+ ");"
+			+ ")"
 			) ;
 	//  A FAIRE!! : recuperer le nbre de place libre de la catgorie de IdVehic ds la station 
 				// 
@@ -436,7 +436,7 @@ public class Requetes {
 				+ NomStation + ", "
 				+ places + ", "
 				+ CatVehicule
-				+ ");"
+				+ ")"
 				) ;
 		sttable.close();
 	}
@@ -444,7 +444,7 @@ public class Requetes {
 	public static void finLocation (Connection conn, int numCB, int idVehicule, String nomStation) throws SQLException {
 		Statement sttable = conn.createStatement() ; 
 		// on recupere le nombre de place libre dans la station ou l'on veut rendre le vehicule
-		ResultSet rs = sttable.executeQuery("Select PlacesLibres.Places from PlacesLibres Where PlacesLibres.NomStation = " + nomStation + ";");
+		ResultSet rs = sttable.executeQuery("Select PlacesLibres.Places from PlacesLibres Where PlacesLibres.NomStation = " + nomStation );
 		
 		// on verifie qu'il y a de la place:
 		int placeLibre = rs.getInt(1);
@@ -453,7 +453,7 @@ public class Requetes {
 			insertEstDans(conn, idVehicule, nomStation);
 			// on decremente le nbre de place libre dans cette station et dans cette categorie
 			// on recupere d'abord la categorie
-			ResultSet catVehicule = sttable.executeQuery ("Select Vehicules.CategorieVehicule From Vehicules Where Vehicules.IdVehicule ="+ idVehicule +";");
+			ResultSet catVehicule = sttable.executeQuery ("Select Vehicules.CategorieVehicule From Vehicules Where Vehicules.IdVehicule ="+ idVehicule);
 		}
 		sttable.close();
 		// mettre le vehicule dedans
