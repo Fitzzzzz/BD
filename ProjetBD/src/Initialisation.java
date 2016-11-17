@@ -1,37 +1,55 @@
 import java.sql.*;
 public class Initialisation {
 	public static void initBase (Connection conn) throws SQLException {
+		
+		Requetes req = new Requetes(conn);
+		
 		Requetes.setautocommit(conn);
-		if (Requetes.tableExists("Categories", conn)) {
+		if (!Requetes.tableExists("Categories", conn)) {
+			System.out.println("caca");
 			Requetes.createTableCategories(conn);
 		}
-		if (Requetes.tableExists("Stations", conn)) {
+		if (!Requetes.tableExists("Stations", conn)) {
 			Requetes.createTableStations(conn);
 		}
-		if (Requetes.tableExists("Vehicules", conn)) {
+		if (!Requetes.tableExists("Vehicules", conn)) {
 			Requetes.createTableVehicules(conn);
 		}
-		if (Requetes.tableExists("Abonnes", conn)) {
+		if (!Requetes.tableExists("Abonnes", conn)) {
 			Requetes.createTableAbonnes(conn);
 		}
-		if (Requetes.tableExists("Locations", conn)) {
+		if (!Requetes.tableExists("Locations", conn)) {
 			Requetes.createTableLocations(conn);
 		}
-		if (Requetes.tableExists("Forfaits", conn)) {
+		if (!Requetes.tableExists("Forfaits", conn)) {
 			Requetes.createTableForfaits(conn);
 		}
-		if (Requetes.tableExists("Forfait1", conn)) {
+		if (!Requetes.tableExists("Forfait1", conn)) {
 			Requetes.createTableForfait1(conn);
 		}
-		if (Requetes.tableExists("Forfait2", conn)) {
+		if (!Requetes.tableExists("Forfait2", conn)) {
 			Requetes.createTableForfaits2(conn);
 		}
-		if (Requetes.tableExists("EstDans", conn)) {
+		if (!Requetes.tableExists("EstDans", conn)) {
 			Requetes.createTableEstDans(conn);
 		}
-		if (Requetes.tableExists("PlacesLibres", conn)) {
+		if (!Requetes.tableExists("PlacesLibres", conn)) {
 			Requetes.createTablePlacesLibres(conn);
 		}
+		
+		req.deleteTableContent("Categories");
+		req.deleteTableContent("Stations");
+		req.deleteTableContent("Vehicules");
+		req.deleteTableContent("Abonnes");
+		req.deleteTableContent("Locations");
+		req.deleteTableContent("Forfaits");
+		req.deleteTableContent("Forfait1");
+		req.deleteTableContent("Forfait2");
+		req.deleteTableContent("EstDans");
+		req.deleteTableContent("PlacesLibres");
+		
+		
+		
 		
 		Requetes.insertCategorie(conn, "Velo", 5, 1, 10);
 		Requetes.insertCategorie(conn, "VeloElec", 5, 2, 20);

@@ -6,6 +6,20 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 public class Requetes {
 
+	private Connection conn;
+	
+	public Requetes(Connection conn) {
+		
+		this.conn = conn;
+	}
+	public void deleteTableContent(String tableName) throws SQLException {
+		
+		String query = "DELETE FROM " + tableName;
+		Statement stmt = this.conn.createStatement();
+		stmt.executeQuery(query);
+		
+	}
+	
 	// CREATE TABLES
 	
 	/**
@@ -58,14 +72,15 @@ public class Requetes {
 	 * @param conn : connection used
 	 */
 	public static void createTableAbonnes(Connection conn) throws SQLException {
-		Statement sttable = conn.createStatement();       
-		sttable.executeUpdate("create table abonnees (NumCarteBancaire  int CONSTRAINT CBPos CHECK (NumCarteBancaire > 0),"
-				+ "NomAbonne VARCHAR(20),"
+		Statement sttable = conn.createStatement();  
+		String query = "create table Abonnes (NumCarteBancaire  int CONSTRAINT CBPA CHECK (NumCarteBancaire > 0), "
+				+ "NomAbonne VARCHAR(20), "
 				+ "PrenomAbonne VARCHAR(20), "
-				+ "DateNaissance DATE,"
+				+ "DateNaissance DATE, "
 				+ "AdresseAbonne VARCHAR(100), "
-				+ "primary key (NumCarteBancaire))"
-				);
+				+ "primary key (NumCarteBancaire))";
+		System.out.println(query);
+		sttable.executeUpdate(query);
 		sttable.close();
 	}
 	
@@ -167,15 +182,14 @@ public class Requetes {
 	 * @param conn : connection used
 	 */
 	public static void createTablePlacesLibres (Connection conn) throws SQLException {
-		Statement sttable = conn.createStatement() ; 
-		sttable.executeUpdate(
-				"create table PlacesLibres ( NomStation varchar(20), "
+		Statement sttable = conn.createStatement();
+		String query = "create table PlacesLibres ( NomStation varchar(20), "
 				+ "CategorieVehicule varchar(20), "
-				+ "Places int constraint PlacesPos check (Places >= 0), "
+				+ "Places int constraint PlacesPosL check (Places >= 0), "
 				+ "constraint NomStationForeign foreign key (NomStation) references Stations(Nomstation), "
 				+ "constraint CatVehiculeForeign2 foreign key (CategorieVehicule) references Categories(CategorieVehicule), "
-				+ "primary key (NomStation, CategorieVehicule))"
-				); 
+				+ "primary key (NomStation, CategorieVehicule))";
+		sttable.executeUpdate(query); 
 		sttable.close(); 
 	}
 
@@ -462,14 +476,32 @@ public class Requetes {
 	}
 	
 
-	public static boolean tableExists(String tableName, Connection conn) throws SQLException {
+	public static boolean tableExists(String tableName, Connection conn) {
 
-		DatabaseMetaData md = conn.getMetaData();
+		/** DatabaseMetaData md = conn.getMetaData();
 		ResultSet rs = md.getTables(null, null, tableName, null);
-		if (rs.next()) {
+		 while (rs.next()) { 
+	            String tName = rs.getString("TABLE_NAME");
+	            if (tName != null && tName.equals(tableName)) {
+	                return true;
+	            }
+	        }
+		System.out.println("false");
+		return false; */
+		
+		String query = "SELECT 1 FROM " + tableName;
+		Statement smt;
+		try {
+			smt = conn.createStatement();
+			ResultSet rs = smt.executeQuery(query);
+			System.out.println(tableName + " exists");
 			return true;
+			
+		} catch (SQLException e) {
+			System.out.println(tableName + " doesnt exists");
+			return false;
 		}
-		return false;
+		
 
 	}
 
