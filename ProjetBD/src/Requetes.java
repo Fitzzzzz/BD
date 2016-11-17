@@ -302,29 +302,37 @@ public class Requetes {
 										String prenomAbonne, 
 										String dateNaissance, 
 										String adresseAbonne) throws SQLException {
-		
-	    	DateFormat formatJour = new SimpleDateFormat("dd-MM-yyyy");
-	    	java.util.Date date;
+		/**
+			java.sql.Date date;
 			try {
-				date = formatJour.parse(dateNaissance);
-				Calendar myCal = new GregorianCalendar();
-		    	myCal.setTime(date);
-		    	Statement sttable = conn.createStatement() ;
-		    	String request = "insert into Abonnes values (" 
-						+ numCarteBancaire + ", '" 
-						+ nomAbonne + "','" 
-						+ prenomAbonne + "'," 
-						+ date + ",'" 
-						+ adresseAbonne + "')";
-		    	System.out.println(request);
+				date = Tools.parseDate(dateNaissance);
+				Statement sttable = conn.createStatement() ;
+			    String request = "insert into Abonnes values (" 
+							+ numCarteBancaire + ", '" 
+							+ nomAbonne + "','" 
+							+ prenomAbonne + "'," 
+							+ date + ",'" 
+							+ adresseAbonne + "')";
+			    System.out.println(request);
 				sttable.executeUpdate(request);
 				sttable.close() ; 
 			} catch (ParseException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-	    	
 			
+			*/
+		
+		String request = "insert into Abonnes values (" 
+				+ numCarteBancaire + ", '" 
+				+ nomAbonne + "','" 
+				+ prenomAbonne + "'," 
+				+ "to_date('" + dateNaissance + "', 'yyyymmdd')" + ",'" 
+				+ adresseAbonne + "')";
+	    	
+		Statement sttable = conn.createStatement() ;
+		sttable.executeUpdate(request);	
+		sttable.close() ; 	
 			
 		
 		
@@ -403,7 +411,7 @@ public class Requetes {
 	/**
 	 * Insert values in Table Forfaits2
 	 * @param conn : connection used
-	 * @param ifForfait : identification number of the package
+	 * @param ifForfait : iden        java.sql.Date sql = new java.sql.Date(parsed.getTime());tification number of the package
 	 * @param nbMaxLocations : number maximum of locations for this package
 	 * @param nbLocationsGratuites : number maximum of free locations for this package
 	 * @param prixForfait : price of the package
