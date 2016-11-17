@@ -26,10 +26,10 @@ public class Requetes {
 	 * Create Table Categories
 	 * @param conn : connection used
 	 */
-	public static void createTableCategories (Connection conn) throws SQLException {
+	public void createTableCategories() throws SQLException {
 		Statement sttable = conn.createStatement();       
 		sttable.executeUpdate(
-				"create table Categories (CategorieVehicules varchar(20) primary key,"
+				"create table CategoriesVehicules (CategorieVehicule varchar(20) primary key,"
 						+ " DureeMax int constraint dureePos check (DureeMax >= 0),"
 						+ "PrixHoraire int constraint prixPos check (PrixHoraire >= 0),"
 						+ "MontantCaution int constraint CautionPos check (MontantCaution >= 0))"
@@ -41,7 +41,7 @@ public class Requetes {
 	 * Create Table Stations
 	 * @param conn : connection used
 	 */
-	public static void createTableStations(Connection conn) throws SQLException{
+	public void createTableStations() throws SQLException{
 		Statement sttable = conn.createStatement();       
 		sttable.executeUpdate(
 				"create table Stations (NomStation varchar(20) primary key,"
@@ -54,7 +54,7 @@ public class Requetes {
 	 * Create Table Vehicules
 	 * @param conn : connection used
 	 */
-	public static void createTableVehicules (Connection conn) throws SQLException {
+	public void createTableVehicules() throws SQLException {
 		Statement sttable = conn.createStatement();       
 		sttable.executeUpdate(
 				"CREATE TABLE VEHICULES (IdVehicule int CONSTRAINT IdPos CHECK (IdVehicule >= 0),"
@@ -71,7 +71,7 @@ public class Requetes {
 	 * Create Table Abonnes
 	 * @param conn : connection used
 	 */
-	public static void createTableAbonnes(Connection conn) throws SQLException {
+	public void createTableAbonnes() throws SQLException {
 		Statement sttable = conn.createStatement();  
 		String query = "create table Abonnes (NumCarteBancaire  int CONSTRAINT CBPA CHECK (NumCarteBancaire > 0), "
 				+ "NomAbonne VARCHAR(20), "
@@ -89,24 +89,24 @@ public class Requetes {
 	 * Create Table Locations
 	 * @param conn : connection used
 	 */
-	public static void createTableLocations (Connection conn) throws SQLException {
-		Statement sttable = conn.createStatement();       
-		sttable.executeUpdate(
-				"create table Locations ( NumLoc int constraint numLocPos check (NumLoc >= 0),"
-						+ "DateLocation date,"
-						+ "heureDebut int,"
-						+ "heureFin int,"
-						+ "IdVehicule  int,"
-						+ "numCarteBancaire int,"
-						+ "nomStationDepart varchar(20),"
-						+ "nomStationArrivee varchar(20),"
-						+ "primary key (NumLoc),"
-						+ "constraint IdVehiculeForeign foreign key (IdVehicule) references Vehicules(IdVehicule),"
-						+ "constraint NumCarteBancaireForeign foreign key (numCarteBancaire) references Abonne(NumCarteBancaire)"
-						+ "constraint NomStationDepartForeign foreign key (NomStation) references Stations(NomStation),"
-						+ "constraint NomStationArriveeForeign foreign key (NomStation) references Stations(NomStation)"
-						+ ")"
-				);
+	public void createTableLocations() throws SQLException {
+		Statement sttable = conn.createStatement(); 
+		String request = "create table Locations (NumLoc int constraint numLocPos check (NumLoc >= 0),"
+				+ "DateLocation date,"
+				+ "heureDebut int,"
+				+ "heureFin int,"
+				+ "IdVehicule  int,"
+				+ "numCarteBancaire int,"
+				+ "nomStationDepart varchar(20),"
+				+ "nomStationArrivee varchar(20),"
+				+ "primary key (NumLoc),"
+				+ "constraint IdVehiculeForeign foreign key (IdVehicule) references Vehicules(IdVehicule),"
+				+ "constraint NumCarteBancaireForeign foreign key (numCarteBancaire) references Abonne(NumCarteBancaire), "
+				+ "constraint NomStationDepartForeign foreign key (nomStationDepart) references Stations(NomStation),"
+				+ "constraint NomStationArriveeForeign foreign key (nomStationArrivee) references Stations(NomStation)"
+				+ ")";
+		System.out.println(request);
+		sttable.executeUpdate(request);
 		sttable.close();
 	}
 
@@ -115,18 +115,17 @@ public class Requetes {
 	 * Create Table Forfaits
 	 * @param conn : connection used
 	 */
-	public static void createTableForfaits(Connection conn) throws SQLException {
-		Statement sttable = conn.createStatement();       
-		sttable.executeUpdate(
-				"IdForfait INT CONSTRAINT ForfaitPos CHECK (IdForfait >= 0),"
+	public void createTableForfaits() throws SQLException {
+		Statement sttable = conn.createStatement();  
+		String request = "create table Forfaits (IdForfait INT CONSTRAINT ForfaitPos CHECK (IdForfait >= 0),"
 				+ "TypeForfait INT CONSTRAINT TypsPos CHECK ((TypeForfait = 1) OR (TypeForfait = 2)),"
 				+ "CategorieVehicule varchar(20),"
 				+ "NumCarteBancaire int,"
 				+ "primary key (IdForfait),"
-				+ "CONSTRAINT NumCarteBancaireForeign FOREIGN KEY (NumCarteBancaire) REFERENCES CATEGORIES(NumCarteBancaire)"
+				+ "CONSTRAINT NumCarteBancForeign FOREIGN KEY (NumCarteBancaire) REFERENCES ABONNES(NumCarteBancaire),"
 				+ "CONSTRAINT CatVehiculeRoreign FOREIGN KEY (CategorieVehicule) REFERENCES CATEGORIESVEHICULES(CategorieVehicule)"
-				+ ")"
-				);
+				+ ")";
+		sttable.executeUpdate(request);
 		sttable.close();
 	}
 
@@ -135,7 +134,7 @@ public class Requetes {
 	 * Create Table Forfaits2
 	 * @param conn : connection used
 	 */
-	public static void createTableForfaits2(Connection conn) throws SQLException {
+	public void createTableForfaits2() throws SQLException {
 		Statement sttable = conn.createStatement();       
 		sttable.executeUpdate("create table Forfait2 (IdForfait int primary key, "
 				+ "NbMaxLocations int constraint dureeForf2Pos check (NbMaxLocations >= 0),"
@@ -151,7 +150,7 @@ public class Requetes {
 	 * Create Table Forfaits1
 	 * @param conn : connection used
 	 */
-	public static void createTableForfait1 (Connection conn) throws SQLException {
+	public void createTableForfait1() throws SQLException {
 		Statement sttable = conn.createStatement();       
 		sttable.executeUpdate(
 				"create table Forfait1 (IdForfait int primary key,"
@@ -167,7 +166,7 @@ public class Requetes {
 	 * Create Table EstDans
 	 * @param conn : connection used
 	 */
-	public static void createTableEstDans (Connection conn) throws SQLException {
+	public void createTableEstDans () throws SQLException {
 		Statement sttable = conn.createStatement();       
 		sttable.executeUpdate(
 				"create table EstDans (IdVehicule int primary key,"
@@ -181,7 +180,7 @@ public class Requetes {
 	 * Create Table Places
 	 * @param conn : connection used
 	 */
-	public static void createTablePlacesLibres (Connection conn) throws SQLException {
+	public void createTablePlacesLibres () throws SQLException {
 		Statement sttable = conn.createStatement();
 		String query = "create table PlacesLibres ( NomStation varchar(20), "
 				+ "CategorieVehicule varchar(20), "
@@ -200,7 +199,7 @@ public class Requetes {
 	 * @param conn : connection used
 	 * @param NomTable : name of the table to drop 
 	 */
-	public static void dropTable(Connection conn,String NomTable) throws SQLException {
+	public void dropTable(String NomTable) throws SQLException {
 		Statement sttable = conn.createStatement();
 		
 		String request = "DROP TABLE " + NomTable + " ";
@@ -212,7 +211,7 @@ public class Requetes {
 	 * Commit
 	 * @conn : connection used
 	 */
-	public static void commit(Connection conn) throws SQLException {
+	public void commit() throws SQLException {
 		Statement sttable = conn.createStatement();       
 		sttable.executeUpdate("commit");
 		sttable.close();
@@ -222,7 +221,7 @@ public class Requetes {
 	 * Set an auto commit
 	 * @param conn : connection used
 	 */
-	public static void setautocommit(Connection conn) throws SQLException {
+	public void setautocommit() throws SQLException {
 		conn.setAutoCommit(false); 
 	}
 	
@@ -239,13 +238,12 @@ public class Requetes {
 	 * @param prixHoraire : price for 1 hour of rent
 	 * @param caution : amount of the caution
 	 */
-	public static void insertCategorie(Connection conn, 
-									   String catVehic, 
+	public void insertCategorieVehicule(String catVehic, 
 									   int dureeMax, 
 									   int prixHoraire, 
 									   int caution) throws SQLException {
 		Statement sttable = conn.createStatement() ; 
-		String update = "insert into Categories values ('"
+		String update = "insert into CategoriesVehicules values ('"
 				+ catVehic + "', "
 				+ dureeMax + ", "
 				+ prixHoraire + ", "
@@ -262,8 +260,7 @@ public class Requetes {
 	 * @param nomStation : name of the station
 	 * @param adresseStation : adress of the station
 	 */
-	public static void insertStation(Connection conn, 
-									String nomStation, 
+	public void insertStation(String nomStation, 
 									String adresseStation) throws SQLException {
 			Statement sttable = conn.createStatement();  
 			String request = "insert into Stations values ('"+nomStation+"', '"+adresseStation+"')";
@@ -279,8 +276,7 @@ public class Requetes {
 	 * @param nbPlaces : number of places of the vehicule
 	 * @param categorieVehicule : category of the vehicule
 	 */
-	public static void insertVehicules(Connection conn, 
-									   int idVehicule, 
+	public void insertVehicules(int idVehicule, 
 									   int nbPlaces , 
 									   String categorieVehicule) throws SQLException {
 			Statement sttable = conn.createStatement();       
@@ -301,8 +297,7 @@ public class Requetes {
 	 * @param dateNaissance : date of birth of the client
 	 * @param adresseabonne : adress of the client
 	 */
-	public static void  insertAbonnes (Connection conn, 
-										int numCarteBancaire, 
+	public void  insertAbonnes (int numCarteBancaire, 
 										String nomAbonne, 
 										String prenomAbonne, 
 										String dateNaissance, 
@@ -344,8 +339,7 @@ public class Requetes {
 	 * @param idVehicule : identification nuimber of the vehicule used for the rent
 	 * @param numCarteBancaire : number if the paycard used by the client for the rent 
 	 */
-	public static void insertLocations(Connection conn, 
-									   int numLoc, 
+	public void insertLocations(int numLoc, 
 									   String nomStationDepart, 
 									   String nomStationArrivee, 
 									   Date dateLocation,
@@ -367,7 +361,7 @@ public class Requetes {
 			// rajouter une fonction qui enleve un vehicule ds la station concernee et qui rajoute une place libre
 	}
 
-	private static void insererForfaits (Connection conn, int IdForfait, int TypeForfait, 
+	private void insererForfaits (int IdForfait, int TypeForfait, 
 			String CatVehicule, int NumCarteBancaire) throws SQLException {
 		Statement sttable = conn.createStatement();       
 		sttable.executeUpdate("insert into Vehicules values ('" 
@@ -387,12 +381,12 @@ public class Requetes {
 	 * @param debutValidite : time of beginning of the package
 	 * @param prixForfait : price of the package
 	 */
-	public static void insertForfaits1(Connection conn, int idForfait, 
+	public void insertForfaits1(int idForfait, 
 									   String CatVehicule, int numCB,
 									   int dureeForfait, 
 									   Date debutValidite, 
 									   int prixForfait)	throws SQLException {
-			insererForfaits (conn, idForfait, 1, CatVehicule, numCB);
+			insererForfaits (idForfait, 1, CatVehicule, numCB);
 			Statement sttable = conn.createStatement();
 			sttable.executeUpdate(" insert into Forfaits1 values (" 
 					+ idForfait + ", " 
@@ -411,13 +405,12 @@ public class Requetes {
 	 * @param nbLocationsGratuites : number maximum of free locations for this package
 	 * @param prixForfait : price of the package
 	 */
-	public static void insertForfaits2(Connection conn, 
-									   int idForfait,
+	public void insertForfaits2(int idForfait,
 									   String CatVehicule, int numCB,
 									   int nbMaxLocations,
 									   int nbLocationsGratuites,
 									   int prixForfait) throws SQLException {
-			insererForfaits (conn, idForfait, 2, CatVehicule, numCB);
+			insererForfaits (idForfait, 2, CatVehicule, numCB);
 			Statement sttable = conn.createStatement() ; 
 			sttable.executeUpdate(" insert into Forfaits1 values ("
 					+ idForfait + ", "
@@ -428,13 +421,13 @@ public class Requetes {
 			sttable.close() ; 
 	}
 
-	public static void insertEstDans (Connection conn, int IdVehicule, String NomStation) throws SQLException {
+	public void insertEstDans (int IdVehicule, String NomStation) throws SQLException {
 
 	Statement sttable = conn.createStatement() ; 
-	sttable.executeUpdate(" insert into Forfaits1 values ("
-			+ IdVehicule + ", "
+	sttable.executeUpdate(" insert into EstDans values ("
+			+ IdVehicule + ", '"
 			+ NomStation
-			+ ")"
+			+ "')"
 			) ;
 	//  A FAIRE!! : recuperer le nbre de place libre de la catgorie de IdVehic ds la station 
 				// 
@@ -442,18 +435,18 @@ public class Requetes {
 }
 	
 	
-	public static  void insertPlacesLibres (Connection conn, String NomStation, int places, String CatVehicule) throws SQLException {
+	public void insertPlacesLibres (String NomStation, int places, String CatVehicule) throws SQLException {
 		Statement sttable = conn.createStatement() ; 
-		sttable.executeUpdate(" insert into Forfaits1 values ("
-				+ NomStation + ", "
-				+ places + ", "
-				+ CatVehicule
+		sttable.executeUpdate(" insert into PlacesLibres values ('"
+				+ NomStation + "', '"
+				+ CatVehicule + "', "
+				+ places
 				+ ")"
 				) ;
 		sttable.close();
 	}
 	
-	public static void finLocation (Connection conn, int numCB, int idVehicule, String nomStation) throws SQLException {
+	public void finLocation (int numCB, int idVehicule, String nomStation) throws SQLException {
 		Statement sttable = conn.createStatement() ; 
 		// on recupere d'abord la categorie
 		ResultSet rs = sttable.executeQuery ("Select Vehicules.CategorieVehicule From Vehicules Where Vehicules.IdVehicule ="+ idVehicule);
@@ -465,7 +458,7 @@ public class Requetes {
 		int placeLibre = rs.getInt(1);
 		if (placeLibre > 0) {
 			// on met le vehicule dedans 
-			insertEstDans(conn, idVehicule, nomStation);
+			insertEstDans(idVehicule, nomStation);
 			// on decremente le nbre de place libre dans cette station et dans cette categorie
 			sttable.executeUpdate("udpate PlacesLibres set Places = Places - 1 where PlacesLibres.NomStation = " + nomStation
 				+ "and PlacesLibres.CategorieVehicule = "+categorie );
@@ -474,7 +467,7 @@ public class Requetes {
 	}
 	
 
-	public static boolean tableExists(String tableName, Connection conn) {
+	public  boolean tableExists(String tableName) {
 
 		/** DatabaseMetaData md = conn.getMetaData();
 		ResultSet rs = md.getTables(null, null, tableName, null);
