@@ -463,6 +463,17 @@ public class Requetes {
 		sttable.close();
 	}
 	
+	public int findLocation(int CB) throws SQLException {
+		
+		Statement sttable = conn.createStatement();
+		String query = "SELECT numloc FROM locations WHERE (numcartebancaire=" + CB +  " AND datefinlocation null)";
+		ResultSet rs = sttable.executeQuery(query);
+		rs.next();
+		return rs.getInt(1);
+		
+		
+	}
+	
 	public void finLocation (int numLoc, int heureArrivee, String nomStationArrivee) throws SQLException {
 		
 		
@@ -524,16 +535,7 @@ public class Requetes {
 
 	public  boolean tableExists(String tableName) {
 
-		/** DatabaseMetaData md = conn.getMetaData();
-		ResultSet rs = md.getTables(null, null, tableName, null);
-		 while (rs.next()) { 
-	            String tName = rs.getString("TABLE_NAME");
-	            if (tName != null && tName.equals(tableName)) {
-	                return true;
-	            }
-	        }
-		System.out.println("false");
-		return false; */
+		
 		
 		String query = "SELECT 1 FROM " + tableName;
 		Statement smt;

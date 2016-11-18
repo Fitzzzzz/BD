@@ -398,7 +398,6 @@ public class Initialisation {
 		req.finLocation(1, 12, "Navet");
 	
 		req.commit();
-		conn.close();
 		
 	}
 }
