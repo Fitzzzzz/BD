@@ -26,8 +26,8 @@ public class Requetes {
 		sttable.executeUpdate(
 				"create table CategoriesVehicules (CategorieVehicule varchar(20) primary key,"
 						+ " DureeMax int constraint dureePos check (DureeMax >= 0),"
-						+ "PrixHoraire1 int constraint prix1Pos check (PrixHoraire >= 0),"
-						+ "PrixHoraire2 float constraint prix2Pos check (PrixHoraire >= 0),"
+						+ "PrixHoraire int constraint prix1Pos check (PrixHoraire >= 0),"
+						+ "PrixMensuel float constraint prix2Pos check (PrixHoraire >= 0),"
 						+ "MontantCaution int constraint CautionPos check (MontantCaution >= 0))"
 				);
 		sttable.close();
@@ -137,7 +137,6 @@ public class Requetes {
 		sttable.executeUpdate("create table Forfait2 (IdForfait int primary key, "
 				+ "NbMaxLocations int constraint dureeForf2Pos check (NbMaxLocations >= 0),"
 				+ "NbLocationsGratuites int constraint nbLocGratuite2 check (NbLocationsGratuites >= 0),"
-				+ "PrixForfait int constraint prixForf2Pos check (PrixForfait >= 0), "
 				+ "constraint IdForfait2Foreign foreign key (IdForfait) references Forfaits(IdForfait)) "
 				);
 		sttable.close();
@@ -154,7 +153,7 @@ public class Requetes {
 				"create table Forfait1 (IdForfait int primary key,"
 				+ "DureeForfait int constraint dureeForfPos check (DureeForfait >= 0),"
 				+ "DebutValidite date, PrixForfait int constraint prixForfPos check (PrixForfait >= 0),"
-				+ " constraint IdForfaitForeign foreign key (IdForfait) references Forfaits(IdForfait))"
+				+ "constraint IdForfaitForeign foreign key (IdForfait) references Forfaits(IdForfait))"
 				);
 		sttable.close();
 	}
@@ -411,15 +410,11 @@ public class Requetes {
 									   Date debutValidite)	throws SQLException {
 			insererForfaits (idForfait, 1, CatVehicule, numCB);
 			Statement sttable = conn.createStatement();
-			ResultSet rs = sttable.executeQuery("SELECT PrixHoraire1 FROM Categorie WHERE CategorieVehicule = '" + CatVehicule
-					+ "'");
-			rs.next();
-			int prixForfait = rs.getInt(1);
+
 			sttable.executeUpdate(" insert into Forfaits1 values (" 
 					+ idForfait + ", " 
 					+ dureeForfait + ", "
-					+ debutValidite + "," 
-					+ prixForfait + ")"
+					+ debutValidite + ")"
 					);
 			sttable.close();
 	}
@@ -434,19 +429,13 @@ public class Requetes {
 	 */
 	public void insertForfaits2(int idForfait,
 									   String CatVehicule, int numCB,
-									   int nbMaxLocations,
-									   int nbLocationsGratuites) throws SQLException {
+									   int nbMaxLocations) throws SQLException {
 			insererForfaits (idForfait, 2, CatVehicule, numCB);
 			Statement sttable = conn.createStatement();
-			ResultSet rs = sttable.executeQuery("SELECT PrixHoraire2 FROM Categorie WHERE CategorieVehicule = '" + CatVehicule
-					+ "'");
-			rs.next();
-			int prixForfait = rs.getInt(1);
 			sttable.executeUpdate(" insert into Forfaits1 values ("
 					+ idForfait + ", "
 					+ nbMaxLocations + ", "
-					+ nbLocationsGratuites + ","
-					+ prixForfait + ")"
+					+ 3 + ")"
 					) ;
 			sttable.close() ; 
 	}

@@ -54,11 +54,11 @@ public class Initialisation {
 		
 		
 		
-		req.insertCategorieVehicule("Velo", 5, 1, 10);
-		req.insertCategorieVehicule("VeloElec", 5, 2, 20);
-		req.insertCategorieVehicule("VoitureElec", 5, 4, 40);
-		req.insertCategorieVehicule("VeloRemork", 5, 3, 30);
-		req.insertCategorieVehicule("Utilitaire", 5, 5, 50);
+		req.insertCategorieVehicule("Velo", 5, 1, (float)0.1, 10);
+		req.insertCategorieVehicule("VeloElec", 5, 2, (float)0.2, 20);
+		req.insertCategorieVehicule("VoitureElec", 5, 4, (float)0.4, 40);
+		req.insertCategorieVehicule("VeloRemork", 5, 3, (float)0.3, 30);
+		req.insertCategorieVehicule("Utilitaire", 5, 5, (float)0.5, 50);
 		
 		 
 		req.insertStation("Patate", "3 avenue de l Empereur Le Net");
