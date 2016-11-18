@@ -6,5 +6,7 @@ public class TestBD {
 		 Connection conn = Utilitaires.openConnection();
 		 
 		 Initialisation.initBase (conn);
+		conn.close();
+
 	 }
 }
