@@ -26,7 +26,8 @@ public class Requetes {
 		sttable.executeUpdate(
 				"create table CategoriesVehicules (CategorieVehicule varchar(20) primary key,"
 						+ " DureeMax int constraint dureePos check (DureeMax >= 0),"
-						+ "PrixHoraire int constraint prixPos check (PrixHoraire >= 0),"
+						+ "PrixHoraire int constraint prix1Pos check (PrixHoraire >= 0),"
+						+ "PrixMensuel float constraint prix2Pos check (PrixHoraire >= 0),"
 						+ "MontantCaution int constraint CautionPos check (MontantCaution >= 0))"
 				);
 		sttable.close();
@@ -134,7 +135,6 @@ public class Requetes {
 		sttable.executeUpdate("create table Forfait2 (IdForfait int primary key, "
 				+ "NbMaxLocations int constraint dureeForf2Pos check (NbMaxLocations >= 0),"
 				+ "NbLocationsGratuites int constraint nbLocGratuite2 check (NbLocationsGratuites >= 0),"
-				+ "PrixForfait int constraint prixForf2Pos check (PrixForfait >= 0), "
 				+ "constraint IdForfait2Foreign foreign key (IdForfait) references Forfaits(IdForfait)) "
 				);
 		sttable.close();
@@ -151,7 +151,7 @@ public class Requetes {
 				"create table Forfait1 (IdForfait int primary key,"
 				+ "DureeForfait int constraint dureeForfPos check (DureeForfait >= 0),"
 				+ "DebutValidite date, PrixForfait int constraint prixForfPos check (PrixForfait >= 0),"
-				+ " constraint IdForfaitForeign foreign key (IdForfait) references Forfaits(IdForfait))"
+				+ "constraint IdForfaitForeign foreign key (IdForfait) references Forfaits(IdForfait))"
 				);
 		sttable.close();
 	}
@@ -235,13 +235,15 @@ public class Requetes {
 	 */
 	public void insertCategorieVehicule(String catVehic, 
 									   int dureeMax, 
-									   int prixHoraire, 
+									   int prixHoraire1,
+									   float prixHoraire2,
 									   int caution) throws SQLException {
 		Statement sttable = conn.createStatement() ; 
 		String update = "insert into CategoriesVehicules values ('"
 				+ catVehic + "', "
 				+ dureeMax + ", "
-				+ prixHoraire + ", "
+				+ prixHoraire1 + ", "
+				+ prixHoraire2 + ", "
 				+ caution + ")";
 		
 		System.out.println(update);
@@ -368,10 +370,14 @@ public class Requetes {
 				+ "' AND CategorieVehicule ='" + categorie + "')";
 		System.out.println(ajoutPlace);
 		sttable.executeUpdate(ajoutPlace);
+		
+		//  enleve un vehicule de la station
+		String query = "DELETE FROM EstDans WHERE IdVehicule =" + idVehicule;
+		sttable.executeQuery(query);
 		sttable.close() ; 	
 			
 		
-			// rajouter une fonction qui enleve un vehicule ds la station concernee et qui rajoute une place libre
+			
 	}
 
 	private void insererForfaits (int IdForfait, int TypeForfait, 
@@ -397,15 +403,14 @@ public class Requetes {
 	public void insertForfaits1(int idForfait, 
 									   String CatVehicule, int numCB,
 									   int dureeForfait, 
-									   Date debutValidite, 
-									   int prixForfait)	throws SQLException {
+									   Date debutValidite)	throws SQLException {
 			insererForfaits (idForfait, 1, CatVehicule, numCB);
 			Statement sttable = conn.createStatement();
+
 			sttable.executeUpdate(" insert into Forfaits1 values (" 
 					+ idForfait + ", " 
 					+ dureeForfait + ", "
-					+ debutValidite + "," 
-					+ prixForfait + ")"
+					+ debutValidite + ")"
 					);
 			sttable.close();
 	}
@@ -420,19 +425,17 @@ public class Requetes {
 	 */
 	public void insertForfaits2(int idForfait,
 									   String CatVehicule, int numCB,
-									   int nbMaxLocations,
-									   int nbLocationsGratuites,
-									   int prixForfait) throws SQLException {
+									   int nbMaxLocations) throws SQLException {
 			insererForfaits (idForfait, 2, CatVehicule, numCB);
-			Statement sttable = conn.createStatement() ; 
+			Statement sttable = conn.createStatement();
 			sttable.executeUpdate(" insert into Forfaits1 values ("
 					+ idForfait + ", "
 					+ nbMaxLocations + ", "
-					+ nbLocationsGratuites + ","
-					+ prixForfait + ")"
+					+ 3 + ")"
 					) ;
 			sttable.close() ; 
 	}
+
 
 	public void insertEstDans (int IdVehicule, String NomStation) throws SQLException {
 
