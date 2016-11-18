@@ -74,6 +74,7 @@ public class Requetes {
 				+ "PrenomAbonne VARCHAR(20), "
 				+ "DateNaissance DATE, "
 				+ "AdresseAbonne VARCHAR(100), "
+				+ "Solde int CONSTRAINT SoldePos CHECK (Solde >= 0),"
 				+ "primary key (NumCarteBancaire))";
 		System.out.println(query);
 		sttable.executeUpdate(query);
@@ -89,6 +90,7 @@ public class Requetes {
 		Statement sttable = conn.createStatement(); 
 		String request = "create table Locations (NumLoc int constraint numLocPos check (NumLoc >= 0),"
 				+ "DateLocation date,"
+				+ "DateFinLocation date,"
 				+ "heureDebut int,"
 				+ "heureFin int,"
 				+ "IdVehicule  int,"
@@ -305,7 +307,8 @@ public class Requetes {
 				+ nomAbonne + "','" 
 				+ prenomAbonne + "'," 
 				+ "to_date('" + dateNaissance + "', 'yyyymmdd')" + ",'" 
-				+ adresseAbonne + "')";
+				+ adresseAbonne + "'"
+				+ "0)";
 	    	
 		Statement sttable = conn.createStatement() ;
 		sttable.executeUpdate(request);	
@@ -338,6 +341,7 @@ public class Requetes {
 		String request = "insert into Locations values (" 
 				+ numLoc + ", "
 				+ "to_date('" + dateLocation + "', 'yyyymmdd')" + ", " 				
+				+ "null" + ","
 				+ heureDebut + ", "
 				+ "null" + ", "
 				+ idVehicule + ", "
@@ -403,7 +407,7 @@ public class Requetes {
 	public void insertForfaits1(int idForfait, 
 									   String CatVehicule, int numCB,
 									   int dureeForfait, 
-									   Date debutValidite)	throws SQLException {
+									   String debutValidite)	throws SQLException {
 			insererForfaits (idForfait, 1, CatVehicule, numCB);
 			Statement sttable = conn.createStatement();
 
@@ -465,7 +469,6 @@ public class Requetes {
 				) ;
 		sttable.close();
 	}
-	
 	public int findLocation(int CB) throws SQLException {
 		
 		Statement sttable = conn.createStatement();
@@ -476,8 +479,11 @@ public class Requetes {
 		
 		
 	}
-	
-	public void finLocation (int numLoc, int heureArrivee, String nomStationArrivee) throws SQLException {
+
+
+
+	public void finLocation (int numLoc, String dateFinLoc, int heureArrivee, String nomStationArrivee) throws SQLException {
+
 		
 		
 		
@@ -518,6 +524,8 @@ public class Requetes {
 			sttable.executeUpdate(minusPlace);
 			String miseAjourStat = "UPDATE Locations SET nomStationArrivee = '"+ nomStationArrivee +"'";
 			sttable.executeUpdate(miseAjourStat);
+			String miseAjourDate = "UPDATE Locations SET dateFinLocation = to_date('" + dateFinLoc + "', 'yyyymmdd')";				
+			sttable.executeUpdate(miseAjourDate);
 			String miseAjourHeure = "UPDATE Locations SET heureFin = "+ heureArrivee ;
 			sttable.executeUpdate(miseAjourHeure);
 		}

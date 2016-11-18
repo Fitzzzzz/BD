@@ -388,14 +388,38 @@ public class Initialisation {
 		req.insertAbonnes(39, "Lefort", "Maxime", "19790114", "23 rue de la Petite Marchande 38000 Grenoble");
 		req.insertAbonnes(40, "Fer", "Odeline", "19910330", "32 Quai des Reveurs 38000 Grenoble");
 		
-		// INSERER LES LOCATIONS
-		
 		// INSERER LES FORFAITS !!!!
-		// Test de location au pif
+	/*	aits1(int idForfait, 
+				   String CatVehicule, int numCB,
+				   int dureeForfait, 
+				   Date debutValidite,
+				   
+				    *2(int idForfait,
+									   String CatVehicule, int numCB,
+									   int nbMaxLocations, */
+				 
+		req.insertForfaits1 (1, "Utilitaire" , 4, 1, "20121101");
+		req.insertForfaits2 (2, "VeloRemork", 1, 4);
+		req.insertForfaits2 (3, "VoitureElec", 2, 5);
+	//	req.insertForfaits1 (4, "", 3, 6, "20161001"); // a finir
+		// A FINIR
+	
 		
-		// AUTO INCREMENTATION A RAJOUTEEEEEEEEEEEEEEEER 
-		req.insertLocations(1, "20131025", 5, 1, 7, "Patate");
-		req.finLocation(1, 12, "Navet");
+		req.insertLocations(1, "20161116", 21, 201, 4, "Navet");
+		req.insertLocations(2, "20161120", 6, 180, 1, "Patate");
+		req.insertLocations(3, "20161119", 13, 149, 2, "Aubergine");
+		req.insertLocations(4, "20161122", 3, 119, 3, "Courge");
+		req.insertLocations(5, "20161121", 21, 209, 14, "Cornichon");
+		req.insertLocations(6, "20170130", 1, 126, 10, "Epinard");
+		req.insertLocations(7, "20170305", 12, 205, 37, "Poix Chiche");
+		req.insertLocations(8, "20170807", 5, 184, 22, "Radis");
+		req.insertLocations(9, "20161226", 11, 207, 25, "Poireau");
+		req.insertLocations(10, "20170203", 4, 152, 17,  "Carotte");
+		req.insertLocations(11, "20160425", 14, 204, 19, "Choux Fleur");
+		req.insertLocations(12, "20160701", 6, 173, 4, "Choux Fleur");
+		req.insertLocations(13, "20170909", 1, 141, 4, "Cornichon");
+		
+		// INSERER LES FINS DE LOC
 	
 		req.commit();
 		
