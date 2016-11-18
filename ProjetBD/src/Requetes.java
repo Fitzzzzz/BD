@@ -507,9 +507,9 @@ public class Requetes {
 			String minusPlace = "UPDATE PlacesLibres SET Places=" + placeLibre + " WHERE (NomStation='" + nomStationArrivee + "' AND CategorieVehicule = '" + categorie + "')";
 			System.out.println(minusPlace);
 			sttable.executeUpdate(minusPlace);
-			String miseAjourStat = "UPDATE Locations SET nomStationArrivee = "+ nomStationArrivee;
+			String miseAjourStat = "UPDATE Locations SET nomStationArrivee = '"+ nomStationArrivee +"'";
 			sttable.executeUpdate(miseAjourStat);
-			String miseAjourHeure = "UPDATE Locations SET heureFin = "+ heureArrivee;
+			String miseAjourHeure = "UPDATE Locations SET heureFin = "+ heureArrivee ;
 			sttable.executeUpdate(miseAjourHeure);
 		}
 		else  {
