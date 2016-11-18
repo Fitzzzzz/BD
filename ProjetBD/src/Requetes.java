@@ -430,8 +430,7 @@ public class Requetes {
 	 */
 	public void insertForfaits2(int idForfait,
 									   String CatVehicule, int numCB,
-									   int nbMaxLocations,
-									   int nbLocationsGratuites) throws SQLException {
+									   int nbMaxLocations) throws SQLException {
 			insererForfaits (idForfait, 2, CatVehicule, numCB);
 			Statement sttable = conn.createStatement();
 			ResultSet rs = sttable.executeQuery("SELECT PrixHoraire2 FROM Categorie WHERE CategorieVehicule = '" + CatVehicule
@@ -441,7 +440,7 @@ public class Requetes {
 			sttable.executeUpdate(" insert into Forfaits1 values ("
 					+ idForfait + ", "
 					+ nbMaxLocations + ", "
-					+ nbLocationsGratuites + ","
+					+ 3 + ","
 					+ prixForfait + ")"
 					) ;
 			sttable.close() ; 
