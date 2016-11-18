@@ -367,7 +367,7 @@ public class Requetes {
 		rs.next();
 		int placeLibre = rs.getInt(1);
 		placeLibre++;
-					// on incremente le nbre de place libre dans cette station et dans cette categorie
+		// on incremente le nbre de place libre dans cette station et dans cette categorie
 		
 		String ajoutPlace = "UPDATE PlacesLibres SET Places=" + placeLibre + " Where (NomStation ='" + nomStationDepart
 				+ "' AND CategorieVehicule ='" + categorie + "')";
@@ -507,6 +507,10 @@ public class Requetes {
 			String minusPlace = "UPDATE PlacesLibres SET Places=" + placeLibre + " WHERE (NomStation='" + nomStationArrivee + "' AND CategorieVehicule = '" + categorie + "')";
 			System.out.println(minusPlace);
 			sttable.executeUpdate(minusPlace);
+			String miseAjourStat = "UPDATE Locations SET nomStationArrivee = "+ nomStationArrivee;
+			sttable.executeUpdate(miseAjourStat);
+			String miseAjourHeure = "UPDATE Locations SET heureFin = "+ heureArrivee;
+			sttable.executeUpdate(miseAjourHeure);
 		}
 		else  {
 			
