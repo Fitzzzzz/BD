@@ -373,10 +373,14 @@ public class Requetes {
 				+ "' AND CategorieVehicule ='" + categorie + "')";
 		System.out.println(ajoutPlace);
 		sttable.executeUpdate(ajoutPlace);
+		
+		//  enleve un vehicule de la station
+		String query = "DELETE FROM EstDans WHERE IdVehicule =" + idVehicule;
+		sttable.executeQuery(query);
 		sttable.close() ; 	
 			
 		
-			// rajouter une fonction qui enleve un vehicule ds la station concernee et qui rajoute une place libre
+			
 	}
 
 	private void insererForfaits (int IdForfait, int TypeForfait, 
