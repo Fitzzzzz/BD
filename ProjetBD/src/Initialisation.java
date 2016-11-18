@@ -2,7 +2,7 @@ import java.sql.*;
 public class Initialisation {
 	public static void initBase (Connection conn) throws SQLException {
 		
-		Requetes req = new Requetes(conn);
+		req req = new req(conn);
 		req.setautocommit();
 		if (!req.tableExists("CategoriesVehicules")) {
 		req.createTableCategories();
@@ -388,14 +388,29 @@ public class Initialisation {
 		req.insertAbonnes(39, "Lefort", "Maxime", "19790114", "23 rue de la Petite Marchande 38000 Grenoble");
 		req.insertAbonnes(40, "Fer", "Odeline", "19910330", "32 Quai des Reveurs 38000 Grenoble");
 		
-		// INSERER LES LOCATIONS
-		
 		// INSERER LES FORFAITS !!!!
-		// Test de location au pif
+	/*	aits1(int idForfait, 
+				   String CatVehicule, int numCB,
+				   int dureeForfait, 
+				   Date debutValidite, */
+				 
+		insertForfaits1 (1, "Utilitaire" , 4, 1, "20121101");
 		
-		// AUTO INCREMENTATION A RAJOUTEEEEEEEEEEEEEEEER 
-		req.insertLocations(1, "20131025", 5, 1, 7, "Patate");
-		req.finLocation(1, 12, "Navet");
+		req.insertLocations(1, "20161116", 21, 201, 4, "Navet");
+		req.insertLocations(2, "20161120", 6, 170, 1, "Patate");
+		req.insertLocations(3, "20161119", 13, 149, 2, "Aubergine");
+		req.insertLocations(4, "20161122", 3, 119, 3, "Courge");
+		req.insertLocations(5, "20161121", 21, 209, 14, "Cornichon");
+		req.insertLocations(6, "20170130", 1, 126, 10, "Epinard");
+		req.insertLocations(7, "20170305", 12, 205, 37, "Poix Chiche");
+		req.insertLocations(8, "20170807", 5, 184, 22, "Radis");
+		req.insertLocations(9, "20161226", 11, 207, 25, "Poireau");
+		req.insertLocations(10, "20170203", 4, 152, 17,  "Carotte");
+		req.insertLocations(11, "20160425", 14, 204, 19, "Choux Fleur");
+		req.insertLocations(12, "20160701", 6, 173, 4, "Choux Fleur");
+		req.insertLocations(13, "20170909", 1, 141, 4, "Cornichon");
+		
+		// INSERER LES FINS DE LOC
 	
 		req.commit();
 		conn.close();

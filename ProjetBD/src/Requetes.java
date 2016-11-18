@@ -73,6 +73,7 @@ public class Requetes {
 				+ "PrenomAbonne VARCHAR(20), "
 				+ "DateNaissance DATE, "
 				+ "AdresseAbonne VARCHAR(100), "
+				+ "Solde int CONSTRAINT SoldePos CHECK (Solde >= 0),"
 				+ "primary key (NumCarteBancaire))";
 		System.out.println(query);
 		sttable.executeUpdate(query);
@@ -303,7 +304,8 @@ public class Requetes {
 				+ nomAbonne + "','" 
 				+ prenomAbonne + "'," 
 				+ "to_date('" + dateNaissance + "', 'yyyymmdd')" + ",'" 
-				+ adresseAbonne + "')";
+				+ adresseAbonne + "'"
+				+ "0)";
 	    	
 		Statement sttable = conn.createStatement() ;
 		sttable.executeUpdate(request);	
