@@ -90,6 +90,7 @@ public class Requetes {
 		Statement sttable = conn.createStatement(); 
 		String request = "create table Locations (NumLoc int constraint numLocPos check (NumLoc >= 0),"
 				+ "DateLocation date,"
+				+ "DateFinLocation date,"
 				+ "heureDebut int,"
 				+ "heureFin int,"
 				+ "IdVehicule  int,"
@@ -341,6 +342,7 @@ public class Requetes {
 		String request = "insert into Locations values (" 
 				+ numLoc + ", "
 				+ "to_date('" + dateLocation + "', 'yyyymmdd')" + ", " 				
+				+ "null" + ","
 				+ heureDebut + ", "
 				+ "null" + ", "
 				+ idVehicule + ", "
@@ -479,7 +481,7 @@ public class Requetes {
 		sttable.close();
 	}
 	
-	public void finLocation (int numLoc, int heureArrivee, String nomStationArrivee) throws SQLException {
+	public void finLocation (int numLoc, String dateFinLoc, int heureArrivee, String nomStationArrivee) throws SQLException {
 		
 		
 		
@@ -520,6 +522,8 @@ public class Requetes {
 			sttable.executeUpdate(minusPlace);
 			String miseAjourStat = "UPDATE Locations SET nomStationArrivee = '"+ nomStationArrivee +"'";
 			sttable.executeUpdate(miseAjourStat);
+			String miseAjourDate = "UPDATE Locations SET dateFinLocation = to_date('" + dateFinLoc + "', 'yyyymmdd')";				
+			sttable.executeUpdate(miseAjourDate);
 			String miseAjourHeure = "UPDATE Locations SET heureFin = "+ heureArrivee ;
 			sttable.executeUpdate(miseAjourHeure);
 		}

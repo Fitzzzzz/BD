@@ -2,7 +2,7 @@ import java.sql.*;
 public class Initialisation {
 	public static void initBase (Connection conn) throws SQLException {
 		
-		req req = new req(conn);
+		Requetes req = new Requetes(conn);
 		req.setautocommit();
 		if (!req.tableExists("CategoriesVehicules")) {
 		req.createTableCategories();
@@ -392,12 +392,21 @@ public class Initialisation {
 	/*	aits1(int idForfait, 
 				   String CatVehicule, int numCB,
 				   int dureeForfait, 
-				   Date debutValidite, */
+				   Date debutValidite,
+				   
+				    *2(int idForfait,
+									   String CatVehicule, int numCB,
+									   int nbMaxLocations, */
 				 
-		insertForfaits1 (1, "Utilitaire" , 4, 1, "20121101");
+		req.insertForfaits1 (1, "Utilitaire" , 4, 1, "20121101");
+		req.insertForfaits2 (2, "VeloRemork", 1, 4);
+		req.insertForfaits2 (3, "VoitureElec", 2, 5);
+	//	req.insertForfaits1 (4, "", 3, 6, "20161001"); // a finir
+		// A FINIR
+	
 		
 		req.insertLocations(1, "20161116", 21, 201, 4, "Navet");
-		req.insertLocations(2, "20161120", 6, 170, 1, "Patate");
+		req.insertLocations(2, "20161120", 6, 180, 1, "Patate");
 		req.insertLocations(3, "20161119", 13, 149, 2, "Aubergine");
 		req.insertLocations(4, "20161122", 3, 119, 3, "Courge");
 		req.insertLocations(5, "20161121", 21, 209, 14, "Cornichon");
