@@ -152,7 +152,7 @@ public class Requetes {
 		sttable.executeUpdate(
 				"create table Forfait1 (IdForfait int primary key,"
 				+ "DureeForfait int constraint dureeForfPos check (DureeForfait >= 0),"
-				+ "DebutValidite date, PrixForfait int constraint prixForfPos check (PrixForfait >= 0),"
+				+ "DebutValidite date,"
 				+ "constraint IdForfaitForeign foreign key (IdForfait) references Forfaits(IdForfait))"
 				);
 		sttable.close();
@@ -308,7 +308,7 @@ public class Requetes {
 				+ prenomAbonne + "'," 
 				+ "to_date('" + dateNaissance + "', 'yyyymmdd')" + ",'" 
 				+ adresseAbonne + "'"
-				+ "0)";
+				+ ")";
 	    	
 		Statement sttable = conn.createStatement() ;
 		sttable.executeUpdate(request);	
@@ -387,10 +387,10 @@ public class Requetes {
 	private void insererForfaits (int IdForfait, int TypeForfait, 
 			String CatVehicule, int NumCarteBancaire) throws SQLException {
 		Statement sttable = conn.createStatement();       
-		sttable.executeUpdate("insert into Vehicules values ('" 
-				+ IdForfait + "', '" 
-				+ TypeForfait + "', " 
-				+ CatVehicule + ", " 
+		sttable.executeUpdate("insert into Forfaits values (" 
+				+ IdForfait + ", " 
+				+ TypeForfait + ",'" 
+				+ CatVehicule + "', " 
 				+ NumCarteBancaire + ")"
 				); 	
 		sttable.close();
@@ -405,16 +405,18 @@ public class Requetes {
 	 * @param prixForfait : price of the package
 	 */
 	public void insertForfaits1(int idForfait, 
-									   String CatVehicule, int numCB,
+									   String CatVehicule, 
+									   int numCB,
 									   int dureeForfait, 
 									   String debutValidite)	throws SQLException {
 			insererForfaits (idForfait, 1, CatVehicule, numCB);
 			Statement sttable = conn.createStatement();
 
-			sttable.executeUpdate(" insert into Forfaits1 values (" 
-					+ idForfait + ", " 
+			sttable.executeUpdate(" insert into Forfait1 values (" 
+					+ idForfait + ", "
 					+ dureeForfait + ", "
-					+ debutValidite + ")"
+					+ "to_date('" + debutValidite + "', 'yyyymmdd')"
+					+ ")"
 					);
 			sttable.close();
 	}
@@ -432,7 +434,7 @@ public class Requetes {
 									   int nbMaxLocations) throws SQLException {
 			insererForfaits (idForfait, 2, CatVehicule, numCB);
 			Statement sttable = conn.createStatement();
-			sttable.executeUpdate(" insert into Forfaits1 values ("
+			sttable.executeUpdate(" insert into Forfait2 values ("
 					+ idForfait + ", "
 					+ nbMaxLocations + ", "
 					+ 3 + ")"
