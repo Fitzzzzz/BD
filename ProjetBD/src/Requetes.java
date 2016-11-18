@@ -27,7 +27,7 @@ public class Requetes {
 				"create table CategoriesVehicules (CategorieVehicule varchar(20) primary key,"
 						+ " DureeMax int constraint dureePos check (DureeMax >= 0),"
 						+ "PrixHoraire int constraint prix1Pos check (PrixHoraire >= 0),"
-						+ "PrixMensuel float constraint prix2Pos check (PrixHoraire >= 0),"
+						+ "PrixMensuel int constraint prix2Pos check (PrixMensuel >= 0),"
 						+ "MontantCaution int constraint CautionPos check (MontantCaution >= 0))"
 				);
 		sttable.close();
@@ -235,19 +235,19 @@ public class Requetes {
 	 */
 	public void insertCategorieVehicule(String catVehic, 
 									   int dureeMax, 
-									   int prixHoraire1,
-									   float prixHoraire2,
+									   int prixHoraire,
+									   int prixMensuel,
 									   int caution) throws SQLException {
 		Statement sttable = conn.createStatement() ; 
 		String update = "insert into CategoriesVehicules values ('"
 				+ catVehic + "', "
 				+ dureeMax + ", "
-				+ prixHoraire1 + ", "
-				+ prixHoraire2 + ", "
+				+ prixHoraire + ", "
+				+ prixMensuel + ", "
 				+ caution + ")";
-		
+
 		System.out.println(update);
-		sttable.executeUpdate(update) ; 
+		sttable.executeUpdate(update) ;
 	}
 
 	
