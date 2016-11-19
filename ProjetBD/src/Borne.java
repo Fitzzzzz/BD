@@ -93,7 +93,8 @@ public class Borne {
 			int numLoc = requests.findLocation(CB);
 			Calendar rightNow = Calendar.getInstance();
 			int hour = rightNow.get(Calendar.HOUR_OF_DAY);
-
+			// a rajouter : recup la date dans un string et le mettre dans 
+			// dans les param de l'appel de finLoc
 			requests.finLocation(numLoc, hour, this.nomStation);
 		} catch (SQLException e) {
 			System.out.println("Vous n'avez pas de location en cours.");
