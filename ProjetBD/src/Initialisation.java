@@ -400,10 +400,18 @@ public class Initialisation {
 									   int nbMaxLocations, */
 
 		req.insertForfaits1 (1, "Utilitaire" , 4, 1, "20121101");
-		req.insertForfaits2 (2, "VeloRemork", 1, 4);
-		req.insertForfaits2 (3, "VoitureElec", 2, 5);
-		//	req.insertForfaits1 (4, "", 3, 6, "20161001"); // a finir
-		// A FINIR
+		req.insertForfaits2 (2, "Velo", 1, 4);
+		req.insertForfaits2 (3, "VeloRemork", 2, 5);
+		req.insertForfaits1 (4, "VeloRemork", 3, 6, "20161001");
+		req.insertForfaits2(5, "Velo", 14, 10);
+		req.insertForfaits2(6, "VeloRemork", 10, 8);
+		req.insertForfaits2(7, "VeloElec", 37, 10);
+		req.insertForfaits2(8, "Utilitaire", 22, 3);
+		req.insertForfaits2(9, "Velo", 25, 5);
+		req.insertForfaits2(10, "VeloRemork", 17, 3);
+		req.insertForfaits2(11, "Utilitaire", 19, 15);
+		req.insertForfaits2(12, "VoitureElec", 4, 7);
+		req.insertForfaits2(13, "VeloElec", 4, 4);
 
 		
 		req.insertLocations(1, "20161116", 21, 161, 4, "Navet");
