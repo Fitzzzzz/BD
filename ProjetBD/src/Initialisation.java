@@ -139,9 +139,9 @@ public class Initialisation {
 
 
 		int compteur = 0;
-		for (int i = 0; i < 101; i++) {
+		for (int i = 0; i < 100; i++) {
 			req.insertVehicules(i, 1, "Velo");
-
+			System.out.println(compteur);
 			switch (compteur) {
 			case 0: 
 				req.insertEstDans(i, "Patate");
@@ -238,18 +238,18 @@ public class Initialisation {
 				req.insertEstDans(i, "Poix Chiche");
 				if (i<30) {
 					req.insertVehicules(100+i, 1, "VeloElec");
-					req.insertEstDans(100+i, "Choux Fleur");
+					req.insertEstDans(100+i, "Poix Chiche");
 
 				}
 				if (i<15) {
 					req.insertVehicules(130+i, 2, "VoitureElec");
 					req.insertVehicules(145+i, 2, "VeloRemork");
-					req.insertEstDans(130+i, "Choux Fleur");
-					req.insertEstDans(145+i, "Choux Fleur");
+					req.insertEstDans(130+i, "Poix Chiche");
+					req.insertEstDans(145+i, "Poix Chiche");
 				}
 				if (i < 10) {
 					req.insertVehicules(160+i, 2, "Utilitaire");
-					req.insertEstDans(160+i, "Choux Fleur");
+					req.insertEstDans(160+i, "Poix Chiche");
 				}
 				break;
 			case 6: 
@@ -342,8 +342,9 @@ public class Initialisation {
 					req.insertEstDans(160+i, "Epinard");
 				}
 				break;
+				
 			}
-			compteur += 1 % 11;
+			compteur = (compteur + 1) % 11;
 		}
 
 
@@ -404,20 +405,20 @@ public class Initialisation {
 		//	req.insertForfaits1 (4, "", 3, 6, "20161001"); // a finir
 		// A FINIR
 
-
-		req.insertLocations(1, "20161116", 21, 201, 4, "Navet");
-		req.insertLocations(2, "20161120", 6, 180, 1, "Patate");
-		req.insertLocations(3, "20161119", 13, 149, 2, "Aubergine");
-		req.insertLocations(4, "20161122", 3, 119, 3, "Courge");
-		req.insertLocations(5, "20161121", 21, 209, 14, "Cornichon");
-		req.insertLocations(6, "20170130", 1, 126, 10, "Epinard");
-		req.insertLocations(7, "20170305", 12, 205, 37, "Poix Chiche");
-		req.insertLocations(8, "20170807", 5, 184, 22, "Radis");
-		req.insertLocations(9, "20161226", 11, 207, 25, "Poireau");
-		req.insertLocations(10, "20170203", 4, 152, 17,  "Carotte");
-		req.insertLocations(11, "20160425", 14, 204, 19, "Choux Fleur");
-		req.insertLocations(12, "20160701", 6, 173, 4, "Choux Fleur");
-		req.insertLocations(13, "20170909", 1, 141, 4, "Cornichon");
+		
+		req.insertLocations(1, "20161116", 21, 161, 4, "Navet");
+		req.insertLocations(2, "20161120", 6, 0, 1, "Patate");
+		req.insertLocations(3, "20161119", 13, 153, 2, "Aubergine");
+		req.insertLocations(4, "20161122", 3, 136, 3, "Courge");
+		req.insertLocations(5, "20161121", 21, 20, 14, "Cornichon");
+		req.insertLocations(6, "20170130", 1, 155, 10, "Epinard");
+		req.insertLocations(7, "20170305", 12, 105, 37, "Poix Chiche");
+		req.insertLocations(8, "20170807", 5, 163, 22, "Radis");
+		req.insertLocations(9, "20161226", 11, 18, 25, "Poireau");
+		req.insertLocations(10, "20170203", 4, 147, 17,  "Carotte");
+		req.insertLocations(11, "20160425", 14, 164, 19, "Choux Fleur");
+		req.insertLocations(12, "20160701", 6, 134, 4, "Choux Fleur");
+		req.insertLocations(13, "20170909", 1, 109, 4, "Cornichon");
 
 		// INSERER LES FINS DE LOC
 

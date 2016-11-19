@@ -284,6 +284,10 @@ public class Requetes {
 			+ nbPlaces + ", '" 
 			+ categorieVehicule+ "' ) "
 			);
+			System.out.println("insert into Vehicules values (" 
+			+ idVehicule+ ", " 
+			+ nbPlaces + ", '" 
+			+ categorieVehicule+ "' ) ");
 			sttable.close();
 	}
 	
@@ -491,7 +495,7 @@ public class Requetes {
 		
 		Statement sttable = conn.createStatement();
 		
-		// On rÃ©cupÃ¨re l'id du vÃ©hicule 
+		// On récupère l'id du véhicule 
 		
 		ResultSet rs = sttable.executeQuery("Select IdVehicule FROM Locations WHERE (NUMLOC = " + numLoc + ")");
 		rs.next();
