@@ -534,12 +534,11 @@ public class Requetes {
 			sttable.executeUpdate(miseAjourDate);
 			String miseAjourHeure = "UPDATE Locations SET heureFin = "+ heureArrivee ;
 			sttable.executeUpdate(miseAjourHeure);
+		} else {
+			System.out.println("Pas de places disponibles dans cette station");			
 		}
-		else  {
-			
-			// TODO !
-			
-		}
+		
+		
 		/*
 		 * 
 		String ajoutPlace = "UPDATE PlacesLibres SET Places=" + placeLibre + " Where (NomStation ='" + nomStationDepart
