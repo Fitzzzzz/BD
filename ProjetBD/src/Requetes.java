@@ -284,6 +284,10 @@ public class Requetes {
 			+ nbPlaces + ", '" 
 			+ categorieVehicule+ "' ) "
 			);
+			System.out.println("insert into Vehicules values (" 
+			+ idVehicule+ ", " 
+			+ nbPlaces + ", '" 
+			+ categorieVehicule+ "' ) ");
 			sttable.close();
 	}
 	
