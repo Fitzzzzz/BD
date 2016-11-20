@@ -1,3 +1,7 @@
+/**
+ * Creation of a driver and opening of the connexion
+ */
+
 import java.sql.*;
 public class Utilitaires {
 

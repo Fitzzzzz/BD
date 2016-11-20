@@ -1,4 +1,6 @@
-
+/**
+ * 
+ */
 
 import java.sql.SQLException;
 import java.util.Calendar;
@@ -15,7 +17,7 @@ public class Borne {
 	private Requetes requests;
 	private int CB;
 	
-	
+
 	public Borne(String nomStation, Requetes requests) {
 		
 		this.requests = requests;
@@ -23,16 +25,17 @@ public class Borne {
 		this.sc = new Scanner(System.in);
 	}
 	
+	/**
+	 * Welcome message printed on the interface.
+	 * The user has to say if he or she is a new client 
+	 */
 	public void welcome() {
 		
 		System.out.println("Bonjour et bienvenue chez esCARgo!");
-		
-		
 		Boolean repondu = false;
 		System.out.println("Etes-vous êtes déjà client chez nous? (O/n)");
-		
-		
-		
+				
+		// Wait until the user responds
 		LinkedList<String> answers = new LinkedList<>();
 		answers.add("O");
 		answers.add("n");
@@ -43,7 +46,6 @@ public class Borne {
 			System.out.println("Etes-vous êtes déjà client chez nous? (O/n)");
 			repondu = expectedResult(sc.nextLine(), answers);
 		}
-		
 		if (answer.equals("O")) {
 			this.newClient = false;
 		}
@@ -58,14 +60,13 @@ public class Borne {
 			System.out.println("Veuillez entrer votre numéro de CB.");
 			this.CB = Integer.parseInt(sc.nextLine());
 		}
-		
-		
-		
-
-		
-		
+	
 	}
 	
+	
+	/**
+	 * Create an account if the user is a new client
+	 */
 	public void createAccount() {
 		
 		System.out.println("Veuillez donner votre nom");
@@ -87,6 +88,9 @@ public class Borne {
 	}
 	
 
+	/**
+	 * Return of a vehicule in a station
+	 */
 	public void depotVehicule() {
 		
 		try {
@@ -99,10 +103,12 @@ public class Borne {
 		} catch (SQLException e) {
 			System.out.println("Vous n'avez pas de location en cours.");
 		}
-		
-		
 	}
 	
+	
+	/**
+	 * Create a new Package for a client
+	 */
 	public void subscribeToNewForfait() {
 		
 		// FIRFAUT1 : ILLIMITE PDT DUREE LIMITE 
@@ -134,11 +140,12 @@ public class Borne {
 		System.out.println("4) Vélo à remorque");
 		System.out.println("5) Véhicule utilitaire");
 		int categorie = Integer.parseInt(sc.next());
-		
-		
-		
 	}
 	
+	
+	/**
+	 * Ask the user what he or she wants to do
+	 */
 	public void whatDoYouWannaDo() {
 		
 		System.out.println("Choisissez votre demande : (1/2/3) ");
@@ -164,6 +171,10 @@ public class Borne {
 	}
 
 	
+	/**
+	 * Check if the anwser is the anwser expected
+	 * @return true if it is an expected anwser
+	 */
 	public Boolean expectedResult(String answer, LinkedList<String> acceptableAnswers) {
 		
 		Boolean found = false;

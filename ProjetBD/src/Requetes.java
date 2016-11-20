@@ -1,3 +1,7 @@
+/**
+ * Methods to create tables and insert data in them
+ */
+
 import java.sql.*;
 public class Requetes {
 
