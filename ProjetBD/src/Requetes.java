@@ -550,7 +550,7 @@ public class Requetes {
 			sttable.executeUpdate(minusPlace);
 			String miseAjourStat = "UPDATE Locations SET nomStationArrivee = '"+ nomStationArrivee +"'";
 			sttable.executeUpdate(miseAjourStat);
-			String toDate = ("to_date('" + dateFinLoc + "T" + heureArrivee +"Z', 'YYYYMMDD\"T\"HH24:MI:SS\"Z\"')");
+			String toDate = ("to_date('" + dateFinLoc + "T" + heureArrivee +"Z', 'YYYYMMDD\"T\"HH24:MI:SS\"Z\"')" + "WHERE ( NumLoc = " + numLoc + ")");
 			String miseAjourDate = "UPDATE Locations SET dateFinLocation =" + toDate;				
 			sttable.executeUpdate(miseAjourDate);
 
