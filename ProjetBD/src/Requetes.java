@@ -497,7 +497,7 @@ public class Requetes {
 	}
 	
 	
-    public void getForfait1(int CB, String categorie) throws SQLException {
+    public Boolean alreadyGotForfait1(int CB, String categorie) throws SQLException {
         
         Statement sttable = conn.createStatement();
         String getForfaitId = "SELECT IdForfait, FROM Forfaits "
@@ -512,13 +512,21 @@ public class Requetes {
              	ID = ID + " OR IdForfait='" + rs.getString(1) + "'";
              	
              }
-             String query = "SELECT IdForfait, DureeForfait, DebutValidite FROM Forfait1 "
-             		+ "WHERE (numcartebancaire=" + CB +  " AND datefinlocation null)";
-             Date d = rs.getDate(0);
+             String query = "SELECT FINVALIDITE FROM Forfait1 "
+             		+ "WHERE (IDFORFAIT = " + ID + ")";
+             rs = sttable.executeQuery(query);
+             java.util.Date today = new java.util.Date();
+             
+             while (rs.next()) {
+            	 
+            	 java.util.Date end = new java.util.Date(rs.getDate(1).getTime());
+            	 if (today.compareTo(end) > 0) {
+            		 return true;
+            	 }
+            	 
+             }
         }
-        else {
-        	
-        }
+        return false;
         
        
     }
