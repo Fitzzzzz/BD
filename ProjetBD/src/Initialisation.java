@@ -1,7 +1,8 @@
 import java.sql.*;
 public class Initialisation {
 	public static void initBase (Connection conn) throws SQLException {
-
+		
+		
 		Requetes req = new Requetes(conn);
 		req.setautocommit();
 		if (!req.tableExists("CategoriesVehicules")) {
@@ -52,14 +53,20 @@ public class Initialisation {
 
 
 
-
-
+		/////////////////////////////////////////////
+		// INSERTION OF VEHICULES CATEGORIES
+		/////////////////////////////////////////////
+		
 		req.insertCategorieVehicule("Velo", 5, 1, 10, 10);
 		req.insertCategorieVehicule("VeloElec", 5, 2, 15, 20);
 		req.insertCategorieVehicule("VoitureElec", 5, 4, 40, 40);
 		req.insertCategorieVehicule("VeloRemork", 5, 3, 25, 30);
 		req.insertCategorieVehicule("Utilitaire", 5, 5, 50, 50);
-
+		
+		
+		/////////////////////////////////////////////
+		// INSERTION OF STATIONS
+		/////////////////////////////////////////////
 
 		req.insertStation("Patate", "3 avenue de l Empereur Le Net");
 		req.insertStation("Navet", "7 ruelle du Bagou");
@@ -74,6 +81,10 @@ public class Initialisation {
 		req.insertStation("Epinard", "17 avenue du Roi Claude");
 
 
+		/////////////////////////////////////////////
+		// INSERTION OF AVAILABLE PLACES IN STATIONS
+		/////////////////////////////////////////////
+		// PLACES OF STANDARD BIKES
 		req.insertPlacesLibres("Patate", 50, "Velo");
 		req.insertPlacesLibres("Navet", 50, "Velo");
 		req.insertPlacesLibres("Carotte", 50, "Velo");
@@ -85,7 +96,7 @@ public class Initialisation {
 		req.insertPlacesLibres("Aubergine", 50, "Velo");
 		req.insertPlacesLibres("Cornichon", 50, "Velo");
 		req.insertPlacesLibres("Epinard", 50, "Velo");
-
+		// PLACES OF ELECTRIC BIKES
 		req.insertPlacesLibres("Patate", 10, "VeloElec");
 		req.insertPlacesLibres("Navet", 10, "VeloElec");
 		req.insertPlacesLibres("Carotte", 10, "VeloElec");
@@ -97,7 +108,7 @@ public class Initialisation {
 		req.insertPlacesLibres("Aubergine", 10, "VeloElec");
 		req.insertPlacesLibres("Cornichon", 10, "VeloElec");
 		req.insertPlacesLibres("Epinard", 10, "VeloElec");
-
+		// PLACES OF ELECRTIC CARS
 		req.insertPlacesLibres("Patate", 5, "VoitureElec");
 		req.insertPlacesLibres("Navet", 10, "VoitureElec");
 		req.insertPlacesLibres("Carotte", 5, "VoitureElec");
@@ -109,7 +120,7 @@ public class Initialisation {
 		req.insertPlacesLibres("Aubergine", 10, "VoitureElec");
 		req.insertPlacesLibres("Cornichon", 10, "VoitureElec");
 		req.insertPlacesLibres("Epinard", 10, "VoitureElec");
-
+		// PLACES OF BIKES WITH REMORK
 		req.insertPlacesLibres("Patate", 10, "VeloRemork");
 		req.insertPlacesLibres("Navet", 5, "VeloRemork");
 		req.insertPlacesLibres("Carotte", 5, "VeloRemork");
@@ -121,7 +132,7 @@ public class Initialisation {
 		req.insertPlacesLibres("Aubergine", 10, "VeloRemork");
 		req.insertPlacesLibres("Cornichon", 10, "VeloRemork");
 		req.insertPlacesLibres("Epinard", 5, "VeloRemork");
-
+		// PLACES OF UTILITARIES
 		req.insertPlacesLibres("Patate", 12, "Utilitaire");
 		req.insertPlacesLibres("Navet", 13, "Utilitaire");
 		req.insertPlacesLibres("Carotte", 5, "Utilitaire");
@@ -136,7 +147,10 @@ public class Initialisation {
 
 
 
-
+		/////////////////////////////////////////////
+		// INSERTION OF VEHICULES
+		// THE INSERTED VEHICULES ARE ADDED TO A STATION
+		/////////////////////////////////////////////
 
 		int compteur = 0;
 		for (int i = 0; i < 100; i++) {
@@ -349,7 +363,11 @@ public class Initialisation {
 			compteur = (compteur + 1) % 11;
 		}
 
-
+		
+		/////////////////////////////////////////////
+		// INSERTION OF USERS
+		/////////////////////////////////////////////
+		
 		req.insertAbonnes(1, "Bagou", "Claire", "19940708", "2 rue Thomas Edison 38000 Grenoble");
 		req.insertAbonnes(2, "Le Net", "Dorian", "19950112", "3 rue Gabriel Peri 38000 Grenoble");
 		req.insertAbonnes(3, "Nicolas", "Louise", "19951022", "5 avenue Jules Flandrin 38000 Grenoble");
@@ -401,6 +419,10 @@ public class Initialisation {
 									   String CatVehicule, int numCB,
 									   int nbMaxLocations, */
 
+		/////////////////////////////////////////////
+		// INSERTION OF PACKAGES TYPE 1 AND 2
+		/////////////////////////////////////////////
+		
 		req.insertForfaits1 (1, "Utilitaire" , 4, "20161101", "20161201");
 		req.insertForfaits2 (2, "Velo", 1, 4, "20161009");
 		req.insertForfaits2 (3, "VeloRemork", 2, 5, "20161019");
@@ -416,6 +438,9 @@ public class Initialisation {
 		req.insertForfaits2(13, "VeloElec", 4, 4, "20161009");
 
 		
+		/////////////////////////////////////////////
+		// INSERTION OF RENTS
+		/////////////////////////////////////////////
 		req.insertLocations(1, "20161116", "21:00:00", 161, 4, "Navet");
 		req.insertLocations(2, "20161120", "06:00:00", 0, 1, "Patate");
 		req.insertLocations(3, "20161119", "13:00:00", 153, 2, "Aubergine");
@@ -429,7 +454,6 @@ public class Initialisation {
 		req.insertLocations(11, "20160425", "14:00:00", 164, 19, "Choux Fleur");
 		req.insertLocations(12, "20160701", "06:00:00", 134, 4, "Choux Fleur");
 		req.insertLocations(13, "20160909", "01:00:00", 109, 4, "Cornichon");
-		// INSERER LES FINS DE LOC
 
 		//regarde si ca fonctionne bien
 		req.insertLocations(50, "20160908", "01:00:00", 100, 30, "Patate");
