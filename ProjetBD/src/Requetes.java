@@ -19,7 +19,6 @@ public class Requetes {
 	
 	/**
 	 * Create Table Categories
-	 * @param conn : connection used
 	 */
 	public void createTableCategories() throws SQLException {
 		Statement sttable = conn.createStatement();       
@@ -35,7 +34,6 @@ public class Requetes {
 	
 	/**
 	 * Create Table Stations
-	 * @param conn : connection used
 	 */
 	public void createTableStations() throws SQLException{
 		Statement sttable = conn.createStatement();       
@@ -48,7 +46,6 @@ public class Requetes {
 
 	/**
 	 * Create Table Vehicules
-	 * @param conn : connection used
 	 */
 	public void createTableVehicules() throws SQLException {
 		Statement sttable = conn.createStatement();       
@@ -65,7 +62,6 @@ public class Requetes {
 	
 	/**
 	 * Create Table Abonnes
-	 * @param conn : connection used
 	 */
 	public void createTableAbonnes() throws SQLException {
 		Statement sttable = conn.createStatement();  
@@ -84,7 +80,6 @@ public class Requetes {
 	
 	/**
 	 * Create Table Locations
-	 * @param conn : connection used
 	 */
 	public void createTableLocations() throws SQLException {
 		Statement sttable = conn.createStatement(); 
@@ -111,7 +106,6 @@ public class Requetes {
 	
 	/**
 	 * Create Table Forfaits
-	 * @param conn : connection used
 	 */
 	public void createTableForfaits() throws SQLException {
 		Statement sttable = conn.createStatement();  
@@ -131,7 +125,6 @@ public class Requetes {
 	
 	/**
 	 * Create Table Forfaits2
-	 * @param conn : connection used
 	 */
 	public void createTableForfaits2() throws SQLException {
 		Statement sttable = conn.createStatement();       
@@ -146,7 +139,6 @@ public class Requetes {
 
 	/**
 	 * Create Table Forfaits1
-	 * @param conn : connection used
 	 */
 	public void createTableForfait1() throws SQLException {
 		Statement sttable = conn.createStatement();       
@@ -162,7 +154,6 @@ public class Requetes {
 	
 	/**
 	 * Create Table EstDans
-	 * @param conn : connection used
 	 */
 	public void createTableEstDans () throws SQLException {
 		Statement sttable = conn.createStatement();       
@@ -176,7 +167,6 @@ public class Requetes {
 	
 	/**
 	 * Create Table Places
-	 * @param conn : connection used
 	 */
 	public void createTablePlacesLibres () throws SQLException {
 		Statement sttable = conn.createStatement();
@@ -194,7 +184,6 @@ public class Requetes {
 	
 	/**
 	 * Drop table in parameters
-	 * @param conn : connection used
 	 * @param NomTable : name of the table to drop 
 	 */
 	public void dropTable(String NomTable) throws SQLException {
@@ -207,7 +196,6 @@ public class Requetes {
 	}
 	/**
 	 * Commit
-	 * @conn : connection used
 	 */
 	public void commit() throws SQLException {
 		Statement sttable = conn.createStatement();       
@@ -217,7 +205,6 @@ public class Requetes {
 	
 	/**
 	 * Set an auto commit
-	 * @param conn : connection used
 	 */
 	public void setautocommit() throws SQLException {
 		conn.setAutoCommit(false); 
@@ -230,10 +217,10 @@ public class Requetes {
 	
 	/**
 	 * Insert values in Table Categorie
-	 * @param conn : connection used
 	 * @param catVehicule : category of the vehicule
 	 * @param dureeMax : maximum duration of the location for the chosen category
 	 * @param prixHoraire : price for 1 hour of rent
+	 * @param prixMensuel : price for 1 month of rent
 	 * @param caution : amount of the caution
 	 */
 	public void insertCategorieVehicule(String catVehic, 
@@ -254,9 +241,8 @@ public class Requetes {
 	}
 
 	
-	/**		sttable.e
+	/**
 	 * Insert values in Table Station
-	 * @param conn : connection used
 	 * @param nomStation : name of the station
 	 * @param adresseStation : adress of the station
 	 */
@@ -271,7 +257,6 @@ public class Requetes {
 	
 	/**
 	 * Insert values in Table Vehicules
-	 * @param conn : connection used
 	 * @param idVehicule : identification number of the vehicule
 	 * @param nbPlaces : number of places of the vehicule
 	 * @param categorieVehicule : category of the vehicule
@@ -294,7 +279,6 @@ public class Requetes {
 	
 	/**
 	 * Insert values in Table Abonnes
-	 * @param conn : connection used
 	 * @param numCarteBancaire : number of the paycard of the user
 	 * @param nomAbonne : last name of the client
 	 * @param prenomAbonne : first name of the client
@@ -326,10 +310,7 @@ public class Requetes {
 	
 	/**
 	 * Insert values in Table Locations
-	 * @param conn : connection used
-	 * @param nulLoc : number of the rent
-	 * @param nomStationDepart : name of the departure station
-	 * @param nomStationArrivee : name of the arrival station
+	 * @param numLoc : number of the rent
 	 * @param dateLocation : date of the rent
 	 * @param heureDebut : time of the beggining of the rent
 	 * @param heureFin : time of the end of the rent
@@ -394,6 +375,15 @@ public class Requetes {
 			
 	}
 
+	
+	/**
+	 * Insert values in Table Forfaits
+	 * @param IdForfaits : Identification number of the package
+	 * @param TypeForfait : number of the package's type
+	 * @param debutval : beginning date of the paskage
+	 * @param CatVehicule : category of the vehicule concerned by the package
+	 * @param NumCarteBancaire : number of the user's cash card
+	 */
 	private void insererForfaits (int IdForfait, int TypeForfait, String debutVal,
 			String CatVehicule, int NumCarteBancaire) throws SQLException {
 		Statement sttable = conn.createStatement();       
@@ -410,11 +400,11 @@ public class Requetes {
 
 	/**
 	 * Insert values in Table Forfaits1
-	 * @param conn : connection used
 	 * @param idforfait : identification number of the package
-	 * @param dureeForfait : time duration of the package
-	 * @param debutValidite : time of beginning of the package
-	 * @param prixForfait : price of the package
+	 * @param CatVehicule : category of the vehicule
+	 * @param numCB : number of the user's cash card
+	 * @param debutValidite : date of beginning of the package
+	 * @param finValidité : date of the end of the package
 	 */
 	public void insertForfaits1(int idForfait, 
 									   String CatVehicule, 
@@ -442,11 +432,12 @@ public class Requetes {
 	
 	/**
 	 * Insert values in Table Forfaits2
-	 * @param conn : connection used
-	 * @param ifForfait : iden        java.sql.Date sql = new java.sql.Date(parsed.getTime());tification number of the package
+	 * @param ifForfait : identification number of the package
+	 * @param CatVehicule : category of the vehicule
+	 * @param numCB : number of the user's cash card
 	 * @param nbMaxLocations : number maximum of locations for this package
 	 * @param nbLocationsGratuites : number maximum of free locations for this package
-	 * @param prixForfait : price of the package
+	 * @param debutValidité : ate of beginning of the package
 	 */
 	public void insertForfaits2(int idForfait,
 									   String CatVehicule, int numCB,
@@ -462,7 +453,13 @@ public class Requetes {
 			sttable.close() ; 
 	}
 	
-	//à l'initilisation on crée toutes les insertions de tous les vélos
+	
+	/**
+	 * Insert values in Table EstDansInit
+	 * All vehicules are inserted during the initialisation protocole
+	 * @param IdVehicule : identification number of the vehicule
+	 * @param NomStation : name of the station in which the vehicule is inserted
+	 */
 	public void insertEstDansInit(int IdVehicule, String NomStation) throws SQLException{
 		Statement sttable = conn.createStatement() ; 
 		sttable.executeUpdate(" insert into EstDans values ("
@@ -471,8 +468,14 @@ public class Requetes {
 				+ "')");
 		sttable.close();
 	}
-
-	//ensuite il faut juste faire des updates
+	
+	/**
+	 * Insert values in Table EstDans
+	 * This method is used to update the new position of a vehicule
+	 * All vehicules are inserted during the initialisation protocole
+	 * @param IdVehicule : identification number of the vehicule
+	 * @param NomStation : name of the station in which the vehicule is inserted
+	 */
 	public void insertEstDans (int IdVehicule, String NomStation) throws SQLException {
 
 	Statement sttable = conn.createStatement() ; 
@@ -484,7 +487,12 @@ public class Requetes {
 	sttable.close();
 }
 	
-	
+	/**
+	 * Insert values in Table PlacesLibres
+	 * @param NomStation : name of the station
+	 * @param places : number of available places in the station
+	 * @param CatVehicule : category of the vehicule 
+	 */
 	public void insertPlacesLibres (String NomStation, int places, String CatVehicule) throws SQLException {
 		Statement sttable = conn.createStatement() ; 
 		sttable.executeUpdate(" insert into PlacesLibres values ('"
@@ -495,10 +503,17 @@ public class Requetes {
 				) ;
 		sttable.close();
 	}
+	
+	
+	/**
+	 * Find a rent from a user's cash card number
+	 * @param CB : number of the user's cash card
+	 * @return 
+	 */
 	public int findLocation(int CB) throws SQLException {
 		
 		Statement sttable = conn.createStatement();
-		String query = "SELECT numloc FROM locations WHERE (numcartebancaire=" + CB +  " AND datefinlocation null)";
+		String query = "SELECT numloc FROM locations WHERE (numcartebancaire=" + CB +  " AND datefinlocation = null)";
 		ResultSet rs = sttable.executeQuery(query);
 		rs.next();
 		return rs.getInt(1);
@@ -508,6 +523,13 @@ public class Requetes {
 
 
 
+	/**
+	 * Find a rent
+	 * @param numLoc : identification number of the rent
+	 * @param dateFinLoc : date of the end of the rent
+	 * @param heureArrivee : time of arrival
+	 * @param nomStationArrivée : name of the arrival station
+	 */
 	public void finLocation (int numLoc, String dateFinLoc, String heureArrivee, String nomStationArrivee) throws SQLException {
 
 		
@@ -571,10 +593,12 @@ public class Requetes {
 	}
 	
 
+	/**
+	 * Check if a table exists or not
+	 * @param tableName : name of the table
+	 * @return true if the table exists
+	 */
 	public  boolean tableExists(String tableName) {
-
-		
-		
 		String query = "SELECT 1 FROM " + tableName;
 		Statement smt;
 		try {
@@ -587,11 +611,14 @@ public class Requetes {
 			System.out.println(tableName + " doesnt exists");
 			return false;
 		}
-		
-
 	}
 	
 	
+	/**
+	 * Calculate the price of a rent
+	 * @param IdForfait : identification number of the package
+	 * @return the price of the rent
+	 */
 	public int facturation(int IdForfait){
 		int prix = 0;
 		try{
