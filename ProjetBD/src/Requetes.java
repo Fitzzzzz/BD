@@ -542,8 +542,9 @@ public class Requetes {
 	
         
         Statement sttable = conn.createStatement();
-        String getForfaitId = "SELECT IdForfait, FROM Forfaits "
+        String getForfaitId = "SELECT IdForfait FROM Forfaits "
         		+ "WHERE (NumCarteBancaire=" + CB + " AND TYPEFORFAIT = 1 AND CATEGORIEVEHICULE = '" + categorie + "')";
+        System.out.println(getForfaitId);
         ResultSet rs = sttable.executeQuery(getForfaitId);
         String ID = "";
         
@@ -574,7 +575,7 @@ public class Requetes {
     }
     
     
-    public Boolean alreadyGotForfait2(int CB, String categorie) throws SQLException {
+    public int alreadyGotForfait2(int CB, String categorie) throws SQLException {
     	
     	 Statement sttable = conn.createStatement();
          String getForfaitId = "SELECT IdForfait, FROM Forfaits "
@@ -589,17 +590,19 @@ public class Requetes {
               	ID = ID + " OR IdForfait='" + rs.getString(1) + "'";
               	
               }
-              String query = "SELECT FINVALIDITE FROM Forfait1 "
+              String query = "SELECT IdForfait, NBLocationsRestantes FROM Forfait2 "
               		+ "WHERE (IDFORFAIT = " + ID + ")";
               rs = sttable.executeQuery(query);
               
               while (rs.next()) {
              	 
-             	 
+             	 if (rs.getInt(2) != 0) {
+             		 return rs.getInt(1);
+             	 }
              	 
               }
          }
-         return false;
+         return 0;
     	
     	
     }
@@ -796,7 +799,17 @@ public class Requetes {
 		
 		
 	}
-
+	public void decreaseLocationsRestantes(int idForfait) throws SQLException {
+		String query = "SELECT NBLocationsRestantes "
+				+ "FROM Forfait2 "
+				+ "WHERE (IdForfait = " + idForfait + " )";
+		Statement sta = conn.createStatement();
+		ResultSet rs = sta.executeQuery(query);
+		rs.next();
+		int newLocationsRestantes = rs.getInt(1) + 1;
+		String update = "UPDATE Forfait2 SET NBLocationsRestantes = " + newLocationsRestantes + ")";
+		
+	}
 	/**
 	 * Calculate the price of a rent
 	 * @param IdForfait : identification number of the package

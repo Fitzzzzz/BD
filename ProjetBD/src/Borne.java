@@ -4,7 +4,6 @@
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -32,8 +31,9 @@ public class Borne {
 	/**
 	 * Welcome message printed on the interface.
 	 * The user has to say if he or she is a new client 
+	 * @throws  
 	 */
-	public void welcome() {
+	public void welcome() throws SQLException {
 		this.sc = new Scanner(System.in);
 
 		System.out.println("Bonjour et bienvenue chez esCARgo!");
@@ -45,30 +45,25 @@ public class Borne {
 		
 		
 		
-		LinkedList<String> answers = new LinkedList<String>();
-
-		answers.add("O");
-		answers.add("n");
 		String answer = sc.nextLine();
-		repondu = expectedResult(answer, answers);
-		while (!repondu) {
-			System.out.println("Veuillez répondre par O ou n.");
-			System.out.println("Etes-vous êtes déjà client chez nous? (O/n)");
-			repondu = expectedResult(sc.nextLine(), answers);
-		}
+		
 		if (answer.equals("O")) {
 			this.newClient = false;
 		}
-		else {
+		else if (answer.equals("n")) {
 			this.newClient = true;
 		}
-		
+		else {
+			System.out.println("Veuillez répondre par O ou n");
+			this.welcome();
+		}
 		if (newClient) {
 			createAccount();
 		}
 		else {
 			System.out.println("Veuillez entrer votre numéro de CB.");
 			this.CB = Integer.parseInt(sc.nextLine());
+			this.whatDoYouWannaDo();
 		}
 	
 	}
@@ -267,7 +262,8 @@ public class Borne {
 		default:
 			welcome();
 			return;
-		}	
+		}
+		int idForfait2;
 		if (requests.alreadyGotForfait1(CB, cat)) {
 			ResultSet rs = requests.location(this.nomStation, cat);
 			if (rs == null) {
@@ -282,9 +278,10 @@ public class Borne {
 				int numLoc = requests.getMaxNumLoc() + 1;
 				requests.insertLocations(numLoc, new SimpleDateFormat("yyyyMMdd").format(today), new SimpleDateFormat("HH:mm:ss").format(today), idVehicule, CB, this.nomStation);
 				requests.deleteFromEstDans(idVehicule);
+				System.out.println("Votre location est effectuée. Vous avez le véhicule numéro " + idVehicule + ".");
 			}
 		}
-		else if (requests.alreadyGotForfait2(CB, cat)) {
+		else if ((idForfait2 = requests.alreadyGotForfait2(CB, cat)) != 0) {
 			ResultSet rs = requests.location(this.nomStation, cat);
 			if (rs == null) {
 				System.out.println("Désolé, il n'y a pas de véhicules de ce type disponible ici.");
@@ -292,13 +289,22 @@ public class Borne {
 				return;
 			}
 			else {
+				requests.decreaseLocationsRestantes(idForfait2);
 				int idVehicule = rs.getInt(1);
 				Date today = new Date();
 				
 				int numLoc = requests.getMaxNumLoc() + 1;
 				requests.insertLocations(numLoc, new SimpleDateFormat("yyyyMMdd").format(today), new SimpleDateFormat("HH:mm:ss").format(today), idVehicule, CB, this.nomStation);
 				requests.deleteFromEstDans(idVehicule);
+				System.out.println("Votre location est effectuée. Vous avez le véhicule numéro " + idVehicule + ".");
 			}
+			
+		}
+		else {
+			
+			System.out.println("Désolé vous n'avez pas de forfait, il faut en prendre un.");
+			this.subscribeToNewForfait();
+			return;
 		}
 		
 	}
@@ -338,23 +344,6 @@ public class Borne {
 	}
 
 	
-	/**
-	 * Check if the anwser is the anwser expected
-	 * @return true if it is an expected anwser
-	 */
-	public Boolean expectedResult(String answer, LinkedList<String> acceptableAnswers) {
-		
-		Boolean found = false;
-		Iterator<String> itr = acceptableAnswers.iterator();
-		while (!found && itr.hasNext()) {
-			if (itr.equals(answer)) {
-				found = true;
-			}
-			itr.next();
-		}
-		return found;
-		
-		
-	}
+	
 		
 }
