@@ -475,6 +475,46 @@ public class Requetes {
 				) ;
 		sttable.close();
 	}
+	
+	
+    public void getForfait1(int CB, String categorie) throws SQLException {
+        
+        Statement sttable = conn.createStatement();
+        String getForfaitId = "SELECT IdForfait, FROM Forfaits "
+        		+ "WHERE (NumCarteBancaire=" + CB + " AND CATEGORIEVEHICULE = '" + categorie + "')";
+        ResultSet rs = sttable.executeQuery(getForfaitId);
+        String ID = "";
+        
+        if (rs.next()) {
+        	ID = "'" + rs.getString(1)+ "'" ; 	
+        	while (rs.next()) {
+             	
+             	ID = ID + " OR IdForfait='" + rs.getString(1) + "'";
+             	
+             }
+             String query = "SELECT IdForfait, DureeForfait, DebutValidite FROM Forfait1 "
+             		+ "WHERE (numcartebancaire=" + CB +  " AND datefinlocation null)";
+             Date d = rs.getDate(0);
+        }
+        else {
+        	
+        }
+        
+       
+    }
+/*
+    "create table Forfait1 (IdForfait int primary key,"
+    + "DureeForfait int constraint dureeForfPos check (DureeForfait >= 0),"
+    + "DebutValidite date,"
+    + "constraint IdForfaitForeign foreign key (IdForfait) references Forfaits(IdForfait))"
+    */
+	/*
+	 * + IdForfait + ", " 
+				+ TypeForfait + ",'" 
+				+ CatVehicule + "', " 
+				+ NumCarteBancaire + ")"
+	 */
+
 	public int findLocation(int CB) throws SQLException {
 		
 		Statement sttable = conn.createStatement();
@@ -495,7 +535,7 @@ public class Requetes {
 		
 		Statement sttable = conn.createStatement();
 		
-		// On récupère l'id du véhicule 
+		// On rï¿½cupï¿½re l'id du vï¿½hicule 
 		
 		ResultSet rs = sttable.executeQuery("Select IdVehicule FROM Locations WHERE (NUMLOC = " + numLoc + ")");
 		rs.next();
@@ -567,6 +607,24 @@ public class Requetes {
 		}
 		
 
+	}
+	
+	public void printTable(String TableName) throws SQLException {
+		
+		Statement sttable = conn.createStatement();
+		String query = "SELECT * FROM " + TableName;
+		ResultSet rs = sttable.executeQuery(query);
+		ResultSetMetaData rsmd = rs.getMetaData();
+		int columnsNumber = rsmd.getColumnCount();
+		while (rs.next()) {
+		    for (int i = 1; i <= columnsNumber; i++) {
+		        if (i > 1) System.out.print(",  ");
+		        String columnValue = rs.getString(i);
+		        System.out.print(columnValue + " " + rsmd.getColumnName(i));
+		    }
+		    System.out.println("");
+		}
+		
 	}
 
 }
