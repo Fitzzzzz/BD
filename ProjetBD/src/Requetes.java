@@ -15,6 +15,14 @@ public class Requetes {
 		
 	}
 	
+	public void deleteFromEstDans(int idVehicule) throws SQLException {
+		
+		String query = "DELETE FROM EstDans WHERE (IdVehicule = " + idVehicule + " )";
+		Statement stmt = this.conn.createStatement();
+		stmt.executeQuery(query);
+		
+		
+	}
 	//////////////////////////////////////////////////
 	// CREATE TABLES
 	/////////////////////////////////////////////////
@@ -526,7 +534,7 @@ public class Requetes {
         
         Statement sttable = conn.createStatement();
         String getForfaitId = "SELECT IdForfait, FROM Forfaits "
-        		+ "WHERE (NumCarteBancaire=" + CB + " AND CATEGORIEVEHICULE = '" + categorie + "')";
+        		+ "WHERE (NumCarteBancaire=" + CB + " AND TYPEFORFAIT = 1 AND CATEGORIEVEHICULE = '" + categorie + "')";
         ResultSet rs = sttable.executeQuery(getForfaitId);
         String ID = "";
         
@@ -554,6 +562,37 @@ public class Requetes {
         return false;
         
        
+    }
+    
+    
+    public Boolean alreadyGotForfait2(int CB, String categorie) throws SQLException {
+    	
+    	 Statement sttable = conn.createStatement();
+         String getForfaitId = "SELECT IdForfait, FROM Forfaits "
+         		+ "WHERE (NumCarteBancaire=" + CB + " AND TYPEFORFAIT = 2 AND CATEGORIEVEHICULE = '" + categorie + "')";
+         ResultSet rs = sttable.executeQuery(getForfaitId);
+         String ID = "";
+         
+         if (rs.next()) {
+         	ID = "'" + rs.getString(1)+ "'" ; 	
+         	while (rs.next()) {
+              	
+              	ID = ID + " OR IdForfait='" + rs.getString(1) + "'";
+              	
+              }
+              String query = "SELECT FINVALIDITE FROM Forfait1 "
+              		+ "WHERE (IDFORFAIT = " + ID + ")";
+              rs = sttable.executeQuery(query);
+              
+              while (rs.next()) {
+             	 
+             	 
+             	 
+              }
+         }
+         return false;
+    	
+    	
     }
 /*
     "create table Forfait1 (IdForfait int primary key,"
@@ -585,7 +624,20 @@ public class Requetes {
 		
 	}
 
-
+	public ResultSet location(String station, String categorie) throws SQLException {
+		
+		Statement sttable = conn.createStatement();
+		String query = "SELECT IdVehicule FROM Vehicules WHERE (Vehicules.CategorieVehicule = '" + categorie + "' AND EstDans.nomStation  = '" + station + "')";
+		ResultSet rs = sttable.executeQuery(query);
+		if (rs.next()) {
+			
+			return rs;
+		}
+		else {
+			return null;
+		}
+		
+	}
 
 	/**
 	 * Find a rent
@@ -666,6 +718,17 @@ public class Requetes {
 		
 	}
 
+	public int getMaxNumLoc() throws SQLException {
+		
+		String request = "SELECT MAX(numLoc) AS numLoc FROM Forfaits";
+		Statement sttable = conn.createStatement();
+		ResultSet rs = sttable.executeQuery(request);
+		rs.next();
+		return rs.getInt(1);
+		
+		
+	}
+	
 	/**
 	 * Check if a table exists or not
 	 * @param tableName : name of the table
@@ -704,7 +767,26 @@ public class Requetes {
 		}
 	}
 
+	public void makePayement(int idForfait, int CB) throws SQLException{
+		
+		String query = "SELECT SOLDE FROM Abonnes WHERE (NUMCARTEBANCAIRE = " + CB + " )";
+		Statement sttable = conn.createStatement();
+		ResultSet rs = sttable.executeQuery(query);
+		rs.next();
+		int newSolde = rs.getInt(1) + facturation(idForfait);
+		updateSolde(CB, newSolde);
+		
+	}
 	
+	public void updateSolde(int CB, int newSolde) throws SQLException {
+		
+		Statement sttable = conn.createStatement();
+		String query = "UPDATE Abonnes SET SOLDE=" + newSolde;
+		sttable.executeUpdate(query);
+
+		
+		
+	}
 
 	/**
 	 * Calculate the price of a rent
@@ -762,7 +844,8 @@ public class Requetes {
 			return prix;
 		}
 	}	
-
+	
+	
 }
 
 
