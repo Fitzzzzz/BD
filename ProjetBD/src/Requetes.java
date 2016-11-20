@@ -315,6 +315,7 @@ public class Requetes {
 				+ adresseAbonne + "'"
 				+ ", 0"
 				+ ")";
+		System.out.println(request);
 	    	
 		Statement sttable = conn.createStatement() ;
 		sttable.executeUpdate(request);	
@@ -462,10 +463,15 @@ public class Requetes {
 			sttable.close() ; 
 	}
 	
-	//ï¿½ l'initilisation on crï¿½e toutes les insertions de tous les vï¿½los
+	//à l'initilisation on crée toutes les insertions de tous les véhicules
+
 	public void insertEstDansInit(int IdVehicule, String NomStation) throws SQLException{
 		Statement sttable = conn.createStatement() ; 
-		sttable.executeUpdate(" insert into EstDans values ("
+		sttable.executeUpdate("insert into EstDans values ("
+				+ IdVehicule + ", '"
+				+ NomStation
+				+ "')");
+		System.out.println("insert into EstDans values ("
 				+ IdVehicule + ", '"
 				+ NomStation
 				+ "')");
