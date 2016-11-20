@@ -463,7 +463,7 @@ public class Requetes {
 			sttable.close() ; 
 	}
 	
-	//à l'initilisation on crée toutes les insertions de tous les véhicules
+	//ï¿½ l'initilisation on crï¿½e toutes les insertions de tous les vï¿½hicules
 
 	public void insertEstDansInit(int IdVehicule, String NomStation) throws SQLException{
 		Statement sttable = conn.createStatement() ; 
@@ -624,6 +624,15 @@ public class Requetes {
 		sttable.close();
 	}
 	
+	public int getMaxIdForfait() throws SQLException {
+		
+		String request = "SELECT MAX(IdForfait) AS IdForfait FROM Forfaits";
+		Statement sttable = conn.createStatement();
+		ResultSet rs = sttable.executeQuery(request);
+		rs.next();
+		return rs.getInt(1);
+		
+	}
 
 	public  boolean tableExists(String tableName) {
 
@@ -661,8 +670,9 @@ public class Requetes {
 		    }
 		    System.out.println("");
 		}
-}
+	}
 
+	
 	
 	public int facturation(int IdForfait){
 		int prix = 0;
