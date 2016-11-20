@@ -91,8 +91,8 @@ public class Requetes {
 		String request = "create table Locations (NumLoc int constraint numLocPos check (NumLoc >= 0),"
 				+ "DateLocation date,"
 				+ "DateFinLocation date,"
-				+ "heureDebut int,"
-				+ "heureFin int,"
+				/*+ "heureDebut int,"
+				+ "heureFin int,"*/
 				+ "IdVehicule  int,"
 				+ "numCarteBancaire int,"
 				+ "nomStationDepart varchar(20),"
@@ -119,6 +119,7 @@ public class Requetes {
 				+ "TypeForfait INT CONSTRAINT TypsPos CHECK ((TypeForfait = 1) OR (TypeForfait = 2)),"
 				+ "CategorieVehicule varchar(20),"
 				+ "NumCarteBancaire int,"
+				+ "DateCreation date,"
 				+ "primary key (IdForfait),"
 				+ "CONSTRAINT NumCarteBancForeign FOREIGN KEY (NumCarteBancaire) REFERENCES ABONNES(NumCarteBancaire),"
 				+ "CONSTRAINT CatVehiculeRoreign FOREIGN KEY (CategorieVehicule) REFERENCES CATEGORIESVEHICULES(CategorieVehicule)"
@@ -151,8 +152,8 @@ public class Requetes {
 		Statement sttable = conn.createStatement();       
 		sttable.executeUpdate(
 				"create table Forfait1 (IdForfait int primary key,"
-				+ "DureeForfait int constraint dureeForfPos check (DureeForfait >= 0),"
-				+ "DebutValidite date,"
+				//+ "DureeForfait int constraint dureeForfPos check (DureeForfait >= 0),"
+				+ "FinValidite date,"
 				+ "constraint IdForfaitForeign foreign key (IdForfait) references Forfaits(IdForfait))"
 				);
 		sttable.close();
@@ -312,6 +313,7 @@ public class Requetes {
 				+ prenomAbonne + "'," 
 				+ "to_date('" + dateNaissance + "', 'yyyymmdd')" + ",'" 
 				+ adresseAbonne + "'"
+				+ ", 0"
 				+ ")";
 	    	
 		Statement sttable = conn.createStatement() ;
@@ -336,18 +338,22 @@ public class Requetes {
 	 */
 	public void insertLocations(int numLoc, 
 								String dateLocation,
-								int heureDebut, 
+								String heureDebut, 
 								int idVehicule, 
 								int numCarteBancaire,
 								String nomStationDepart)
 									    throws SQLException {
 		
+		//TO_DATE('20110728T23:54:14Z',  'YYYYMMDD"T"HH24:MI:SS"Z"')
+		String toDate = ("to_date('" + dateLocation + "T" + heureDebut + "Z', 'YYYYMMDD\"T\"HH24:MI:SS\"Z\"')");
+		
 		String request = "insert into Locations values (" 
 				+ numLoc + ", "
-				+ "to_date('" + dateLocation + "', 'yyyymmdd')" + ", " 				
+				//+ "to_date('" + dateLocation + "', 'yyyymmdd')" + ", " 				
+				+ toDate + "," 
 				+ "null" + ","
-				+ heureDebut + ", "
-				+ "null" + ", "
+				/*+ heureDebut + ", "
+				+ "null" + ", "*/
 				+ idVehicule + ", "
 				+ numCarteBancaire + ", '"
 				+ nomStationDepart + "', " 
@@ -388,14 +394,16 @@ public class Requetes {
 			
 	}
 
-	private void insererForfaits (int IdForfait, int TypeForfait, 
+	private void insererForfaits (int IdForfait, int TypeForfait, String debutVal,
 			String CatVehicule, int NumCarteBancaire) throws SQLException {
 		Statement sttable = conn.createStatement();       
 		sttable.executeUpdate("insert into Forfaits values (" 
 				+ IdForfait + ", " 
 				+ TypeForfait + ",'" 
 				+ CatVehicule + "', " 
-				+ NumCarteBancaire + ")"
+				+ NumCarteBancaire + ","
+				+ debutVal
+				+ ")"
 				); 	
 		sttable.close();
 	}
@@ -411,15 +419,22 @@ public class Requetes {
 	public void insertForfaits1(int idForfait, 
 									   String CatVehicule, 
 									   int numCB,
-									   int dureeForfait, 
-									   String debutValidite)	throws SQLException {
-			insererForfaits (idForfait, 1, CatVehicule, numCB);
+									   //int dureeForfait, 
+									   String debutValidite,
+									   String finValidite)	throws SQLException {
+		
+		
+		String toDate1 = ("to_date('" + debutValidite + "', 'yyyymmdd')");
+		String toDate2 = ("to_date('" + finValidite + "', 'yyyymmdd')");
+		
+		insererForfaits (idForfait, 1, toDate1, CatVehicule, numCB);
 			Statement sttable = conn.createStatement();
 
 			sttable.executeUpdate(" insert into Forfait1 values (" 
 					+ idForfait + ", "
-					+ dureeForfait + ", "
-					+ "to_date('" + debutValidite + "', 'yyyymmdd')"
+					//+ dureeForfait + ", "
+					//+ "to_date('" + debutValidite + "', 'yyyymmdd')"
+					+ toDate2
 					+ ")"
 					);
 			sttable.close();
@@ -435,8 +450,9 @@ public class Requetes {
 	 */
 	public void insertForfaits2(int idForfait,
 									   String CatVehicule, int numCB,
-									   int nbMaxLocations) throws SQLException {
-			insererForfaits (idForfait, 2, CatVehicule, numCB);
+									   int nbMaxLocations, String debutValidite) throws SQLException {
+		String toDate1 = ("to_date('" + debutValidite + "', 'yyyymmdd')");	
+		insererForfaits (idForfait, 2, toDate1, CatVehicule, numCB);
 			Statement sttable = conn.createStatement();
 			sttable.executeUpdate(" insert into Forfait2 values ("
 					+ idForfait + ", "
@@ -445,17 +461,21 @@ public class Requetes {
 					) ;
 			sttable.close() ; 
 	}
+	
+	//� l'initilisation on cr�e toutes les insertions de tous les v�los
+	public void insertEstDansInit(int IdVehicule, String NomStation) throws SQLException{
+		Statement sttable = conn.createStatement() ; 
+		sttable.executeUpdate(" insert into EstDans values ("
+				+ IdVehicule + ", '"
+				+ NomStation
+				+ "')");
+		sttable.close();
+	}
 
-
+	//ensuite il faut juste faire des updates
 	public void insertEstDans (int IdVehicule, String NomStation) throws SQLException {
 
 	Statement sttable = conn.createStatement() ; 
-	/*
-	String update = " insert into EstDans values ("
-			+ IdVehicule + ", '"
-			+ NomStation
-			+ "')";
-			*/
 	String update = "UPDATE EstDans SET NomStation='" + NomStation + "' WHERE (IdVehicule = " + IdVehicule + ")" ;
 	System.out.println(update);
 	sttable.executeUpdate(update) ;
@@ -528,7 +548,7 @@ public class Requetes {
 
 
 
-	public void finLocation (int numLoc, String dateFinLoc, int heureArrivee, String nomStationArrivee) throws SQLException {
+	public void finLocation (int numLoc, String dateFinLoc, String heureArrivee, String nomStationArrivee) throws SQLException {
 
 		
 		
@@ -570,10 +590,12 @@ public class Requetes {
 			sttable.executeUpdate(minusPlace);
 			String miseAjourStat = "UPDATE Locations SET nomStationArrivee = '"+ nomStationArrivee +"'";
 			sttable.executeUpdate(miseAjourStat);
-			String miseAjourDate = "UPDATE Locations SET dateFinLocation = to_date('" + dateFinLoc + "', 'yyyymmdd')";				
+			String toDate = ("to_date('" + dateFinLoc + "T" + heureArrivee +"Z', 'YYYYMMDD\"T\"HH24:MI:SS\"Z\"')" + "WHERE ( NumLoc = " + numLoc + ")");
+			String miseAjourDate = "UPDATE Locations SET dateFinLocation =" + toDate;				
 			sttable.executeUpdate(miseAjourDate);
-			String miseAjourHeure = "UPDATE Locations SET heureFin = "+ heureArrivee ;
-			sttable.executeUpdate(miseAjourHeure);
+
+			/*String miseAjourHeure = "UPDATE Locations SET heureFin = "+ heureArrivee ;
+			sttable.executeUpdate(miseAjourHeure);*/
 		} else {
 			System.out.println("Pas de places disponibles dans cette station");			
 		}
@@ -609,6 +631,7 @@ public class Requetes {
 
 	}
 	
+
 	public void printTable(String TableName) throws SQLException {
 		
 		Statement sttable = conn.createStatement();
@@ -624,8 +647,59 @@ public class Requetes {
 		    }
 		    System.out.println("");
 		}
-		
-	}
+}
+
+	
+	public int facturation(int IdForfait){
+		int prix = 0;
+		try{
+			Statement sttable = conn.createStatement();
+			
+			// On r�cup�re le type du forfait
+			ResultSet rs = sttable.executeQuery("SELECT TypeForfait FROM Forfaits WHERE IdForfait = " + IdForfait);
+			rs.next();
+			int typeForfait = rs.getInt(1);
+			// on v�rfie l'age
+			rs = sttable.executeQuery("SELECT dateNaissance FROM Abonnes WHERE numCarteBancaire = (" + "SELECT NumCarteBancaire FROM Forfaits WHERE IdForfait = " + IdForfait + ")");
+			rs.next();
+			String age = rs.getString(1);
+			rs = sttable.executeQuery("SELECT  FROM Abonnes WHERE numCarteBancaire = (" + "SELECT NumCarteBancaire FROM Forfaits WHERE IdForfait = " + IdForfait + ")");
+			rs.next();
+			String date;
+			rs.close();
+			// On agit en fonction du type de forfait
+			switch(typeForfait){
+			case 1:
+				// on r�cup�re la dur�e du forfait
+				ResultSet rs1 = sttable.executeQuery("SELECT DureeForfait FROM Forfait1 WHERE IdForfait = " + IdForfait);
+				rs1.next();
+				prix = rs1.getInt(1);
+				// on la multiplie par le prix mensuel du forfait en fonction de sa cat�gorie
+				rs1 = sttable.executeQuery("SELECT PrixMensuel FROM CategoriesVehicules WHERE CategorieVehicule = (" + "SELECT CategorieVehicule FROM Forfaits WHERE IdForfait = " + IdForfait + ")");
+				rs1.next();
+				prix *= rs1.getInt(1);
+				rs1.close();
+				return prix;
+				//break;
+			case 2:
+				// on r�cup�re le nombre de location max
+				ResultSet rs2 = sttable.executeQuery("SELECT nbMaxLocations FROM Forfait2 WHERE IdForfait = " + IdForfait);
+				rs2.next();
+				prix = rs2.getInt(1);
+				// on multiplie ce nombre par le cout de cette loc en fonction de sa cat�gorie
+				rs2 = sttable.executeQuery("SELECT PrixHoraire FROM CategoriesVehicules WHERE CategorieVehicule = (" + "SELECT CategorieVehicule FROM Forfaits WHERE IdForfait = " + IdForfait + ")");
+				rs2.next();
+				prix *= rs2.getInt(1);
+				rs2.close();
+				return prix;
+				//break;
+			default:
+				return prix;
+			}
+		} catch (SQLException e){
+			return prix;
+		}
+	}	
 
 }
 
