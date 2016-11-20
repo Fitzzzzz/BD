@@ -217,6 +217,28 @@ public class Borne {
 				subscribeToNewForfait();
 				return;
 			}
+			if (requests.alreadyGotForfait2(CB, cat) == 0) {
+				Date today = new Date();
+				Calendar calendar = Calendar.getInstance();         
+				calendar.setTime(today);
+				calendar.add(Calendar.MONTH, 1);
+				int idForfait = requests.getMaxIdForfait() + 1;
+				System.out.println("Combien de Locations voulez-vous?");
+				int nbLocations = Integer.parseInt(sc.next());
+				this.requests.insertForfaits2(
+						idForfait, cat, CB, 
+						nbLocations,
+						nbLocations,
+						new SimpleDateFormat("yyyyMMdd").format(today));
+				requests.makePayement(idForfait, CB);
+				System.out.println("Votre forfait a été créé.");
+				
+			}
+			else {
+				System.out.println("Vous avez déjà un forfait de ce type en cours de validité.");
+				welcome();
+				return;
+			}
 			break;
 			
 		default:
