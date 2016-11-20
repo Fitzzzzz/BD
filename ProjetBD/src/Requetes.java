@@ -1,5 +1,5 @@
 /**
- * Methods to create tables and insert data in them
+* Methods to create tables and insert data in them
  */
 
 import java.sql.*;
@@ -712,7 +712,11 @@ public class Requetes {
 		    System.out.println("");
 		}
 	}
-
+	
+	public void tauxOccupation(int date, String Station){
+		String toDate1 = ("to_date('" + date + "', 'yyyymmdd')");
+		String query = "SELECT * FROM LOCATIONS WHERE locations.NomStation = Station" ;
+	}
 	
 
 	/**
