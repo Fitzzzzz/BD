@@ -553,14 +553,18 @@ public class Requetes {
 			String toDate = ("to_date('" + dateFinLoc + "T" + heureArrivee +"Z', 'YYYYMMDD\"T\"HH24:MI:SS\"Z\"')");
 			String miseAjourDate = "UPDATE Locations SET dateFinLocation =" + toDate;				
 			sttable.executeUpdate(miseAjourDate);
+<<<<<<< HEAD
 			/*String miseAjourHeure = "UPDATE Locations SET heureFin = "+ heureArrivee ;
 			sttable.executeUpdate(miseAjourHeure);*/
+=======
+			String miseAjourHeure = "UPDATE Locations SET heureFin = "+ heureArrivee ;
+			sttable.executeUpdate(miseAjourHeure);
+		} else {
+			System.out.println("Pas de places disponibles dans cette station");			
+>>>>>>> 394be1ae1335f189c037abef56740716c8ca9508
 		}
-		else  {
-			
-			// TODO !
-			
-		}
+		
+		
 		/*
 		 * 
 		String ajoutPlace = "UPDATE PlacesLibres SET Places=" + placeLibre + " Where (NomStation ='" + nomStationDepart

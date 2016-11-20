@@ -430,6 +430,7 @@ public class Initialisation {
 		req.insertLocations(13, "20160909", "01:00:00", 109, 4, "Cornichon");
 
 		// INSERER LES FINS DE LOC
+<<<<<<< HEAD
 		//regarde si ca fonctionne bien
 		req.insertLocations(50, "20160908", "01:00:00", 100, 30, "Patate");
 		req.finLocation(50, "20160908", "03:00:00", "Patate");
@@ -438,6 +439,27 @@ public class Initialisation {
 		req.insertLocations(52, "20160910", "11:00:00", 100, 30, "Patate");
 		req.finLocation(52, "20160910", "15:00:00", "Patate");
 		
+=======
+		req.finLocation(1, "20161116", 23, "Patate");
+		req.finLocation(2, "20161120", 9, "Carotte");	
+		req.finLocation(3, "20161119", 16, "Epinard");
+		req.finLocation(4, "20161122", 5, "Navet");
+		req.finLocation(5, "20161121", 23, "Cornichon");
+		req.finLocation(6, "20170130", 4, "Choux Fleur");
+		req.finLocation(7, "20170305", 14, "Poireau");
+		req.finLocation(8, "20170807", 7, "Courge");
+		req.finLocation(9, "20161226", 15, "Aubergine");
+		req.finLocation(10, "20170203", 7, "Poix Chiche");
+		req.finLocation(11, "20160425", 18, "Radis");
+		req.finLocation(12, "20170909", 3, "Epinard");
+
+
+
+
+
+
+
+>>>>>>> 394be1ae1335f189c037abef56740716c8ca9508
 
 		req.commit();
 		
