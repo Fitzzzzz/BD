@@ -331,10 +331,10 @@ public class Requetes {
 	 * Insert values in Table Locations
 	 * @param numLoc : number of the rent
 	 * @param dateLocation : date of the rent
-	 * @param heureDebut : time of the beggining of the rent
-	 * @param heureFin : time of the end of the rent
+	 * @param heureDebut : hour of the rent
 	 * @param idVehicule : identification nuimber of the vehicule used for the rent
 	 * @param numCarteBancaire : number if the paycard used by the client for the rent 
+	 * @param nomStationDepart : station of departure
 	 */
 	public void insertLocations(int numLoc, 
 								String dateLocation,
@@ -423,7 +423,7 @@ public class Requetes {
 	 * @param CatVehicule : category of the vehicule
 	 * @param numCB : number of the user's cash card
 	 * @param debutValidite : date of beginning of the package
-	 * @param finValiditï¿½ : date of the end of the package
+	 * @param finValidité : date of the end of the package
 	 */
 	public void insertForfaits1(int idForfait, 
 									   String CatVehicule, 
@@ -450,12 +450,12 @@ public class Requetes {
 	
 	/**
 	 * Insert values in Table Forfaits2
-	 * @param ifForfait : identification number of the package
+	 * @param idForfait : identification number of the package
 	 * @param CatVehicule : category of the vehicule
 	 * @param numCB : number of the user's cash card
 	 * @param nbMaxLocations : number maximum of locations for this package
-	 * @param nbLocationsGratuites : number maximum of free locations for this package
-	 * @param debutValiditï¿½ : ate of beginning of the package
+	 * @param nbLocRest : number of remaining locations for the package
+	 * @param debutValidité : ate of beginning of the package
 	 */
 	public void insertForfaits2(int idForfait,
 									   String CatVehicule, 
