@@ -144,202 +144,204 @@ public class Initialisation {
 			System.out.println(compteur);
 			switch (compteur) {
 			case 0: 
-				req.insertEstDans(i, "Patate");
+				req.insertEstDansInit(i, "Patate");
 				if (i<30){
 					req.insertVehicules(100+i, 1, "VeloElec");
-					req.insertEstDans(100+i, "Patate");
+					req.insertEstDansInit(100+i, "Patate");
 
 				}
 				if (i<15) {
 					req.insertVehicules(130+i, 2, "VoitureElec");
 					req.insertVehicules(145+i, 2, "VeloRemork");
-					req.insertEstDans(130+i, "Patate");
-					req.insertEstDans(145+i, "Patate");
+					req.insertEstDansInit(130+i, "Patate");
+					req.insertEstDansInit(145+i, "Patate");
 				}
 				if (i < 10) {
 					req.insertVehicules(160+i, 2, "Utilitaire");
-					req.insertEstDans(160+i, "Patate");
+					req.insertEstDansInit(160+i, "Patate");
 				}
 				break;
 			case 1: 
-				req.insertEstDans(i, "Navet");
+				req.insertEstDansInit(i, "Navet");
 				if (i<30){
 					req.insertVehicules(100+i, 1, "VeloElec");
-					req.insertEstDans(100+i, "Navet");
+					req.insertEstDansInit(100+i, "Navet");
 
 				}
 				if (i<15) {
 					req.insertVehicules(130+i, 2, "VoitureElec");
 					req.insertVehicules(145+i, 2, "VeloRemork");
-					req.insertEstDans(130+i, "Navet");
-					req.insertEstDans(145+i, "Navet");
+					req.insertEstDansInit(130+i, "Navet");
+					req.insertEstDansInit(145+i, "Navet");
 				}
 				if (i < 10) {
 					req.insertVehicules(160+i, 2, "Utilitaire");
-					req.insertEstDans(160+i, "Navet");
+					req.insertEstDansInit(160+i, "Navet");
 				}
 				break;
 			case 2: 
-				req.insertEstDans(i, "Carotte");
+				req.insertEstDansInit(i, "Carotte");
 				if (i<30) {
 					req.insertVehicules(100+i, 1, "VeloElec");
-					req.insertEstDans(100+i, "Carotte");
+					req.insertEstDansInit(100+i, "Carotte");
 
 				}
 				if (i<15) {
 					req.insertVehicules(130+i, 2, "VoitureElec");
 					req.insertVehicules(145+i, 2, "VeloRemork");
-					req.insertEstDans(130+i, "Carotte");
-					req.insertEstDans(145+i, "Carotte");
+					req.insertEstDansInit(130+i, "Carotte");
+					req.insertEstDansInit(145+i, "Carotte");
 				}
 				if (i < 10) {
 					req.insertVehicules(160+i, 2, "Utilitaire");
-					req.insertEstDans(160+i, "Carotte");
+					req.insertEstDansInit(160+i, "Carotte");
 				}
 				break;
 			case 3: 
 
-				req.insertEstDans(i, "Radis");
+				req.insertEstDansInit(i, "Radis");
 				if (i<30) {
 					req.insertVehicules(100+i, 1, "VeloElec");
-					req.insertEstDans(100+i, "Radis");
+					req.insertEstDansInit(100+i, "Radis");
 
 				}
 				if (i<15) {
 					req.insertVehicules(130+i, 2, "VoitureElec");
 					req.insertVehicules(145+i, 2, "VeloRemork");
-					req.insertEstDans(130+i, "Radis");
-					req.insertEstDans(145+i, "Radis");
+					req.insertEstDansInit(130+i, "Radis");
+					req.insertEstDansInit(145+i, "Radis");
 				}
 				if (i < 10) {
 					req.insertVehicules(160+i, 2, "Utilitaire");
-					req.insertEstDans(160+i, "Radis");
+					req.insertEstDansInit(160+i, "Radis");
 				}
 				break;
 			case 4: 
-				req.insertEstDans(i, "Choux Fleur");
+				req.insertEstDansInit(i, "Choux Fleur");
 				if (i<30) {
 					req.insertVehicules(100+i, 1, "VeloElec");
-					req.insertEstDans(100+i, "Choux Fleur");
+					req.insertEstDansInit(100+i, "Choux Fleur");
 
 				}
 				if (i<15) {
 					req.insertVehicules(130+i, 2, "VoitureElec");
 					req.insertVehicules(145+i, 2, "VeloRemork");
-					req.insertEstDans(130+i, "Choux Fleur");
-					req.insertEstDans(145+i, "Choux Fleur");
+					req.insertEstDansInit(130+i, "Choux Fleur");
+					req.insertEstDansInit(145+i, "Choux Fleur");
 				}
 				if (i<10) {
 					req.insertVehicules(160+i, 2, "Utilitaire");
-					req.insertEstDans(160+i, "Choux Fleur");
+					req.insertEstDansInit(160+i, "Choux Fleur");
 				}
 				break;
 			case 5: 
-				req.insertEstDans(i, "Poix Chiche");
+				req.insertEstDansInit(i, "Poix Chiche");
 				if (i<30) {
 					req.insertVehicules(100+i, 1, "VeloElec");
-					req.insertEstDans(100+i, "Poix Chiche");
+
+					req.insertEstDansInit(100+i, "Poix Chiche");
 
 				}
 				if (i<15) {
 					req.insertVehicules(130+i, 2, "VoitureElec");
 					req.insertVehicules(145+i, 2, "VeloRemork");
-					req.insertEstDans(130+i, "Poix Chiche");
-					req.insertEstDans(145+i, "Poix Chiche");
+
+					req.insertEstDansInit(130+i, "Poix Chiche");
+					req.insertEstDansInit(145+i, "Poix Chiche");
 				}
 				if (i < 10) {
 					req.insertVehicules(160+i, 2, "Utilitaire");
-					req.insertEstDans(160+i, "Poix Chiche");
+					req.insertEstDansInit(160+i, "Poix Chiche");
 				}
 				break;
 			case 6: 
-				req.insertEstDans(i, "Courge");
+				req.insertEstDansInit(i, "Courge");
 				if (i<30) {
 					req.insertVehicules(100+i, 1, "VeloElec");
-					req.insertEstDans(100+i, "Courge");
+					req.insertEstDansInit(100+i, "Courge");
 
 				}
 				if (i<15) {
 					req.insertVehicules(130+i, 2, "VoitureElec");
 					req.insertVehicules(145+i, 2, "VeloRemork");
-					req.insertEstDans(130+i, "Courge");
-					req.insertEstDans(145+i, "Courge");
+					req.insertEstDansInit(130+i, "Courge");
+					req.insertEstDansInit(145+i, "Courge");
 				}
 				if (i < 10) {
 					req.insertVehicules(160+i, 2, "Utilitaire");
-					req.insertEstDans(160+i, "Courge");
+					req.insertEstDansInit(160+i, "Courge");
 				}
 				break;
 			case 7: 
-				req.insertEstDans(i, "Poireau");
+				req.insertEstDansInit(i, "Poireau");
 				if (i<30) {
 					req.insertVehicules(100+i, 1, "VeloElec");
-					req.insertEstDans(100+i, "Poireau");
+					req.insertEstDansInit(100+i, "Poireau");
 
 				}
 				if (i<15) {
 					req.insertVehicules(130+i, 2, "VoitureElec");
 					req.insertVehicules(145+i, 2, "VeloRemork");
-					req.insertEstDans(130+i, "Poireau");
-					req.insertEstDans(145+i, "Poireau");
+					req.insertEstDansInit(130+i, "Poireau");
+					req.insertEstDansInit(145+i, "Poireau");
 				}
 				if (i < 10) {
 					req.insertVehicules(160+i, 2, "Utilitaire");
-					req.insertEstDans(160+i, "Poireau");
+					req.insertEstDansInit(160+i, "Poireau");
 				}
 				break;
 			case 8: 
-				req.insertEstDans(i, "Aubergine");
+				req.insertEstDansInit(i, "Aubergine");
 				if (i<30) {
 					req.insertVehicules(100+i, 1, "VeloElec");
-					req.insertEstDans(100+i, "Aubergine");
+					req.insertEstDansInit(100+i, "Aubergine");
 
 				}
 				if (i<15) {
 					req.insertVehicules(130+i, 2, "VoitureElec");
 					req.insertVehicules(145+i, 2, "VeloRemork");
-					req.insertEstDans(130+i, "Aubergine");
-					req.insertEstDans(145+i, "Aubergine");
+					req.insertEstDansInit(130+i, "Aubergine");
+					req.insertEstDansInit(145+i, "Aubergine");
 				}
 				if (i < 10) {
 					req.insertVehicules(160+i, 2, "Utilitaire");
-					req.insertEstDans(160+i, "Aubergine");
+					req.insertEstDansInit(160+i, "Aubergine");
 				}
 				break;
 			case 9: 
-				req.insertEstDans(i, "Cornichon");
+				req.insertEstDansInit(i, "Cornichon");
 				if (i<30) {
 					req.insertVehicules(100+i, 1, "VeloElec");
-					req.insertEstDans(100+i, "Cornichon");
+					req.insertEstDansInit(100+i, "Cornichon");
 
 				}
 				if (i<15) {
 					req.insertVehicules(130+i, 2, "VoitureElec");
 					req.insertVehicules(145+i, 2, "VeloRemork");
-					req.insertEstDans(130+i, "Cornichon");
-					req.insertEstDans(145+i, "Cornichon");
+					req.insertEstDansInit(130+i, "Cornichon");
+					req.insertEstDansInit(145+i, "Cornichon");
 				}
 				if (i < 10) {
 					req.insertVehicules(160+i, 2, "Utilitaire");
-					req.insertEstDans(160+i, "Cornichon");
+					req.insertEstDansInit(160+i, "Cornichon");
 				}
 				break;
 			case 10: 
-				req.insertEstDans(i, "Epinard");
+				req.insertEstDansInit(i, "Epinard");
 				if (i<30) {
 					req.insertVehicules(100+i, 1, "VeloElec");
-					req.insertEstDans(100+i, "Epinard");
+					req.insertEstDansInit(100+i, "Epinard");
 
 				}
 				if (i<15) {
 					req.insertVehicules(130+i, 2, "VoitureElec");
 					req.insertVehicules(145+i, 2, "VeloRemork");
-					req.insertEstDans(130+i, "Epinard");
-					req.insertEstDans(145+i, "Epinard");
+					req.insertEstDansInit(130+i, "Epinard");
+					req.insertEstDansInit(145+i, "Epinard");
 				}
 				if (i < 10) {
 					req.insertVehicules(160+i, 2, "Utilitaire");
-					req.insertEstDans(160+i, "Epinard");
+					req.insertEstDansInit(160+i, "Epinard");
 				}
 				break;
 				
@@ -399,30 +401,67 @@ public class Initialisation {
 									   String CatVehicule, int numCB,
 									   int nbMaxLocations, */
 
-		req.insertForfaits1 (1, "Utilitaire" , 4, 1, "20121101");
-		req.insertForfaits2 (2, "VeloRemork", 1, 4);
-		req.insertForfaits2 (3, "VoitureElec", 2, 5);
-		//	req.insertForfaits1 (4, "", 3, 6, "20161001"); // a finir
-		// A FINIR
+		req.insertForfaits1 (1, "Utilitaire" , 4, "20161101", "20161201");
+		req.insertForfaits2 (2, "Velo", 1, 4, "20161009");
+		req.insertForfaits2 (3, "VeloRemork", 2, 5, "20161019");
+		req.insertForfaits1 (4, "VeloRemork", 3, "20161001", "20161201");
+		req.insertForfaits2(5, "Velo", 14, 10, "20161029");
+		req.insertForfaits2(6, "VeloRemork", 10, 8, "20161009");
+		req.insertForfaits2(7, "VeloElec", 37, 10, "20161009");
+		req.insertForfaits2(8, "Utilitaire", 22, 3, "20161009");
+		req.insertForfaits2(9, "Velo", 25, 5, "20161009");
+		req.insertForfaits2(10, "VeloRemork", 17, 3, "20161009");
+		req.insertForfaits2(11, "Utilitaire", 19, 15, "20161009");
+		req.insertForfaits2(12, "VoitureElec", 4, 7, "20161009");
+		req.insertForfaits2(13, "VeloElec", 4, 4, "20161009");
 
 		
-		req.insertLocations(1, "20161116", 21, 161, 4, "Navet");
-		req.insertLocations(2, "20161120", 6, 0, 1, "Patate");
-		req.insertLocations(3, "20161119", 13, 153, 2, "Aubergine");
-		req.insertLocations(4, "20161122", 3, 136, 3, "Courge");
-		req.insertLocations(5, "20161121", 21, 20, 14, "Cornichon");
-		req.insertLocations(6, "20170130", 1, 155, 10, "Epinard");
-		req.insertLocations(7, "20170305", 12, 105, 37, "Poix Chiche");
-		req.insertLocations(8, "20170807", 5, 163, 22, "Radis");
-		req.insertLocations(9, "20161226", 11, 18, 25, "Poireau");
-		req.insertLocations(10, "20170203", 4, 147, 17,  "Carotte");
-		req.insertLocations(11, "20160425", 14, 164, 19, "Choux Fleur");
-		req.insertLocations(12, "20160701", 6, 134, 4, "Choux Fleur");
-		req.insertLocations(13, "20170909", 1, 109, 4, "Cornichon");
-
+		req.insertLocations(1, "20161116", "21:00:00", 161, 4, "Navet");
+		req.insertLocations(2, "20161120", "06:00:00", 0, 1, "Patate");
+		req.insertLocations(3, "20161119", "13:00:00", 153, 2, "Aubergine");
+		req.insertLocations(4, "20161122", "03:00:00", 136, 3, "Courge");
+		req.insertLocations(5, "20161121", "21:00:00", 20, 14, "Cornichon");
+		req.insertLocations(6, "20160130", "01:00:00", 155, 10, "Epinard");
+		req.insertLocations(7, "20160305", "12:00:00", 105, 37, "Poix Chiche");
+		req.insertLocations(8, "20160807", "05:00:00", 163, 22, "Radis");
+		req.insertLocations(9, "20161226", "11:00:00", 18, 25, "Poireau");
+		req.insertLocations(10, "20160203", "04:00:00", 147, 17,  "Carotte");
+		req.insertLocations(11, "20160425", "14:00:00", 164, 19, "Choux Fleur");
+		req.insertLocations(12, "20160701", "06:00:00", 134, 4, "Choux Fleur");
+		req.insertLocations(13, "20160909", "01:00:00", 109, 4, "Cornichon");
 		// INSERER LES FINS DE LOC
 
+		//regarde si ca fonctionne bien
+		req.insertLocations(50, "20160908", "01:00:00", 100, 30, "Patate");
+		req.finLocation(50, "20160908", "03:00:00", "Patate");
+		req.insertLocations(51, "20160909", "01:00:00", 100, 30, "Patate");
+		req.finLocation(51, "20160909", "13:00:00", "Patate");
+		req.insertLocations(52, "20160910", "11:00:00", 100, 30, "Patate");
+		req.finLocation(52, "20160910", "15:00:00", "Patate");
+
+		req.finLocation(1, "20161116", "23:00:00", "Patate");
+		req.finLocation(2, "20161120", "09:00:00", "Carotte");	
+		req.finLocation(3, "20161119", "16:00:00", "Epinard");
+		req.finLocation(4, "20161122", "15:00:00", "Navet");
+		req.finLocation(5, "20161121", "23:00:00", "Cornichon");
+		req.finLocation(6, "20170130", "04:00:00", "Choux Fleur");
+		req.finLocation(7, "20170305", "14:00:00", "Poireau");
+		req.finLocation(8, "20170807", "07:00:00", "Courge");
+		req.finLocation(9, "20161226", "15:00:00", "Aubergine");
+		req.finLocation(10, "20170203", "07:00:00", "Poix Chiche");
+		req.finLocation(11, "20160425", "18:00:00", "Radis");
+		req.finLocation(12, "20170909", "03:00:00", "Epinard");
+
+
+
+
+
 		req.commit();
+		
+		/*System.out.println(req.facturation(4));
+		System.out.println(req.facturation(12));*/
+		
+
 
 	}
 }
