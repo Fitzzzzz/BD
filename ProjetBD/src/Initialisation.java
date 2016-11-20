@@ -414,7 +414,44 @@ public class Initialisation {
 		req.insertForfaits2(11, "Utilitaire", 19, 15, "20161009");
 		req.insertForfaits2(12, "VoitureElec", 4, 7, "20161009");
 		req.insertForfaits2(13, "VeloElec", 4, 4, "20161009");
+		req.insertForfaits1(14, "Velo", 20, "20160101", "20160801");
+		req.insertForfaits1(15, "VeloRemork", 11, "20160201", "20160301");
+		req.insertForfaits1(16, "VeloElec", 12, "20160201", "20160501");
+		req.insertForfaits2(17, "VeloRemork", 5, 10, "20160301");
+		req.insertForfaits2(18, "Utilitaire", 6, 5, "20160410");
+		req.insertForfaits2(19, "VoitureElec", 7, 10, "20160410");
+		req.insertForfaits2(20, "VoitureElec", 8, 2, "20160510");
+		req.insertForfaits2(21, "VeloElec", 9, 5, "20160610");
+		req.insertForfaits1(22, "VeloElec", 13, "20160701", "20161101");
+		req.insertForfaits1(23, "Velo", 15, "20160801", "20161201");
+		req.insertForfaits1(24, "Velo", 16, "20160922", "20161122");
+		req.insertForfaits1(25, "Velo", 18, "20161010", "20161210");
+		req.insertForfaits2(26, "Velo", 21, 10, "20161101");
+		req.insertForfaits2(27, "Velo", 23, 10, "20161201");
+		req.insertForfaits2(28, "Velo", 24, 10, "20160101");
+		req.insertForfaits2(29, "Velo", 26, 10, "20160201");
+		req.insertForfaits2(30, "Velo", 27, 5, "20160301");
+		req.insertForfaits2(31, "Velo", 28, 10, "20160401");
+		req.insertForfaits2(32, "Velo", 29, 10, "20160501");
+		req.insertForfaits1(33, "Velo", 30, "20160610", "20161210");
+		req.insertForfaits1(34, "Velo", 31, "20160710", "20161210");
+		req.insertForfaits1(35, "Velo", 32, "20160710", "20161210");
+		req.insertForfaits1(36, "Velo", 33, "20160910", "20161210");
+		req.insertForfaits1(37, "Velo", 34, "20161010", "20161210");
+		req.insertForfaits1(38, "Velo", 35, "20161110", "20161210");
+		req.insertForfaits1(39, "Velo", 36, "20161210", "20170710");
+		req.insertForfaits2(40, "Velo", 37, 8, "20160101");
+		req.insertForfaits2(41, "Velo", 38, 2, "20160201");
+		req.insertForfaits2(42, "Velo", 39, 2, "20160301");
+		req.insertForfaits2(43, "Velo", 40, 6, "20160401");
+		req.insertForfaits2(44, "VeloElec", 26, 10, "20160501");
+		req.insertForfaits2(45, "VeloElec", 27, 12, "20160701");
+		req.insertForfaits2(46, "VeloElec", 28, 8, "20160801");
+		req.insertForfaits2(47, "VeloElec", 29, 12, "20160901");
+		req.insertForfaits2(48, "VeloElec", 30, 12, "20161001");
+		req.insertForfaits2(49, "VeloElec", 31, 5, "20161101");
 
+		
 		
 		req.insertLocations(1, "20161116", "21:00:00", 161, 4, "Navet");
 		req.insertLocations(2, "20161120", "06:00:00", 0, 1, "Patate");
@@ -429,8 +466,51 @@ public class Initialisation {
 		req.insertLocations(11, "20160425", "14:00:00", 164, 19, "Choux Fleur");
 		req.insertLocations(12, "20160701", "06:00:00", 134, 4, "Choux Fleur");
 		req.insertLocations(13, "20160909", "01:00:00", 109, 4, "Cornichon");
-		// INSERER LES FINS DE LOC
+		req.insertLocations(14, "20160117", "14:00:00", 5, 20, "Poix Chiche");
+		req.insertLocations(15, "20160215", "09:00:00", 149, 11, "Choux Fleur");
+		req.insertLocations(16, "20160307", "11:00:00", 104, 12, "Choux Fleur");
+		req.insertLocations(17, "20160402", "10:00:00", 151, 5, "Courge");
+		req.insertLocations(18, "20160422", "16:00:00", 169, 6, "Cornichon");
+		req.insertLocations(19, "20160422", "21:00:00", 141, 7, "Patate");
+		req.insertLocations(20, "20160622", "21:00:00", 143, 8, "Carotte");
+		req.insertLocations(21, "20160622", "16:00:00", 110, 9, "Epinard");
+		req.insertLocations(22, "20160822", "16:00:00", 112, 13, "Navet");
+		req.insertLocations(23, "20160822", "15:00:00", 21, 15, "Epinard");
+		req.insertLocations(24, "20160923", "11:00:00", 22, 16, "Patate");
+		req.insertLocations(25, "20161023", "09:00:00", 23, 18, "Navet");
+		req.insertLocations(26, "20161123", "14:00:00", 24, 21, "Carotte");
+		req.insertLocations(27, "20161211", "09:00:00", 25, 23, "Radis");
+		req.insertLocations(28, "20160111", "11:00:00", 26, 24, "Choux Fleur");
+		req.insertLocations(29, "20160211", "18:00:00", 27, 26, "Poix Chiche");
+		req.insertLocations(30, "20160311", "18:00:00", 28, 27, "Courge");
+		req.insertLocations(31, "20160411", "12:00:00", 29, 28, "Poireau");
+		req.insertLocations(32, "20160521", "21:00:00", 30, 29, "Aubergine");
+		req.insertLocations(33, "20160621", "14:00:00", 31, 30, "Cornichon");
+		req.insertLocations(34, "20160721", "14:00:00", 32, 31, "Epinard");
+		req.insertLocations(35, "20160721", "14:00:00", 33, 32, "Patate");
+		req.insertLocations(36, "20160821", "15:00:00", 34, 33, "Navet");
+		req.insertLocations(37, "20161021", "08:00:00", 35, 34, "Carotte");
+		req.insertLocations(38, "20161121", "15:00:00", 36, 35, "Radis");
+		req.insertLocations(39, "20161221", "12:00:00", 37, 36, "Choux Fleur");
+		req.insertLocations(40, "20160112", "20:00:00", 38, 37, "Poix Chiche");
+		req.insertLocations(41, "20160208", "02:00:00", 39, 38, "Courge");
+		req.insertLocations(42, "20160309", "10:00:00", 40, 39, "Poireau");
+		req.insertLocations(43, "20160409", "06:00:00", 41, 40, "Aubergine");
+		req.insertLocations(44, "20160509", "09:00:00", 101, 26, "Navet");
+		req.insertLocations(45, "20160716", "05:00:00", 102, 27, "Carotte");
+		req.insertLocations(46, "20160816", "12:00:00", 103, 28, "Radis");
+		req.insertLocations(47, "20160916", "07:00:00", 106, 29, "Courge");
+		req.insertLocations(48, "20161006", "07:00:00", 107, 30, "Poireau");
+		req.insertLocations(49, "20161106", "15:00:00", 108, 31, "Aubergine");
 
+		
+		
+		//req.insertForfaits1(39, "Velo", 36, "20161210", "20170710");
+		//req.insertForfaits2(idForfait, CatVehicule, numCB, nbMaxLocations, debutValidite);
+		req.insertForfaits2(53, "VeloElec", 32, 7, "20161201");
+		req.insertLocations(53, "20161206", "15:00:00", 109, 32, "Aubergine");
+		req.finLocation(53, "20161206", "18:00:00", "Patate");
+		
 		//regarde si ca fonctionne bien
 		req.insertLocations(50, "20160908", "01:00:00", 100, 30, "Patate");
 		req.finLocation(50, "20160908", "03:00:00", "Patate");
@@ -451,10 +531,46 @@ public class Initialisation {
 		req.finLocation(10, "20170203", "07:00:00", "Poix Chiche");
 		req.finLocation(11, "20160425", "18:00:00", "Radis");
 		req.finLocation(12, "20170909", "03:00:00", "Epinard");
+		req.finLocation(13, "20160909", "04:00:00", "Patate");
+		req.finLocation(14, "20160117", "18:00:00", "Poireau");
+		req.finLocation(15, "20160215", "12:00:00", "Poix Chiche");
+		req.finLocation(16, "20160307", "15:00:00", "Carotte");
+		req.finLocation(17, "20160402", "18:00:00", "Radis");
+		req.finLocation(17, "20160402", "13:00:00", "Cornichon");
+		req.finLocation(18, "20160422", "19:00:00", "Poireau");
+		req.finLocation(19, "20160422", "23:00:00", "Courge");
+		req.finLocation(20, "20160622", "23:00:00", "Radis");
+		req.finLocation(21, "20160622", "18:00:00", "Poireau");
+		req.finLocation(22, "20160622", "19:00:00", "Epinard");
+		req.finLocation(23, "20160822", "19:00:00", "Choux Fleur");
+		req.finLocation(24, "20160923", "14:00:00", "Navet");
+		req.finLocation(25, "20161023", "12:00:00", "Patate");
+		req.finLocation(26, "20161123", "17:00:00", "Epinard");
+		req.finLocation(27, "20161211", "11:00:00", "Navet");
+		req.finLocation(28, "20160111", "14:00:00", "Poix Chiche");
+		req.finLocation(29, "20160211", "20:00:00", "Epinard");
+		req.finLocation(30, "20160311", "20:00:00", "Navet");
+		req.finLocation(31, "20160411", "15:00:00", "Patate");
+		req.finLocation(32, "20160521", "23:00:00", "Epinard");
+		req.finLocation(33, "20160521", "16:00:00", "Aubergine");
+		req.finLocation(34, "20160721", "16:00:00", "Patate");
+		req.finLocation(35, "20160721", "16:00:00", "Navet");
+		req.finLocation(36, "20160921", "19:00:00", "Epinard");
+		req.finLocation(37, "20161021", "11:00:00", "Patate");
+		req.finLocation(38, "20161121", "19:00:00", "Carotte");
+		req.finLocation(39, "20161221", "15:00:00", "Poix Chiche");
+		req.finLocation(40, "20160112", "23:00:00", "Aubergine");
+		req.finLocation(41, "20160208", "05:00:00", "Navet");
+		req.finLocation(42, "20160309", "13:00:00", "Patate");
+		req.finLocation(43, "20160409", "08:00:00", "Radis");
+		req.finLocation(44, "20160509", "11:00:00", "Poireau");
+		req.finLocation(45, "20160716", "09:00:00", "Poireau");
+		req.finLocation(46, "20160816", "14:00:00", "Courge");
+		req.finLocation(47, "20160916", "10:00:00", "Radis");
+		req.finLocation(48, "20161006", "10:00:00", "Aubergine");
+		req.finLocation(49, "20161106", "18:00:00", "Patate");
 
-
-
-
+		
 
 		req.commit();
 		
