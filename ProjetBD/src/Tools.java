@@ -1,3 +1,7 @@
+/**
+ * Tool used to parse a date
+ */
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 

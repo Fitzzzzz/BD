@@ -1,3 +1,7 @@
+/**
+ * Methods to create tables and insert data in them
+ */
+
 import java.sql.*;
 public class Requetes {
 
@@ -141,6 +145,7 @@ public class Requetes {
 		sttable.executeUpdate("create table Forfait2 (IdForfait int primary key, "
 				+ "NbMaxLocations int constraint dureeForf2Pos check (NbMaxLocations >= 0),"
 				+ "NbLocationsGratuites int constraint nbLocGratuite2 check (NbLocationsGratuites >= 0),"
+				+ "NbLocationsRestantes int constraint nbLocRest check (NbLocationsRestantes >= 0),"
 				+ "constraint IdForfait2Foreign foreign key (IdForfait) references Forfaits(IdForfait)) "
 				);
 		sttable.close();
@@ -453,15 +458,19 @@ public class Requetes {
 	 * @param debutValidit� : ate of beginning of the package
 	 */
 	public void insertForfaits2(int idForfait,
-									   String CatVehicule, int numCB,
-									   int nbMaxLocations, String debutValidite) throws SQLException {
+									   String CatVehicule, 
+									   int numCB,
+									   int nbMaxLocations,
+									   int nbLocRest, 
+									   String debutValidite) throws SQLException {
 		String toDate1 = ("to_date('" + debutValidite + "', 'yyyymmdd')");	
 		insererForfaits (idForfait, 2, toDate1, CatVehicule, numCB);
 			Statement sttable = conn.createStatement();
 			sttable.executeUpdate(" insert into Forfait2 values ("
 					+ idForfait + ", "
 					+ nbMaxLocations + ", "
-					+ 3 + ")"
+					+ 3 + ","
+					+ nbLocRest+ ")"
 					) ;
 			sttable.close() ; 
 	}

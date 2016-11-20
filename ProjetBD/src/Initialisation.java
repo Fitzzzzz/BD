@@ -424,18 +424,18 @@ public class Initialisation {
 		/////////////////////////////////////////////
 		
 		req.insertForfaits1 (1, "Utilitaire" , 4, "20161101", "20161201");
-		req.insertForfaits2 (2, "Velo", 1, 4, "20161009");
-		req.insertForfaits2 (3, "VeloRemork", 2, 5, "20161019");
+		req.insertForfaits2 (2, "Velo", 1, 4, 4, "20161009");
+		req.insertForfaits2 (3, "VeloRemork", 2, 5, 5, "20161019");
 		req.insertForfaits1 (4, "VeloRemork", 3, "20161001", "20161201");
-		req.insertForfaits2(5, "Velo", 14, 10, "20161029");
-		req.insertForfaits2(6, "VeloRemork", 10, 8, "20161009");
-		req.insertForfaits2(7, "VeloElec", 37, 10, "20161009");
-		req.insertForfaits2(8, "Utilitaire", 22, 3, "20161009");
-		req.insertForfaits2(9, "Velo", 25, 5, "20161009");
-		req.insertForfaits2(10, "VeloRemork", 17, 3, "20161009");
-		req.insertForfaits2(11, "Utilitaire", 19, 15, "20161009");
-		req.insertForfaits2(12, "VoitureElec", 4, 7, "20161009");
-		req.insertForfaits2(13, "VeloElec", 4, 4, "20161009");
+		req.insertForfaits2(5, "Velo", 14, 10, 10, "20161029");
+		req.insertForfaits2(6, "VeloRemork", 10, 8, 8, "20161009");
+		req.insertForfaits2(7, "VeloElec", 37, 10, 10, "20161009");
+		req.insertForfaits2(8, "Utilitaire", 22, 3, 3, "20161009");
+		req.insertForfaits2(9, "Velo", 25, 5, 5, "20161009");
+		req.insertForfaits2(10, "VeloRemork", 17, 3, 3,  "20161009");
+		req.insertForfaits2(11, "Utilitaire", 19, 15, 15,  "20161009");
+		req.insertForfaits2(12, "VoitureElec", 4, 7, 7, "20161009");
+		req.insertForfaits2(13, "VeloElec", 4, 4, 4, "20161009");
 
 		
 		/////////////////////////////////////////////

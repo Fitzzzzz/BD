@@ -1,4 +1,6 @@
-
+/**
+ * 
+ */
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -20,17 +22,22 @@ public class Borne {
 	private Requetes requests;
 	private int CB;
 	
-	
+
 	public Borne(String nomStation, Requetes requests) {
 		
 		this.requests = requests;
 		this.nomStation = nomStation;
 	}
 	
+	/**
+	 * Welcome message printed on the interface.
+	 * The user has to say if he or she is a new client 
+	 */
 	public void welcome() {
 		this.sc = new Scanner(System.in);
 
 		System.out.println("Bonjour et bienvenue chez esCARgo!");
+
 		
 		
 		boolean repondu = false;
@@ -39,6 +46,7 @@ public class Borne {
 		
 		
 		LinkedList<String> answers = new LinkedList<String>();
+
 		answers.add("O");
 		answers.add("n");
 		String answer = sc.nextLine();
@@ -48,7 +56,6 @@ public class Borne {
 			System.out.println("Etes-vous êtes déjà client chez nous? (O/n)");
 			repondu = expectedResult(sc.nextLine(), answers);
 		}
-		
 		if (answer.equals("O")) {
 			this.newClient = false;
 		}
@@ -63,14 +70,13 @@ public class Borne {
 			System.out.println("Veuillez entrer votre numéro de CB.");
 			this.CB = Integer.parseInt(sc.nextLine());
 		}
-		
-		
-		
-
-		
-		
+	
 	}
 	
+	
+	/**
+	 * Create an account if the user is a new client
+	 */
 	public void createAccount() {
 		
 		System.out.println("Veuillez donner votre nom");
@@ -92,6 +98,9 @@ public class Borne {
 	}
 	
 
+	/**
+	 * Return of a vehicule in a station
+	 */
 	public void depotVehicule() {
 		
 		try {
@@ -111,11 +120,16 @@ public class Borne {
 		} catch (SQLException e) {
 			System.out.println("Vous n'avez pas de location en cours.");
 		}
-		
-		
 	}
 	
+
+	
+	/**
+	 * Create a new Package for a client
+	 * @throws SQLException 
+	 */
 	public void subscribeToNewForfait() throws SQLException {
+
 		
 		// FIRFAUT1 : ILLIMITE PDT DUREE LIMITE 
 		// FORFAIT2 :
@@ -231,6 +245,7 @@ public class Borne {
 		System.out.println("4) Vélo à remorque");
 		System.out.println("5) Véhicule utilitaire");
 		int categorie = Integer.parseInt(sc.next());
+
 		String cat = "";
 		switch (categorie) {
 		
@@ -289,7 +304,16 @@ public class Borne {
 	}
 	
 	
+
+	
+	
+	
+	/**
+	 * Ask the user what he or she wants to do
+	 * @throws SQLException 
+	 */
 	public void whatDoYouWannaDo() throws SQLException {
+
 		
 		System.out.println("Choisissez votre demande : (1/2/3) ");
 		System.out.println("1) Je souhaite effectuer une location.");
@@ -314,6 +338,10 @@ public class Borne {
 	}
 
 	
+	/**
+	 * Check if the anwser is the anwser expected
+	 * @return true if it is an expected anwser
+	 */
 	public Boolean expectedResult(String answer, LinkedList<String> acceptableAnswers) {
 		
 		Boolean found = false;
