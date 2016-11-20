@@ -299,6 +299,7 @@ public class Requetes {
 				+ adresseAbonne + "'"
 				+ ", 0"
 				+ ")";
+		System.out.println(request);
 	    	
 		Statement sttable = conn.createStatement() ;
 		sttable.executeUpdate(request);	
@@ -452,8 +453,7 @@ public class Requetes {
 					) ;
 			sttable.close() ; 
 	}
-	
-	
+
 	/**
 	 * Insert values in Table EstDansInit
 	 * All vehicules are inserted during the initialisation protocole
@@ -462,7 +462,11 @@ public class Requetes {
 	 */
 	public void insertEstDansInit(int IdVehicule, String NomStation) throws SQLException{
 		Statement sttable = conn.createStatement() ; 
-		sttable.executeUpdate(" insert into EstDans values ("
+		sttable.executeUpdate("insert into EstDans values ("
+				+ IdVehicule + ", '"
+				+ NomStation
+				+ "')");
+		System.out.println("insert into EstDans values ("
 				+ IdVehicule + ", '"
 				+ NomStation
 				+ "')");
@@ -504,7 +508,46 @@ public class Requetes {
 		sttable.close();
 	}
 	
-	
+
+    public void getForfait1(int CB, String categorie) throws SQLException {
+        
+        Statement sttable = conn.createStatement();
+        String getForfaitId = "SELECT IdForfait, FROM Forfaits "
+        		+ "WHERE (NumCarteBancaire=" + CB + " AND CATEGORIEVEHICULE = '" + categorie + "')";
+        ResultSet rs = sttable.executeQuery(getForfaitId);
+        String ID = "";
+        
+        if (rs.next()) {
+        	ID = "'" + rs.getString(1)+ "'" ; 	
+        	while (rs.next()) {
+             	
+             	ID = ID + " OR IdForfait='" + rs.getString(1) + "'";
+             	
+             }
+             String query = "SELECT IdForfait, DureeForfait, DebutValidite FROM Forfait1 "
+             		+ "WHERE (numcartebancaire=" + CB +  " AND datefinlocation null)";
+             Date d = rs.getDate(0);
+        }
+        else {
+        	
+        }
+        
+       
+    }
+/*
+    "create table Forfait1 (IdForfait int primary key,"
+    + "DureeForfait int constraint dureeForfPos check (DureeForfait >= 0),"
+    + "DebutValidite date,"
+    + "constraint IdForfaitForeign foreign key (IdForfait) references Forfaits(IdForfait))"
+    */
+	/*
+	 * + IdForfait + ", " 
+				+ TypeForfait + ",'" 
+				+ CatVehicule + "', " 
+				+ NumCarteBancaire + ")"
+	 */
+
+
 	/**
 	 * Find a rent from a user's cash card number
 	 * @param CB : number of the user's cash card
@@ -537,7 +580,7 @@ public class Requetes {
 		
 		Statement sttable = conn.createStatement();
 		
-		// On récupère l'id du véhicule 
+		// On rï¿½cupï¿½re l'id du vï¿½hicule 
 		
 		ResultSet rs = sttable.executeQuery("Select IdVehicule FROM Locations WHERE (NUMLOC = " + numLoc + ")");
 		rs.next();
@@ -572,7 +615,7 @@ public class Requetes {
 			sttable.executeUpdate(minusPlace);
 			String miseAjourStat = "UPDATE Locations SET nomStationArrivee = '"+ nomStationArrivee +"'";
 			sttable.executeUpdate(miseAjourStat);
-			String toDate = ("to_date('" + dateFinLoc + "T" + heureArrivee +"Z', 'YYYYMMDD\"T\"HH24:MI:SS\"Z\"')");
+			String toDate = ("to_date('" + dateFinLoc + "T" + heureArrivee +"Z', 'YYYYMMDD\"T\"HH24:MI:SS\"Z\"')" + "WHERE ( NumLoc = " + numLoc + ")");
 			String miseAjourDate = "UPDATE Locations SET dateFinLocation =" + toDate;				
 			sttable.executeUpdate(miseAjourDate);
 
@@ -613,6 +656,24 @@ public class Requetes {
 		}
 	}
 	
+
+	public void printTable(String TableName) throws SQLException {
+		
+		Statement sttable = conn.createStatement();
+		String query = "SELECT * FROM " + TableName;
+		ResultSet rs = sttable.executeQuery(query);
+		ResultSetMetaData rsmd = rs.getMetaData();
+		int columnsNumber = rsmd.getColumnCount();
+		while (rs.next()) {
+		    for (int i = 1; i <= columnsNumber; i++) {
+		        if (i > 1) System.out.print(",  ");
+		        String columnValue = rs.getString(i);
+		        System.out.print(columnValue + " " + rsmd.getColumnName(i));
+		    }
+		    System.out.println("");
+		}
+}
+
 	
 	/**
 	 * Calculate the price of a rent
@@ -624,11 +685,11 @@ public class Requetes {
 		try{
 			Statement sttable = conn.createStatement();
 			
-			// On récupère le type du forfait
+			// On rï¿½cupï¿½re le type du forfait
 			ResultSet rs = sttable.executeQuery("SELECT TypeForfait FROM Forfaits WHERE IdForfait = " + IdForfait);
 			rs.next();
 			int typeForfait = rs.getInt(1);
-			// on vérfie l'age
+			// on vï¿½rfie l'age
 			rs = sttable.executeQuery("SELECT dateNaissance FROM Abonnes WHERE numCarteBancaire = (" + "SELECT NumCarteBancaire FROM Forfaits WHERE IdForfait = " + IdForfait + ")");
 			rs.next();
 			String age = rs.getString(1);
@@ -639,11 +700,11 @@ public class Requetes {
 			// On agit en fonction du type de forfait
 			switch(typeForfait){
 			case 1:
-				// on récupère la durée du forfait
+				// on rï¿½cupï¿½re la durï¿½e du forfait
 				ResultSet rs1 = sttable.executeQuery("SELECT DureeForfait FROM Forfait1 WHERE IdForfait = " + IdForfait);
 				rs1.next();
 				prix = rs1.getInt(1);
-				// on la multiplie par le prix mensuel du forfait en fonction de sa catégorie
+				// on la multiplie par le prix mensuel du forfait en fonction de sa catï¿½gorie
 				rs1 = sttable.executeQuery("SELECT PrixMensuel FROM CategoriesVehicules WHERE CategorieVehicule = (" + "SELECT CategorieVehicule FROM Forfaits WHERE IdForfait = " + IdForfait + ")");
 				rs1.next();
 				prix *= rs1.getInt(1);
@@ -651,11 +712,11 @@ public class Requetes {
 				return prix;
 				//break;
 			case 2:
-				// on récupère le nombre de location max
+				// on rï¿½cupï¿½re le nombre de location max
 				ResultSet rs2 = sttable.executeQuery("SELECT nbMaxLocations FROM Forfait2 WHERE IdForfait = " + IdForfait);
 				rs2.next();
 				prix = rs2.getInt(1);
-				// on multiplie ce nombre par le cout de cette loc en fonction de sa catégorie
+				// on multiplie ce nombre par le cout de cette loc en fonction de sa catï¿½gorie
 				rs2 = sttable.executeQuery("SELECT PrixHoraire FROM CategoriesVehicules WHERE CategorieVehicule = (" + "SELECT CategorieVehicule FROM Forfaits WHERE IdForfait = " + IdForfait + ")");
 				rs2.next();
 				prix *= rs2.getInt(1);
@@ -668,7 +729,7 @@ public class Requetes {
 		} catch (SQLException e){
 			return prix;
 		}
-	}
+	}	
 
 }
 

@@ -238,12 +238,14 @@ public class Initialisation {
 				req.insertEstDansInit(i, "Poix Chiche");
 				if (i<30) {
 					req.insertVehicules(100+i, 1, "VeloElec");
+
 					req.insertEstDansInit(100+i, "Poix Chiche");
 
 				}
 				if (i<15) {
 					req.insertVehicules(130+i, 2, "VoitureElec");
 					req.insertVehicules(145+i, 2, "VeloRemork");
+
 					req.insertEstDansInit(130+i, "Poix Chiche");
 					req.insertEstDansInit(145+i, "Poix Chiche");
 				}
@@ -399,7 +401,6 @@ public class Initialisation {
 									   String CatVehicule, int numCB,
 									   int nbMaxLocations, */
 
-		
 		req.insertForfaits1 (1, "Utilitaire" , 4, "20161101", "20161201");
 		req.insertForfaits2 (2, "Velo", 1, 4, "20161009");
 		req.insertForfaits2 (3, "VeloRemork", 2, 5, "20161019");
@@ -428,7 +429,6 @@ public class Initialisation {
 		req.insertLocations(11, "20160425", "14:00:00", 164, 19, "Choux Fleur");
 		req.insertLocations(12, "20160701", "06:00:00", 134, 4, "Choux Fleur");
 		req.insertLocations(13, "20160909", "01:00:00", 109, 4, "Cornichon");
-
 		// INSERER LES FINS DE LOC
 
 		//regarde si ca fonctionne bien
