@@ -8,8 +8,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.Scanner;
 
 
@@ -71,24 +69,25 @@ public class Borne {
 	
 	/**
 	 * Create an account if the user is a new client
+	 * @throws SQLException 
 	 */
-	public void createAccount() {
+	public void createAccount() throws SQLException {
 		
 		System.out.println("Veuillez donner votre nom");
 		String name = sc.nextLine();
 		System.out.println("Veuillez donner votre prénom");
 		String vorName = sc.nextLine();
-		System.out.println("Veuillez donner votre date de naissance au format yyyy");
-		String birthDate = sc.next();
+		System.out.println("Veuillez donner votre date de naissance au format yyyyMMdd");
+		String birthDate = sc.nextLine();
 		System.out.println("Veuillez donner votre adresse.");
-		String adress = sc.next();
+		String adress = sc.nextLine();
 		System.out.println("Veuillez donner votre numéro de carte bancaire.");
 		this.CB = Integer.parseInt(sc.nextLine());
-		try {
-			requests.insertAbonnes(CB, name, vorName, birthDate, adress);
-		} catch (SQLException e) {
-			System.out.println("Vous avez déjà un compte chez nous! Vos données n'ont pas été mises à jour");
-		}
+		
+		requests.insertAbonnes(CB, name, vorName, birthDate, adress);
+		System.out.println("Votre compte a bien été créé");
+		welcome();
+		
 		
 	}
 	
@@ -217,6 +216,27 @@ public class Borne {
 				subscribeToNewForfait();
 				return;
 			}
+			if (requests.alreadyGotForfait2(CB, cat) == 0) {
+				Date today = new Date();
+				Calendar calendar = Calendar.getInstance();         
+				calendar.setTime(today);
+				calendar.add(Calendar.MONTH, 1);
+				int idForfait = requests.getMaxIdForfait() + 1;
+				System.out.println("Combien de Locations voulez-vous?");
+				int nbLocations = Integer.parseInt(sc.next());
+				this.requests.insertForfaits2(
+						idForfait, cat, CB, 
+						nbLocations,
+						new SimpleDateFormat("yyyyMMdd").format(today));
+				requests.makePayement(idForfait, CB);
+				System.out.println("Votre forfait a été créé.");
+				
+			}
+			else {
+				System.out.println("Vous avez déjà un forfait de ce type en cours de validité.");
+				welcome();
+				return;
+			}
 			break;
 			
 		default:
@@ -337,6 +357,7 @@ public class Borne {
 			this.subscribeToNewForfait();
 			break;
 		case 1:
+			this.processLocation();
 			break;
 		default:
 			whatDoYouWannaDo();

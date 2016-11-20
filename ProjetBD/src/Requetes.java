@@ -578,7 +578,7 @@ public class Requetes {
     public int alreadyGotForfait2(int CB, String categorie) throws SQLException {
     	
     	 Statement sttable = conn.createStatement();
-         String getForfaitId = "SELECT IdForfait, FROM Forfaits "
+         String getForfaitId = "SELECT IdForfait FROM Forfaits "
          		+ "WHERE (NumCarteBancaire=" + CB + " AND TYPEFORFAIT = 2 AND CATEGORIEVEHICULE = '" + categorie + "')";
          ResultSet rs = sttable.executeQuery(getForfaitId);
          String ID = "";
