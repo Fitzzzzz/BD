@@ -3,6 +3,7 @@
  */
 
 import java.sql.*;
+
 public class Utilitaires {
 
 	public static void createRegister() {
