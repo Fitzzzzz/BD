@@ -15,7 +15,9 @@ public class Requetes {
 		
 	}
 	
+	//////////////////////////////////////////////////
 	// CREATE TABLES
+	/////////////////////////////////////////////////
 	
 	/**
 	 * Create Table Categories
@@ -180,7 +182,10 @@ public class Requetes {
 		sttable.close(); 
 	}
 
+	
+	//////////////////////////////////////////////////
 	// DROP AND COMMIT 
+	//////////////////////////////////////////////////
 	
 	/**
 	 * Drop table in parameters
@@ -211,9 +216,9 @@ public class Requetes {
 	}
 	
 	
-	
+	//////////////////////////////////////////////////		
 	// INSERT IN TABLES
-	
+	//////////////////////////////////////////////////	
 	
 	/**
 	 * Insert values in Table Categorie
@@ -409,8 +414,7 @@ public class Requetes {
 	 */
 	public void insertForfaits1(int idForfait, 
 									   String CatVehicule, 
-									   int numCB,
-									   //int dureeForfait, 
+									   int numCB, 
 									   String debutValidite,
 									   String finValidite)	throws SQLException {
 		
@@ -509,6 +513,11 @@ public class Requetes {
 	}
 	
 
+	/**
+	 * 
+	 * @param CB : number of the user's cash card
+	 * @param categorie : category of the vehicule
+	 */
     public void getForfait1(int CB, String categorie) throws SQLException {
         
         Statement sttable = conn.createStatement();
@@ -580,7 +589,7 @@ public class Requetes {
 		
 		Statement sttable = conn.createStatement();
 		
-		// On rï¿½cupï¿½re l'id du vï¿½hicule 
+		// On récupère l'Id du véhicule 
 		
 		ResultSet rs = sttable.executeQuery("Select IdVehicule FROM Locations WHERE (NUMLOC = " + numLoc + ")");
 		rs.next();
@@ -685,11 +694,11 @@ public class Requetes {
 		try{
 			Statement sttable = conn.createStatement();
 			
-			// On rï¿½cupï¿½re le type du forfait
+			// On récupère le type du forfait
 			ResultSet rs = sttable.executeQuery("SELECT TypeForfait FROM Forfaits WHERE IdForfait = " + IdForfait);
 			rs.next();
 			int typeForfait = rs.getInt(1);
-			// on vï¿½rfie l'age
+			// on vérifie l'age
 			rs = sttable.executeQuery("SELECT dateNaissance FROM Abonnes WHERE numCarteBancaire = (" + "SELECT NumCarteBancaire FROM Forfaits WHERE IdForfait = " + IdForfait + ")");
 			rs.next();
 			String age = rs.getString(1);
@@ -700,11 +709,11 @@ public class Requetes {
 			// On agit en fonction du type de forfait
 			switch(typeForfait){
 			case 1:
-				// on rï¿½cupï¿½re la durï¿½e du forfait
+				// on récupère la durée du forfait
 				ResultSet rs1 = sttable.executeQuery("SELECT DureeForfait FROM Forfait1 WHERE IdForfait = " + IdForfait);
 				rs1.next();
 				prix = rs1.getInt(1);
-				// on la multiplie par le prix mensuel du forfait en fonction de sa catï¿½gorie
+				// on la multiplie par le prix mensuel du forfait en fonction de sa catégorie
 				rs1 = sttable.executeQuery("SELECT PrixMensuel FROM CategoriesVehicules WHERE CategorieVehicule = (" + "SELECT CategorieVehicule FROM Forfaits WHERE IdForfait = " + IdForfait + ")");
 				rs1.next();
 				prix *= rs1.getInt(1);
@@ -712,11 +721,11 @@ public class Requetes {
 				return prix;
 				//break;
 			case 2:
-				// on rï¿½cupï¿½re le nombre de location max
+				// on récuprère le nombre de location max
 				ResultSet rs2 = sttable.executeQuery("SELECT nbMaxLocations FROM Forfait2 WHERE IdForfait = " + IdForfait);
 				rs2.next();
 				prix = rs2.getInt(1);
-				// on multiplie ce nombre par le cout de cette loc en fonction de sa catï¿½gorie
+				// on multiplie ce nombre par le cout de cette loc en fonction de sa catégorie
 				rs2 = sttable.executeQuery("SELECT PrixHoraire FROM CategoriesVehicules WHERE CategorieVehicule = (" + "SELECT CategorieVehicule FROM Forfaits WHERE IdForfait = " + IdForfait + ")");
 				rs2.next();
 				prix *= rs2.getInt(1);
