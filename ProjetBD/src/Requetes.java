@@ -460,8 +460,7 @@ public class Requetes {
 	public void insertForfaits2(int idForfait,
 									   String CatVehicule, 
 									   int numCB,
-									   int nbMaxLocations,
-									   int nbLocRest, 
+									   int nbMaxLocations, 
 									   String debutValidite) throws SQLException {
 		String toDate1 = ("to_date('" + debutValidite + "', 'yyyymmdd')");	
 		insererForfaits (idForfait, 2, toDate1, CatVehicule, numCB);
@@ -470,7 +469,7 @@ public class Requetes {
 					+ idForfait + ", "
 					+ nbMaxLocations + ", "
 					+ 3 + ","
-					+ nbLocRest+ ")"
+					+ nbMaxLocations+ ")"
 					) ;
 			sttable.close() ; 
 	}
