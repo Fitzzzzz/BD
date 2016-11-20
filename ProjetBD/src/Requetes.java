@@ -423,7 +423,7 @@ public class Requetes {
 	 * @param CatVehicule : category of the vehicule
 	 * @param numCB : number of the user's cash card
 	 * @param debutValidite : date of beginning of the package
-	 * @param finValidité : date of the end of the package
+	 * @param finValiditï¿½ : date of the end of the package
 	 */
 	public void insertForfaits1(int idForfait, 
 									   String CatVehicule, 
@@ -455,7 +455,7 @@ public class Requetes {
 	 * @param numCB : number of the user's cash card
 	 * @param nbMaxLocations : number maximum of locations for this package
 	 * @param nbLocRest : number of remaining locations for the package
-	 * @param debutValidité : ate of beginning of the package
+	 * @param debutValiditï¿½ : ate of beginning of the package
 	 */
 	public void insertForfaits2(int idForfait,
 									   String CatVehicule, 
@@ -557,13 +557,14 @@ public class Requetes {
              }
              String query = "SELECT FINVALIDITE FROM Forfait1 "
              		+ "WHERE (IDFORFAIT = " + ID + ")";
+             System.out.println("query");
              rs = sttable.executeQuery(query);
              java.util.Date today = new java.util.Date();
              
              while (rs.next()) {
             	 
             	 java.util.Date end = new java.util.Date(rs.getDate(1).getTime());
-            	 if (today.compareTo(end) > 0) {
+            	 if (today.compareTo(end) < 0) {
             		 return true;
             	 }
             	 
