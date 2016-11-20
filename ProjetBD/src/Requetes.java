@@ -19,6 +19,14 @@ public class Requetes {
 		
 	}
 	
+	public void deleteFromEstDans(int idVehicule) throws SQLException {
+		
+		String query = "DELETE FROM EstDans WHERE (IdVehicule = " + idVehicule + " )";
+		Statement stmt = this.conn.createStatement();
+		stmt.executeQuery(query);
+		
+		
+	}
 	//////////////////////////////////////////////////
 	// CREATE TABLES
 	/////////////////////////////////////////////////
@@ -323,10 +331,10 @@ public class Requetes {
 	 * Insert values in Table Locations
 	 * @param numLoc : number of the rent
 	 * @param dateLocation : date of the rent
-	 * @param heureDebut : time of the beggining of the rent
-	 * @param heureFin : time of the end of the rent
+	 * @param heureDebut : hour of the rent
 	 * @param idVehicule : identification nuimber of the vehicule used for the rent
 	 * @param numCarteBancaire : number if the paycard used by the client for the rent 
+	 * @param nomStationDepart : station of departure
 	 */
 	public void insertLocations(int numLoc, 
 								String dateLocation,
@@ -442,18 +450,17 @@ public class Requetes {
 	
 	/**
 	 * Insert values in Table Forfaits2
-	 * @param ifForfait : identification number of the package
+	 * @param idForfait : identification number of the package
 	 * @param CatVehicule : category of the vehicule
 	 * @param numCB : number of the user's cash card
 	 * @param nbMaxLocations : number maximum of locations for this package
-	 * @param nbLocationsGratuites : number maximum of free locations for this package
+	 * @param nbLocRest : number of remaining locations for the package
 	 * @param debutValidit� : ate of beginning of the package
 	 */
 	public void insertForfaits2(int idForfait,
 									   String CatVehicule, 
 									   int numCB,
-									   int nbMaxLocations,
-									   int nbLocRest, 
+									   int nbMaxLocations, 
 									   String debutValidite) throws SQLException {
 		String toDate1 = ("to_date('" + debutValidite + "', 'yyyymmdd')");	
 		insererForfaits (idForfait, 2, toDate1, CatVehicule, numCB);
@@ -462,7 +469,7 @@ public class Requetes {
 					+ idForfait + ", "
 					+ nbMaxLocations + ", "
 					+ 3 + ","
-					+ nbLocRest+ ")"
+					+ nbMaxLocations+ ")"
 					) ;
 			sttable.close() ; 
 	}
@@ -534,8 +541,9 @@ public class Requetes {
 	
         
         Statement sttable = conn.createStatement();
-        String getForfaitId = "SELECT IdForfait, FROM Forfaits "
-        		+ "WHERE (NumCarteBancaire=" + CB + " AND CATEGORIEVEHICULE = '" + categorie + "')";
+        String getForfaitId = "SELECT IdForfait FROM Forfaits "
+        		+ "WHERE (NumCarteBancaire=" + CB + " AND TYPEFORFAIT = 1 AND CATEGORIEVEHICULE = '" + categorie + "')";
+        System.out.println(getForfaitId);
         ResultSet rs = sttable.executeQuery(getForfaitId);
         String ID = "";
         
@@ -548,13 +556,14 @@ public class Requetes {
              }
              String query = "SELECT FINVALIDITE FROM Forfait1 "
              		+ "WHERE (IDFORFAIT = " + ID + ")";
+             System.out.println("query");
              rs = sttable.executeQuery(query);
              java.util.Date today = new java.util.Date();
              
              while (rs.next()) {
             	 
             	 java.util.Date end = new java.util.Date(rs.getDate(1).getTime());
-            	 if (today.compareTo(end) > 0) {
+            	 if (today.compareTo(end) < 0) {
             		 return true;
             	 }
             	 
@@ -563,6 +572,39 @@ public class Requetes {
         return false;
         
        
+    }
+    
+    
+    public int alreadyGotForfait2(int CB, String categorie) throws SQLException {
+    	
+    	 Statement sttable = conn.createStatement();
+         String getForfaitId = "SELECT IdForfait FROM Forfaits "
+         		+ "WHERE (NumCarteBancaire=" + CB + " AND TYPEFORFAIT = 2 AND CATEGORIEVEHICULE = '" + categorie + "')";
+         ResultSet rs = sttable.executeQuery(getForfaitId);
+         String ID = "";
+         
+         if (rs.next()) {
+         	ID = "'" + rs.getString(1)+ "'" ; 	
+         	while (rs.next()) {
+              	
+              	ID = ID + " OR IdForfait='" + rs.getString(1) + "'";
+              	
+              }
+              String query = "SELECT IdForfait, NBLocationsRestantes FROM Forfait2 "
+              		+ "WHERE (IDFORFAIT = " + ID + ")";
+              rs = sttable.executeQuery(query);
+              
+              while (rs.next()) {
+             	 
+             	 if (rs.getInt(2) != 0) {
+             		 return rs.getInt(1);
+             	 }
+             	 
+              }
+         }
+         return 0;
+    	
+    	
     }
 /*
     "create table Forfait1 (IdForfait int primary key,"
@@ -594,7 +636,20 @@ public class Requetes {
 		
 	}
 
-
+	public ResultSet location(String station, String categorie) throws SQLException {
+		
+		Statement sttable = conn.createStatement();
+		String query = "SELECT IdVehicule FROM Vehicules WHERE (Vehicules.CategorieVehicule = '" + categorie + "' AND EstDans.nomStation  = '" + station + "')";
+		ResultSet rs = sttable.executeQuery(query);
+		if (rs.next()) {
+			
+			return rs;
+		}
+		else {
+			return null;
+		}
+		
+	}
 
 	/**
 	 * Find a rent
@@ -675,6 +730,17 @@ public class Requetes {
 		
 	}
 
+	public int getMaxNumLoc() throws SQLException {
+		
+		String request = "SELECT MAX(numLoc) AS numLoc FROM Forfaits";
+		Statement sttable = conn.createStatement();
+		ResultSet rs = sttable.executeQuery(request);
+		rs.next();
+		return rs.getInt(1);
+		
+		
+	}
+	
 	/**
 	 * Check if a table exists or not
 	 * @param tableName : name of the table
@@ -717,8 +783,38 @@ public class Requetes {
 		String toDate1 = ("to_date('" + date + "', 'yyyymmdd')");
 		String query = "SELECT * FROM LOCATIONS WHERE locations.NomStation = Station" ;
 	}
-	
 
+	public void makePayement(int idForfait, int CB) throws SQLException{
+		
+		String query = "SELECT SOLDE FROM Abonnes WHERE (NUMCARTEBANCAIRE = " + CB + " )";
+		Statement sttable = conn.createStatement();
+		ResultSet rs = sttable.executeQuery(query);
+		rs.next();
+		int newSolde = rs.getInt(1) + facturation(idForfait);
+		updateSolde(CB, newSolde);
+		
+	}
+	
+	public void updateSolde(int CB, int newSolde) throws SQLException {
+		
+		Statement sttable = conn.createStatement();
+		String query = "UPDATE Abonnes SET SOLDE=" + newSolde;
+		sttable.executeUpdate(query);
+
+		
+		
+	}
+	public void decreaseLocationsRestantes(int idForfait) throws SQLException {
+		String query = "SELECT NBLocationsRestantes "
+				+ "FROM Forfait2 "
+				+ "WHERE (IdForfait = " + idForfait + " )";
+		Statement sta = conn.createStatement();
+		ResultSet rs = sta.executeQuery(query);
+		rs.next();
+		int newLocationsRestantes = rs.getInt(1) + 1;
+		String update = "UPDATE Forfait2 SET NBLocationsRestantes = " + newLocationsRestantes + ")";
+		
+	}
 	/**
 	 * Calculate the price of a rent
 	 * @param IdForfait : identification number of the package
@@ -775,7 +871,8 @@ public class Requetes {
 			return prix;
 		}
 	}	
-
+	
+	
 }
 
 
