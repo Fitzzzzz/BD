@@ -171,11 +171,11 @@ public class Requetes {
 	 * Create Table EstDans
 	 */
 	public void createTableEstDans () throws SQLException {
-		Statement sttable = conn.createStatement();       
+		Statement sttable = conn.createStatement(); 
 		sttable.executeUpdate(
 				"create table EstDans (IdVehicule int primary key,"
 				+ "NomStation varchar(20))"
-				);
+				); 
 		sttable.close();
 	}
 
@@ -343,7 +343,6 @@ public class Requetes {
 								int numCarteBancaire,
 								String nomStationDepart)
 									    throws SQLException {
-		
 		//TO_DATE('20110728T23:54:14Z',  'YYYYMMDD"T"HH24:MI:SS"Z"')
 		String toDate = ("to_date('" + dateLocation + "T" + heureDebut + "Z', 'YYYYMMDD\"T\"HH24:MI:SS\"Z\"')");
 		
@@ -663,9 +662,7 @@ public int finLocation (int numLoc, String dateFinLoc, String heureArrivee, Stri
 
 		
 		
-		
 		Statement sttable = conn.createStatement();
-		
 		// On recupere l'Id du vehicule 
 		
 		ResultSet rs = sttable.executeQuery("Select IdVehicule FROM Locations WHERE (NUMLOC = " + numLoc + ")");
