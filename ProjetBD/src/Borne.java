@@ -94,10 +94,11 @@ public class Borne {
 
 	/**
 	 * Return of a vehicule in a station
+	 * @throws SQLException 
 	 */
-	public void depotVehicule() {
+	public void depotVehicule() throws SQLException {
 		
-		try {
+		
 			int numLoc = requests.findLocation(CB);
 			
 			
@@ -110,10 +111,19 @@ public class Borne {
 			// dans les param de l'appel de finLoc
 			DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
 			Calendar cal = Calendar.getInstance();
-			requests.finLocation(numLoc, dateFormat.format(cal), df.format(dateobj), this.nomStation);
-		} catch (SQLException e) {
-			System.out.println("Vous n'avez pas de location en cours.");
-		}
+			int caution = requests.finLocation(numLoc, dateFormat.format(cal), df.format(dateobj), this.nomStation, this.CB);
+			switch (caution) {
+			case -1:
+				System.out.println("Désolé, il n'y a plus de place ici, choisissez une autre station!");
+				break;
+			case 0:
+				System.out.println("Votre véhicule nous a bien été remis.");
+				break;
+				
+			default:
+				requests.increaseSolde(caution, CB);
+			}
+			
 	}
 	
 
@@ -165,7 +175,7 @@ public class Borne {
 				subscribeToNewForfait();
 				return;
 			}	
-			if (!requests.alreadyGotForfait1(CB, cat)) {
+			if (requests.alreadyGotForfait1(CB, cat) != 0) {
 				Date today = new Date();
 				Calendar calendar = Calendar.getInstance();         
 				calendar.setTime(today);
@@ -242,11 +252,12 @@ public class Borne {
 		default:
 			subscribeToNewForfait();
 			return;
+			
 		}
 		
 		
 		
-		
+		this.welcome();
 	
 		
 	}
@@ -283,9 +294,11 @@ public class Borne {
 			welcome();
 			return;
 		}
-		int idForfait2;
-		if (requests.alreadyGotForfait1(CB, cat)) {
+		int idForfait;
+		if ((idForfait = requests.alreadyGotForfait1(CB, cat)) != 0) {
+			
 			ResultSet rs = requests.location(this.nomStation, cat);
+			
 			if (rs == null) {
 				System.out.println("Désolé, il n'y a pas de véhicules de ce type disponible ici.");
 				welcome();
@@ -296,12 +309,14 @@ public class Borne {
 				Date today = new Date();
 				
 				int numLoc = requests.getMaxNumLoc() + 1;
+				System.out.println("Max = " + numLoc);
 				requests.insertLocations(numLoc, new SimpleDateFormat("yyyyMMdd").format(today), new SimpleDateFormat("HH:mm:ss").format(today), idVehicule, CB, this.nomStation);
 				requests.deleteFromEstDans(idVehicule);
+				requests.makePayement(idForfait, numLoc);
 				System.out.println("Votre location est effectuée. Vous avez le véhicule numéro " + idVehicule + ".");
 			}
 		}
-		else if ((idForfait2 = requests.alreadyGotForfait2(CB, cat)) != 0) {
+		else if ((idForfait = requests.alreadyGotForfait2(CB, cat)) != 0) {
 			ResultSet rs = requests.location(this.nomStation, cat);
 			if (rs == null) {
 				System.out.println("Désolé, il n'y a pas de véhicules de ce type disponible ici.");
@@ -309,13 +324,14 @@ public class Borne {
 				return;
 			}
 			else {
-				requests.decreaseLocationsRestantes(idForfait2);
+				requests.decreaseLocationsRestantes(idForfait);
 				int idVehicule = rs.getInt(1);
 				Date today = new Date();
 				
 				int numLoc = requests.getMaxNumLoc() + 1;
 				requests.insertLocations(numLoc, new SimpleDateFormat("yyyyMMdd").format(today), new SimpleDateFormat("HH:mm:ss").format(today), idVehicule, CB, this.nomStation);
 				requests.deleteFromEstDans(idVehicule);
+				requests.makePayement(idForfait, numLoc);
 				System.out.println("Votre location est effectuée. Vous avez le véhicule numéro " + idVehicule + ".");
 			}
 			

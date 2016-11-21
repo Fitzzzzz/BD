@@ -171,11 +171,11 @@ public class Requetes {
 	 * Create Table EstDans
 	 */
 	public void createTableEstDans () throws SQLException {
-		Statement sttable = conn.createStatement();       
+		Statement sttable = conn.createStatement(); 
 		sttable.executeUpdate(
 				"create table EstDans (IdVehicule int primary key,"
 				+ "NomStation varchar(20))"
-				);
+				); 
 		sttable.close();
 	}
 
@@ -343,7 +343,6 @@ public class Requetes {
 								int numCarteBancaire,
 								String nomStationDepart)
 									    throws SQLException {
-		
 		//TO_DATE('20110728T23:54:14Z',  'YYYYMMDD"T"HH24:MI:SS"Z"')
 		String toDate = ("to_date('" + dateLocation + "T" + heureDebut + "Z', 'YYYYMMDD\"T\"HH24:MI:SS\"Z\"')");
 		
@@ -659,13 +658,11 @@ public class Requetes {
 	 * @param heureArrivee : time of arrival
 	 * @param nomStationArrivï¿½e : name of the arrival station
 	 */
-public int finLocation (int numLoc, String dateFinLoc, String heureArrivee, String nomStationArrivee) throws SQLException {
+public int finLocation (int numLoc, String dateFinLoc, String heureArrivee, String nomStationArrivee, int CB) throws SQLException {
 
 		
 		
-		
 		Statement sttable = conn.createStatement();
-		
 		// On recupere l'Id du vehicule 
 		
 		ResultSet rs = sttable.executeQuery("Select IdVehicule FROM Locations WHERE (NUMLOC = " + numLoc + ")");
@@ -702,7 +699,16 @@ public int finLocation (int numLoc, String dateFinLoc, String heureArrivee, Stri
 			String miseAjourStat = "UPDATE Locations SET nomStationArrivee = '"+ nomStationArrivee +"'";
 			sttable.executeUpdate(miseAjourStat);
 			String toDate = ("to_date('" + dateFinLoc + "T" + heureArrivee +"Z', 'YYYYMMDD\"T\"HH24:MI:SS\"Z\"')" + "WHERE ( NumLoc = " + numLoc + ")");
+<<<<<<< HEAD
 			String miseAjourDate = "UPDATE Locations SET dateFinLocation =" + toDate;		
+=======
+<<<<<<< HEAD
+			
+			String miseAjourDate = "UPDATE Locations SET dateFinLocation =" + toDate;				
+=======
+			String miseAjourDate = "UPDATE Locations SET dateFinLocation =" + toDate;	
+>>>>>>> b8a80737b9db5fda4ec1c38f7fec79c6a8cb90ac
+>>>>>>> edc5b7f6abf8ee4ddabbb364ea110ea77439a261
 			sttable.executeUpdate(miseAjourDate);
 			// on verifie que la loc n'a pas depasse la duree max
 			Boolean tempsDepasse = false;
@@ -717,10 +723,26 @@ public int finLocation (int numLoc, String dateFinLoc, String heureArrivee, Stri
 			rs.next();
 			int caution = rs.getInt(1);
 			// on cherche la duree d'utilisation du vehicule
-			query = "SELECT (datefinlocation - datelocation)*24 FROM Locations WHERE numloc = 1";
+
+			query = "SELECT (datefinlocation - datelocation)*24 FROM Locations WHERE numloc = +numloc";
+
 			rs = sttable.executeQuery(query);
 			rs.next();
 			int duree = rs.getInt(1);
+			
+			String requetForfait = "SELECT TYPEFORFAIT FROM FORFAITS WHERE (NUMCARTEBANCAIRE = " + CB + " AND CATEGORIEVEHICULE ='" + categorie + "' )";
+			rs = sttable.executeQuery(requetForfait);
+			rs.next(); 
+			int typeForfait = rs.getInt(1);
+			if (typeForfait == 1) {
+				String requetePrix = "SELECT PrixHoraire FROM CategorieVehicules WHERE (CategorieVehicule='" + categorie + "' )";
+				rs = sttable.executeQuery(requetePrix);
+				rs.next();
+				int prix = (duree - 1)*rs.getInt(1);
+				this.increaseSolde(prix, CB);
+			}
+			
+			
 			if (duree > dureeMax) {
 				tempsDepasse = true;
 			}
@@ -733,7 +755,7 @@ public int finLocation (int numLoc, String dateFinLoc, String heureArrivee, Stri
 			/*String miseAjourHeure = "UPDATE Locations SET heureFin = "+ heureArrivee ;
 			sttable.executeUpdate(miseAjourHeure);*/
 		} else {
-			System.out.println("Pas de places disponibles dans cette station");	
+			
 			sttable.close();
 			return -1;
 		}
@@ -827,13 +849,31 @@ public int finLocation (int numLoc, String dateFinLoc, String heureArrivee, Stri
 	public void makePayement(int idForfait, int CB) throws SQLException{
 
 		
-		Statement sttable = conn.createStatement();
+		
 		int coutForfait = facturation(idForfait);
 		System.out.println(coutForfait);
-		String query = "UPDATE Abonnes SET SOLDE=SOLDE+" + coutForfait + " WHERE (NUMCARTEBANCAIRE=" + CB + ")";
+		this.increaseSolde(coutForfait, CB);
+		
+	}
+	
+	public void increaseSolde(int increase, int CB) throws SQLException {
+		
+		Statement sttable = conn.createStatement();
+		String query = "UPDATE Abonnes SET SOLDE=SOLDE+" + increase + " WHERE (NUMCARTEBANCAIRE=" + CB + ")";
 		sttable.executeUpdate(query);
 	}
 	
+//	public int getCaution(int CB) throws SQLException {
+//		
+//		int numLoc = this.findLocation(CB);
+//		String query = "SELECT IdVehicule FROM Locations WHERE (numLoc = " + numLoc + " )";
+//		Statement sttable = conn.createStatement();
+//		ResultSet rs = sttable.executeQuery(query);
+//		rs.next();
+//		int idVehicule = rs.getInt(1);
+//		
+//		
+//	}
 	public void decreaseLocationsRestantes(int idForfait) throws SQLException {
 		String query = "SELECT NBLocationsRestantes "
 				+ "FROM Forfait2 "
@@ -858,7 +898,7 @@ public int finLocation (int numLoc, String dateFinLoc, String heureArrivee, Stri
 		int prix = 0;
 			Statement sttable = conn.createStatement();
 			
-			// On récupère le type du forfait
+			// On rï¿½cupï¿½re le type du forfait
 			ResultSet rs = sttable.executeQuery("SELECT TypeForfait FROM Forfaits WHERE IdForfait = " + IdForfait);
 			rs.next();
 			int typeForfait = rs.getInt(1);
@@ -866,22 +906,22 @@ public int finLocation (int numLoc, String dateFinLoc, String heureArrivee, Stri
 			// On agit en fonction du type de forfait
 			switch(typeForfait){
 			case 1:
-				// on récupère la durée du forfait
+				// on rï¿½cupï¿½re la durï¿½e du forfait
 				ResultSet rs1 = sttable.executeQuery("SELECT floor(months_between(FinValidite, forfaits.DATECREATION)) FROM forfaits, forfait1 WHERE forfaits.idforfait = forfait1.idforfait and forfaits.idforfait = " + IdForfait);
 				rs1.next();
 				prix = rs1.getInt(1);
-				// on la multiplie par le prix mensuel du forfait en fonction de sa catégorie
+				// on la multiplie par le prix mensuel du forfait en fonction de sa catï¿½gorie
 				rs1 = sttable.executeQuery("SELECT PrixMensuel FROM CategoriesVehicules WHERE CategorieVehicule = (" + "SELECT CategorieVehicule FROM Forfaits WHERE IdForfait = " + IdForfait + ")");
 				rs1.next();
 				prix *= rs1.getInt(1);
 				rs1.close();
 				break;
 			case 2:
-				// on récupère le nombre de location max
+				// on rï¿½cupï¿½re le nombre de location max
 				ResultSet rs2 = sttable.executeQuery("SELECT nbMaxLocations FROM Forfait2 WHERE IdForfait = " + IdForfait);
 				rs2.next();
 				prix = rs2.getInt(1);
-				// on multiplie ce nombre par le cout de cette loc en fonction de sa catégorie
+				// on multiplie ce nombre par le cout de cette loc en fonction de sa catï¿½gorie
 				rs2 = sttable.executeQuery("SELECT PrixHoraire FROM CategoriesVehicules WHERE CategorieVehicule = (" + "SELECT CategorieVehicule FROM Forfaits WHERE IdForfait = " + IdForfait + ")");
 				rs2.next();
 				prix *= rs2.getInt(1);
