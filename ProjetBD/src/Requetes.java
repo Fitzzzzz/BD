@@ -1,5 +1,5 @@
 /**
- * Methods to create tables and insert data in them
+* Methods to create tables and insert data in them
  */
 
 import java.sql.*;
@@ -659,14 +659,14 @@ public class Requetes {
 	 * @param heureArrivee : time of arrival
 	 * @param nomStationArrivï¿½e : name of the arrival station
 	 */
-	public void finLocation (int numLoc, String dateFinLoc, String heureArrivee, String nomStationArrivee) throws SQLException {
+public int finLocation (int numLoc, String dateFinLoc, String heureArrivee, String nomStationArrivee) throws SQLException {
 
 		
 		
 		
 		Statement sttable = conn.createStatement();
 		
-		// On rï¿½cupï¿½re l'Id du vï¿½hicule 
+		// On recupere l'Id du vehicule 
 		
 		ResultSet rs = sttable.executeQuery("Select IdVehicule FROM Locations WHERE (NUMLOC = " + numLoc + ")");
 		rs.next();
@@ -703,12 +703,38 @@ public class Requetes {
 			sttable.executeUpdate(miseAjourStat);
 			String toDate = ("to_date('" + dateFinLoc + "T" + heureArrivee +"Z', 'YYYYMMDD\"T\"HH24:MI:SS\"Z\"')" + "WHERE ( NumLoc = " + numLoc + ")");
 			String miseAjourDate = "UPDATE Locations SET dateFinLocation =" + toDate;				
-			sttable.executeUpdate(miseAjourDate);
-
+			// on verifie que la loc n'a pas depasse la duree max
+			Boolean tempsDepasse = false;
+			// chercher si le temps est depassse + recup caution
+			
+			query = "SELECT DureeMax FROM CategoriesVehicules WHERE CategorieVehicule ='"+categorie + "'";
+			rs = sttable.executeQuery(query);
+			rs.next();
+			int dureeMax = rs.getInt(1);
+			query = "SELECT MontantCaution FROM CategoriesVehicules WHERE CategorieVehicule = '"+categorie+"'";
+			rs = sttable.executeQuery(query);
+			rs.next();
+			int caution = rs.getInt(1);
+			// on cherche la duree d'utilisation du vehicule
+			query = "SELECT (datefinlocation - datelocation)*24 FROM Locations WHERE numloc = 1";
+			rs = sttable.executeQuery(query);
+			rs.next();
+			int duree = rs.getInt(1);
+			if (duree > dureeMax) {
+				tempsDepasse = true;
+			}
+			sttable.close();
+			if (tempsDepasse) {
+				return caution;
+			} else {
+				return 0;
+			}
 			/*String miseAjourHeure = "UPDATE Locations SET heureFin = "+ heureArrivee ;
 			sttable.executeUpdate(miseAjourHeure);*/
 		} else {
-			System.out.println("Pas de places disponibles dans cette station");			
+			System.out.println("Pas de places disponibles dans cette station");	
+			sttable.close();
+			return -1;
 		}
 		
 		
@@ -718,7 +744,7 @@ public class Requetes {
 				+ "' AND CategorieVehicule ='" + categorie + "')";
 		 */
 		
-		sttable.close();
+		
 	}
 	
 	public int getMaxIdForfait() throws SQLException {
@@ -779,7 +805,24 @@ public class Requetes {
 		    System.out.println("");
 		}
 	}
-
+	
+	public int tauxOccupation(int date, String Station) throws SQLException{
+		Statement sttable = conn.createStatement();
+		String toDate1 = ("to_date('" + date + "', 'yyyymmdd')");
+		String querydebut = "SELECT DateLocation FROM LOCATIONS WHERE (locations.NomStation = Station "
+				+ "AND locations.DateLocation = " + toDate1;
+		ResultSet rsdebut = sttable.executeQuery(querydebut);
+		ResultSetMetaData rsmddebut = rsdebut.getMetaData();
+		
+		String queryfin = "SELECT DateFinLocation FROM LOCATIONS WHERE (locations.NomStation = Station "
+				+ "AND locations.DateLocation = " + toDate1;
+		ResultSet rsfin = sttable.executeQuery(queryfin);
+		ResultSetMetaData rsmdfin = rsfin.getMetaData();
+		
+		while (rsdebut.next()){
+		}
+		return(1);
+	}	
 	public void makePayement(int idForfait, int CB) throws SQLException{
 
 		
@@ -810,58 +853,51 @@ public class Requetes {
 	 * @return the price of the rent
 	 */
 
-	public int facturation(int IdForfait){
+	public int facturation(int IdForfait) throws SQLException{
 		int prix = 0;
-		try{
 			Statement sttable = conn.createStatement();
 			
-			// On rï¿½cupï¿½re le type du forfait
+			// On récupère le type du forfait
 			ResultSet rs = sttable.executeQuery("SELECT TypeForfait FROM Forfaits WHERE IdForfait = " + IdForfait);
 			rs.next();
 			int typeForfait = rs.getInt(1);
-			// on vï¿½rifie l'age
-			rs = sttable.executeQuery("SELECT dateNaissance FROM Abonnes WHERE numCarteBancaire = (" + "SELECT NumCarteBancaire FROM Forfaits WHERE IdForfait = " + IdForfait + ")");
-			rs.next();
-			String age = rs.getString(1);
-			rs = sttable.executeQuery("SELECT  FROM Abonnes WHERE numCarteBancaire = (" + "SELECT NumCarteBancaire FROM Forfaits WHERE IdForfait = " + IdForfait + ")");
-			rs.next();
-			String date;
 			rs.close();
 			// On agit en fonction du type de forfait
 			switch(typeForfait){
 			case 1:
-				// on rï¿½cupï¿½re la durï¿½e du forfait
-				ResultSet rs1 = sttable.executeQuery("SELECT DureeForfait FROM Forfait1 WHERE IdForfait = " + IdForfait);
+				// on récupère la durée du forfait
+				ResultSet rs1 = sttable.executeQuery("SELECT floor(months_between(FinValidite, forfaits.DATECREATION)) FROM forfaits, forfait1 WHERE forfaits.idforfait = forfait1.idforfait and forfaits.idforfait = " + IdForfait);
 				rs1.next();
 				prix = rs1.getInt(1);
-				// on la multiplie par le prix mensuel du forfait en fonction de sa catï¿½gorie
+				// on la multiplie par le prix mensuel du forfait en fonction de sa catégorie
 				rs1 = sttable.executeQuery("SELECT PrixMensuel FROM CategoriesVehicules WHERE CategorieVehicule = (" + "SELECT CategorieVehicule FROM Forfaits WHERE IdForfait = " + IdForfait + ")");
 				rs1.next();
 				prix *= rs1.getInt(1);
 				rs1.close();
-				return prix;
-				//break;
+				break;
 			case 2:
-				// on rï¿½cuprï¿½re le nombre de location max
+				// on récupère le nombre de location max
 				ResultSet rs2 = sttable.executeQuery("SELECT nbMaxLocations FROM Forfait2 WHERE IdForfait = " + IdForfait);
 				rs2.next();
 				prix = rs2.getInt(1);
-				// on multiplie ce nombre par le cout de cette loc en fonction de sa catï¿½gorie
+				// on multiplie ce nombre par le cout de cette loc en fonction de sa catégorie
 				rs2 = sttable.executeQuery("SELECT PrixHoraire FROM CategoriesVehicules WHERE CategorieVehicule = (" + "SELECT CategorieVehicule FROM Forfaits WHERE IdForfait = " + IdForfait + ")");
 				rs2.next();
 				prix *= rs2.getInt(1);
 				rs2.close();
-				return prix;
-				//break;
+				break;
 			default:
 				return prix;
 			}
-		} catch (SQLException e){
-			return prix;
-		}
-	}	
-	
-	
+			ResultSet rss = sttable.executeQuery("SELECT floor(months_between(datecreation, datenaissance)/12) FROM abonnes, forfaits WHERE forfaits.numcartebancaire = abonnes.numcartebancaire and forfaits.idforfait = " + IdForfait);
+			rss.next();
+			int age = rss.getInt(1);
+			rss.close();		
+			if (age < 25 || age > 65)
+				return prix*3/4;
+			else
+				return prix;
+	}
 }
 
 

@@ -9,6 +9,7 @@ public class TestPerso {
 	public static void main(String[] args) throws SQLException {
 		Utilitaires.createRegister();
 		Connection conn = Utilitaires.openConnection();
+
 		Requetes req = new Requetes(conn);
 		
 		req.printTable("Forfaits");

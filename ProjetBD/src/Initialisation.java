@@ -530,21 +530,27 @@ public class Initialisation {
 		req.insertLocations(48, "20161006", "07:00:00", 107, 30, "Poireau");
 		req.insertLocations(49, "20161106", "15:00:00", 108, 31, "Aubergine");
 
-		
-		
-		//req.insertForfaits1(39, "Velo", 36, "20161210", "20170710");
-		//req.insertForfaits2(idForfait, CatVehicule, numCB, nbMaxLocations, debutValidite);
-		//req.insertForfaits2(53, "VeloElec", 32, 7, "20161201");
-	//	req.insertLocations(53, "20161206", "15:00:00", 109, 32, "Aubergine");
-	//	req.finLocation(53, "20161206", "18:00:00", "Patate");
-		
-		//regarde si ca fonctionne bien
 		req.insertLocations(50, "20160908", "01:00:00", 100, 30, "Patate");
 		req.finLocation(50, "20160908", "03:00:00", "Patate");
 		req.insertLocations(51, "20160909", "01:00:00", 100, 30, "Patate");
 		req.finLocation(51, "20160909", "13:00:00", "Patate");
 		req.insertLocations(52, "20160910", "11:00:00", 100, 30, "Patate");
 		req.finLocation(52, "20160910", "15:00:00", "Patate");
+		req.insertLocations(53, "20160908", "02:00:00", 99, 29, "Epinard");
+		req.finLocation(53, "20160908", "05:00:00", "Epinard");
+		req.insertLocations(54, "20160913", "01:00:00", 99, 29, "Epinard");
+		req.finLocation(54, "20160913", "13:00:00", "Epinard");
+		req.insertLocations(55, "20160924", "09:00:00", 99, 29, "Epinard");
+		req.finLocation(55, "20160924", "15:00:00", "Epinard");
+		req.insertLocations(56, "20160912", "01:00:00", 98, 28, "Cornichon");
+		req.finLocation(56, "20160912", "02:00:00", "Cornichon");
+		req.insertLocations(57, "20160928", "00:00:00", 98, 28, "Cornichon");
+		req.finLocation(57, "20160928", "07:00:00", "Cornichon");
+		req.insertLocations(58, "20160929", "14:00:00", 98, 28, "Cornichon");
+		req.finLocation(58, "20160929", "15:00:00", "Cornichon");
+		req.insertLocations(59, "20170929", "14:00:00", 100, 28, "Patate");
+		req.finLocation(59, "20171001", "14:00:00", "Patate");
+
 
 		req.finLocation(1, "20161116", "23:00:00", "Patate");
 		req.finLocation(2, "20161120", "09:00:00", "Carotte");	
@@ -601,8 +607,9 @@ public class Initialisation {
 
 		req.commit();
 		
-		/*System.out.println(req.facturation(4));
-		System.out.println(req.facturation(12));*/
+		System.out.println(req.facturation(4));
+		System.out.println(req.facturation(12));
+	
 		
 
 
