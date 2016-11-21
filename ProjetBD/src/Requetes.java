@@ -782,17 +782,20 @@ public void finLocation (int numLoc, String dateFinLoc, String heureArrivee, Str
 	public int tauxOccupation(int date, String Station) throws SQLException{
 		Statement sttable = conn.createStatement();
 		String toDate1 = ("to_date('" + date + "', 'yyyymmdd')");
-		String querydebut = "SELECT DateLocation FROM LOCATIONS WHERE (locations.NomStation = Station "
+		String querydebut = "SELECT * FROM LOCATIONS WHERE (locations.NomStation = Station "
 				+ "AND locations.DateLocation = " + toDate1;
 		ResultSet rsdebut = sttable.executeQuery(querydebut);
 		ResultSetMetaData rsmddebut = rsdebut.getMetaData();
 		
-		String queryfin = "SELECT DateFinLocation FROM LOCATIONS WHERE (locations.NomStation = Station "
+		String queryfin = "SELECT * FROM LOCATIONS WHERE (locations.NomStation = Station "
 				+ "AND locations.DateLocation = " + toDate1;
 		ResultSet rsfin = sttable.executeQuery(queryfin);
 		ResultSetMetaData rsmdfin = rsfin.getMetaData();
 		
 		while (rsdebut.next()){
+			while (rsfin.next()){
+				rsdebut.getString(1);
+			}
 		}
 		return(1);
 	}	
