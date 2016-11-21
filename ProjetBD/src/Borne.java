@@ -1,5 +1,5 @@
 /**
- * 
+ * Interface used by a client to rent a vehicule
  */
 
 import java.sql.ResultSet;
@@ -21,7 +21,6 @@ public class Borne {
 	
 
 	public Borne(String nomStation, Requetes requests) {
-		
 		this.requests = requests;
 		this.nomStation = nomStation;
 	}
@@ -33,16 +32,9 @@ public class Borne {
 	 */
 	public void welcome() throws SQLException {
 		this.sc = new Scanner(System.in);
-
 		System.out.println("Bonjour et bienvenue chez esCARgo!");
-
-		
-		
 		boolean repondu = false;
 		System.out.println("Etes-vous êtes déjà client chez nous? (O/n)");
-		
-		
-		
 		String answer = sc.nextLine();
 		
 		if (answer.equals("O")) {
@@ -83,12 +75,9 @@ public class Borne {
 		String adress = sc.nextLine();
 		System.out.println("Veuillez donner votre numéro de carte bancaire.");
 		this.CB = Integer.parseInt(sc.nextLine());
-		
 		requests.insertAbonnes(CB, name, vorName, birthDate, adress);
 		System.out.println("Votre compte a bien été créé");
 		welcome();
-		
-		
 	}
 	
 
@@ -98,14 +87,9 @@ public class Borne {
 	 */
 	public void depotVehicule() throws SQLException {
 		
-		
 			int numLoc = requests.findLocation(CB);
-			
-			
 			DateFormat df = new SimpleDateFormat("HH:mm:ss");
 			Date dateobj = new Date();
-			
-			
 			
 			// a rajouter : recup la date dans un string et le mettre dans 
 			// dans les param de l'appel de finLoc
@@ -123,7 +107,6 @@ public class Borne {
 			default:
 				requests.increaseSolde(caution, CB);
 			}
-			
 	}
 	
 
@@ -133,16 +116,8 @@ public class Borne {
 	 * @throws SQLException 
 	 */
 	public void subscribeToNewForfait() throws SQLException {
-
-		
-		// FIRFAUT1 : ILLIMITE PDT DUREE LIMITE 
-		// FORFAIT2 :
-		
 		System.out.println("Voulez un forfait à durée limité et usages illimités ou un forfait à durée illimité mais à usage limité? (1/2)");
 		int forfait = Integer.parseInt(sc.next());
-		
-		
-		
 		
 		switch (forfait) {
 		case 1:
@@ -254,14 +229,14 @@ public class Borne {
 			return;
 			
 		}
-		
-		
-		
 		this.welcome();
-	
-		
 	}
 	
+	
+	/**
+	 * Proceed to a rent
+	 * @throws SQLException 
+	 */
 	public void processLocation() throws SQLException {
 		
 		System.out.println("Quel type de véhicule voulez-vous louer?");
@@ -334,15 +309,12 @@ public class Borne {
 				requests.makePayement(idForfait, numLoc);
 				System.out.println("Votre location est effectuée. Vous avez le véhicule numéro " + idVehicule + ".");
 			}
-			
 		}
 		else {
-			
 			System.out.println("Désolé vous n'avez pas de forfait, il faut en prendre un.");
 			this.subscribeToNewForfait();
 			return;
 		}
-		
 	}
 	
 	
@@ -351,7 +323,8 @@ public class Borne {
 	
 	
 	/**
-	 * Ask the user what he or she wants to do
+	 * Ask the user what he or she wants to do and redirect 
+	 * the client to the corresponding method
 	 * @throws SQLException 
 	 */
 	public void whatDoYouWannaDo() throws SQLException {
@@ -379,8 +352,4 @@ public class Borne {
 			whatDoYouWannaDo();
 		}
 	}
-
-	
-	
-		
 }
