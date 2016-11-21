@@ -1,3 +1,6 @@
+/**
+ * Main methods do deal with transactions
+ */
 import java.sql.*;
 public class Transaction {
 	private Connection conn;

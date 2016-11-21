@@ -1,3 +1,6 @@
+/**
+ * Initialisation of the database's tables
+ */
 import java.sql.*;
 public class Initialisation {
 	public static void initBase (Connection conn) throws SQLException {
@@ -410,20 +413,11 @@ public class Initialisation {
 		req.insertAbonnes(39, "Lefort", "Maxime", "19790114", "23 rue de la Petite Marchande 38000 Grenoble");
 		req.insertAbonnes(40, "Fer", "Odeline", "19910330", "32 Quai des Reveurs 38000 Grenoble");
 
-		// INSERER LES FORFAITS !!!!
-		/*	aits1(int idForfait, 
-				   String CatVehicule, int numCB,
-				   int dureeForfait, 
-				   Date debutValidite,
-
-		 *2(int idForfait,
-									   String CatVehicule, int numCB,
-									   int nbMaxLocations, */
+		
 
 		/////////////////////////////////////////////
 		// INSERTION OF PACKAGES TYPE 1 AND 2
 		/////////////////////////////////////////////
-		
 		req.insertForfaits1 (1, "Utilitaire" , 4, "20161101", "20161201");
 		req.insertForfaits2 (2, "Velo", 1, 4, "20161009");
 		req.insertForfaits2 (3, "VeloRemork", 2, 5, "20161019");
@@ -574,7 +568,7 @@ public class Initialisation {
 		req.finLocation(19, "20160422", "23:00:00", "Courge");
 		req.finLocation(20, "20160622", "23:00:00", "Radis");
 		req.finLocation(21, "20160622", "18:00:00", "Poireau");
-		req.finLocation(22, "20160622", "19:00:00", "Epinard");
+		req.finLocation(22, "20160822", "19:00:00", "Epinard");
 		req.finLocation(23, "20160822", "19:00:00", "Choux Fleur");
 		req.finLocation(24, "20160923", "14:00:00", "Navet");
 		req.finLocation(25, "20161023", "12:00:00", "Patate");
@@ -585,7 +579,7 @@ public class Initialisation {
 		req.finLocation(30, "20160311", "20:00:00", "Navet");
 		req.finLocation(31, "20160411", "15:00:00", "Patate");
 		req.finLocation(32, "20160521", "23:00:00", "Epinard");
-		req.finLocation(33, "20160521", "16:00:00", "Aubergine");
+		req.finLocation(33, "20160621", "16:00:00", "Aubergine");
 		req.finLocation(34, "20160721", "16:00:00", "Patate");
 		req.finLocation(35, "20160721", "16:00:00", "Navet");
 		req.finLocation(36, "20160921", "19:00:00", "Epinard");
@@ -603,15 +597,10 @@ public class Initialisation {
 		req.finLocation(48, "20161006", "10:00:00", "Aubergine");
 		req.finLocation(49, "20161106", "18:00:00", "Patate");
 
-		
+
+		System.out.println(req.facturation(4));
+		System.out.println(req.facturation(12));		
 
 		req.commit();
-		
-		System.out.println(req.facturation(4));
-		System.out.println(req.facturation(12));
-	
-		
-
-
 	}
 }
