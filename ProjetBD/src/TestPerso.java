@@ -17,7 +17,7 @@ public class TestPerso {
 		while (rs.next()) {
 		    for (int i = 1; i <= columnsNumber; i++) {
 		        if (i > 1) System.out.print(",  ");
-		        String columnValue = rs.getString(i);
+		        Byte columnValue = rs.getByte(i);
 		        System.out.print(columnValue + " " + rsmd.getColumnName(i));
 		    }
 		    System.out.println("");

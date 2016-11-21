@@ -813,16 +813,18 @@ public int finLocation (int numLoc, String dateFinLoc, String heureArrivee, Stri
 		ResultSet rsdebut = sttable.executeQuery(querydebut);
 		ResultSetMetaData rsmddebut = rsdebut.getMetaData();
 		
-		String queryfin = "SELECT * FROM LOCATIONS WHERE (locations.NomStation = Station "
-				+ "AND locations.DateLocation = " + toDate1;
-		ResultSet rsfin = sttable.executeQuery(queryfin);
-		ResultSetMetaData rsmdfin = rsfin.getMetaData();
+//		String queryfin = "SELECT * FROM LOCATIONS WHERE (locations.NomStation = Station "
+//				+ "AND locations.DateLocation = " + toDate1;
+//		ResultSet rsfin = sttable.executeQuery(queryfin);
+//		ResultSetMetaData rsmdfin = rsfin.getMetaData();
 		
 		while (rsdebut.next()){
-			while (rsfin.next()){
-				rsdebut.getString(1);
-			}
+//			while (rsfin.next()){
+//				if (rsdebut.getBytes(1) == rsfin.next();
+//			}
+			
 		}
+		sttable.close();
 		return(1);
 	}	
 	public void makePayement(int idForfait, int CB) throws SQLException{
