@@ -702,7 +702,8 @@ public int finLocation (int numLoc, String dateFinLoc, String heureArrivee, Stri
 			String miseAjourStat = "UPDATE Locations SET nomStationArrivee = '"+ nomStationArrivee +"'";
 			sttable.executeUpdate(miseAjourStat);
 			String toDate = ("to_date('" + dateFinLoc + "T" + heureArrivee +"Z', 'YYYYMMDD\"T\"HH24:MI:SS\"Z\"')" + "WHERE ( NumLoc = " + numLoc + ")");
-			String miseAjourDate = "UPDATE Locations SET dateFinLocation =" + toDate;				
+			String miseAjourDate = "UPDATE Locations SET dateFinLocation =" + toDate;		
+			sttable.executeUpdate(miseAjourDate);
 			// on verifie que la loc n'a pas depasse la duree max
 			Boolean tempsDepasse = false;
 			// chercher si le temps est depassse + recup caution
