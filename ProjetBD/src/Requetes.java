@@ -171,11 +171,11 @@ public class Requetes {
 	 * Create Table EstDans
 	 */
 	public void createTableEstDans () throws SQLException {
-		Statement sttable = conn.createStatement();       
+		Statement sttable = conn.createStatement(); 
 		sttable.executeUpdate(
 				"create table EstDans (IdVehicule int primary key,"
 				+ "NomStation varchar(20))"
-				);
+				); 
 		sttable.close();
 	}
 
@@ -343,7 +343,6 @@ public class Requetes {
 								int numCarteBancaire,
 								String nomStationDepart)
 									    throws SQLException {
-		
 		//TO_DATE('20110728T23:54:14Z',  'YYYYMMDD"T"HH24:MI:SS"Z"')
 		String toDate = ("to_date('" + dateLocation + "T" + heureDebut + "Z', 'YYYYMMDD\"T\"HH24:MI:SS\"Z\"')");
 		
@@ -535,7 +534,7 @@ public class Requetes {
 	 * @param CB : number of the user's cash card
 	 * @param categorie : category of the vehicule
 	 */
-    public Boolean alreadyGotForfait1(int CB, String categorie) throws SQLException {
+    public int alreadyGotForfait1(int CB, String categorie) throws SQLException {
 
 
 	
@@ -554,7 +553,7 @@ public class Requetes {
              	ID = ID + " OR IdForfait='" + rs.getString(1) + "'";
              	
              }
-             String query = "SELECT FINVALIDITE FROM Forfait1 "
+             String query = "SELECT IdForfait, FINVALIDITE FROM Forfait1 "
              		+ "WHERE (IDFORFAIT = " + ID + ")";
              System.out.println("query");
              rs = sttable.executeQuery(query);
@@ -562,14 +561,14 @@ public class Requetes {
              
              while (rs.next()) {
             	 
-            	 java.util.Date end = new java.util.Date(rs.getDate(1).getTime());
+            	 java.util.Date end = new java.util.Date(rs.getDate(2).getTime());
             	 if (today.compareTo(end) < 0) {
-            		 return true;
+            		 return rs.getInt(1);
             	 }
             	 
              }
         }
-        return false;
+        return 0;
         
        
     }
@@ -639,7 +638,8 @@ public class Requetes {
 	public ResultSet location(String station, String categorie) throws SQLException {
 		
 		Statement sttable = conn.createStatement();
-		String query = "SELECT IdVehicule FROM Vehicules WHERE (Vehicules.CategorieVehicule = '" + categorie + "' AND EstDans.nomStation  = '" + station + "')";
+		String query = "SELECT Vehicules.IdVehicule FROM Vehicules, EstDans WHERE (Vehicules.CategorieVehicule = '" + categorie + "' AND EstDans.NomStation='" + station + "' AND Vehicules.IdVehicule = EstDans.IdVehicule)";
+		System.out.println(query);
 		ResultSet rs = sttable.executeQuery(query);
 		if (rs.next()) {
 			
@@ -662,9 +662,7 @@ public int finLocation (int numLoc, String dateFinLoc, String heureArrivee, Stri
 
 		
 		
-		
 		Statement sttable = conn.createStatement();
-		
 		// On recupere l'Id du vehicule 
 		
 		ResultSet rs = sttable.executeQuery("Select IdVehicule FROM Locations WHERE (NUMLOC = " + numLoc + ")");
@@ -758,7 +756,7 @@ public int finLocation (int numLoc, String dateFinLoc, String heureArrivee, Stri
 
 	public int getMaxNumLoc() throws SQLException {
 		
-		String request = "SELECT MAX(numLoc) AS numLoc FROM Forfaits";
+		String request = "SELECT MAX(numLoc) AS numLoc FROM Locations";
 		Statement sttable = conn.createStatement();
 		ResultSet rs = sttable.executeQuery(request);
 		rs.next();
@@ -828,25 +826,15 @@ public int finLocation (int numLoc, String dateFinLoc, String heureArrivee, Stri
 		return(1);
 	}	
 	public void makePayement(int idForfait, int CB) throws SQLException{
-		
-		String query = "SELECT SOLDE FROM Abonnes WHERE (NUMCARTEBANCAIRE = " + CB + " )";
-		Statement sttable = conn.createStatement();
-		ResultSet rs = sttable.executeQuery(query);
-		rs.next();
-		int newSolde = rs.getInt(1) + facturation(idForfait);
-		updateSolde(CB, newSolde);
-		
-	}
-	
-	public void updateSolde(int CB, int newSolde) throws SQLException {
-		
-		Statement sttable = conn.createStatement();
-		String query = "UPDATE Abonnes SET SOLDE=" + newSolde;
-		sttable.executeUpdate(query);
 
 		
-		
+		Statement sttable = conn.createStatement();
+		int coutForfait = facturation(idForfait);
+		System.out.println(coutForfait);
+		String query = "UPDATE Abonnes SET SOLDE=SOLDE+" + coutForfait + " WHERE (NUMCARTEBANCAIRE=" + CB + ")";
+		sttable.executeUpdate(query);
 	}
+	
 	public void decreaseLocationsRestantes(int idForfait) throws SQLException {
 		String query = "SELECT NBLocationsRestantes "
 				+ "FROM Forfait2 "
@@ -854,9 +842,12 @@ public int finLocation (int numLoc, String dateFinLoc, String heureArrivee, Stri
 		Statement sta = conn.createStatement();
 		ResultSet rs = sta.executeQuery(query);
 		rs.next();
-		int newLocationsRestantes = rs.getInt(1) + 1;
-		String update = "UPDATE Forfait2 SET NBLocationsRestantes = " + newLocationsRestantes + ")";
+		int newLocationsRestantes = rs.getInt(1) - 1;
+		String update = "UPDATE Forfait2 SET NBLocationsRestantes=" 
+		+ newLocationsRestantes + " WHERE (IdForfait = " + idForfait + ")";
+		System.out.println(update);
 		
+		sta.executeUpdate(update);
 	}
 	/**
 	 * Calculate the price of a rent
