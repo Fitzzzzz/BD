@@ -781,8 +781,16 @@ public class Requetes {
 	
 	public void tauxOccupation(int date, String Station){
 		String toDate1 = ("to_date('" + date + "', 'yyyymmdd')");
-		String query = "SELECT * FROM LOCATIONS WHERE locations.NomStation = Station" ;
-	}
+		String query = "SELECT * FROM LOCATIONS WHERE (locations.NomStation = Station "
+				+ "AND locations.DateLocation = " + toDate1;
+//		Statement sttable = conn.createStatement();
+//		ResultSet rs = sttable.executeQuery(query);
+//		ResultSetMetaData rsmd = rs.getMetaData();
+//		while (rs.next()){
+//		}
+//	
+	
+	}	
 
 	public void makePayement(int idForfait, int CB) throws SQLException{
 		
