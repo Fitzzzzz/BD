@@ -857,36 +857,6 @@ public class Requetes {
 		}
 	}
 	
-	/**
-	 * Calculates the occupation rate of a station at a specific date
-	 * @param date : date
-	 * @param Station : name of the station
-	 * @return the rate of occupation
-	 * @throws SQLException
-	 */
-	public int tauxOccupation(int date, String Station) throws SQLException{
-		Statement sttable = conn.createStatement();
-		String toDate1 = ("to_date('" + date + "', 'yyyymmdd')");
-		String querydebut = "SELECT * FROM LOCATIONS WHERE (locations.NomStation = Station "
-				+ "AND locations.DateLocation = " 
-				+ toDate1;
-		ResultSet rsdebut = sttable.executeQuery(querydebut);
-		ResultSetMetaData rsmddebut = rsdebut.getMetaData();
-//		String queryfin = "SELECT * FROM LOCATIONS WHERE (locations.NomStation = Station "
-//				+ "AND locations.DateLocation = " + toDate1;
-//		ResultSet rsfin = sttable.executeQuery(queryfin);
-//		ResultSetMetaData rsmdfin = rsfin.getMetaData();
-		while (rsdebut.next()){
-//			while (rsfin.next()){
-//				if (rsdebut.getBytes(1) == rsfin.next();
-//			}
-			
-		}
-		sttable.close();
-		return(1);
-	}	
-	
-	
 	
 	/**
 	 * Make the payment for a package
