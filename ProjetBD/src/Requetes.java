@@ -740,7 +740,7 @@ public int finLocation (int numLoc, String dateFinLoc, String heureArrivee, Stri
 			sttable.executeUpdate(miseAjourDate);
 			// on verifie que la loc n'a pas depasse la duree max
 			Boolean tempsDepasse = false;
-			// chercher si le temps est depassse + recup caution
+			// chercher si le temps est depassse + recup caution car il faut
 			
 			query = "SELECT DureeMax FROM CategoriesVehicules WHERE CategorieVehicule ='"+categorie + "'";
 			rs = sttable.executeQuery(query);
