@@ -36,6 +36,7 @@ public class Initialisation {
 		if (!req.tableExists("PlacesLibres")) {
 			req.createTablePlacesLibres();
 		}
+		
 		req.deleteTableContent("PlacesLibres");
 		req.deleteTableContent("EstDans");
 		req.deleteTableContent("Forfait2");
