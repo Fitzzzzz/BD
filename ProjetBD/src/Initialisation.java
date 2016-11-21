@@ -529,21 +529,6 @@ public class Initialisation {
 		req.insertLocations(48, "20161006", "07:00:00", 107, 30, "Poireau");
 		req.insertLocations(49, "20161106", "15:00:00", 108, 31, "Aubergine");
 
-<<<<<<< HEAD
-		// INSERER LES FINS DE LOC
-
-		//pour tester temps moyen d'utilisation par mois
-=======
-		
-		
-		//req.insertForfaits1(39, "Velo", 36, "20161210", "20170710");
-		//req.insertForfaits2(idForfait, CatVehicule, numCB, nbMaxLocations, debutValidite);
-		//req.insertForfaits2(53, "VeloElec", 32, 7, "20161201");
-	//	req.insertLocations(53, "20161206", "15:00:00", 109, 32, "Aubergine");
-	//	req.finLocation(53, "20161206", "18:00:00", "Patate");
-		
-		//regarde si ca fonctionne bien
->>>>>>> 3614dcff40c3ed7582931f59aa7e50fe26cd0bf3
 		req.insertLocations(50, "20160908", "01:00:00", 100, 30, "Patate");
 		req.finLocation(50, "20160908", "03:00:00", "Patate");
 		req.insertLocations(51, "20160909", "01:00:00", 100, 30, "Patate");
