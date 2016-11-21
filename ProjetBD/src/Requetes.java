@@ -658,7 +658,7 @@ public class Requetes {
 	 * @param heureArrivee : time of arrival
 	 * @param nomStationArriv�e : name of the arrival station
 	 */
-public void finLocation (int numLoc, String dateFinLoc, String heureArrivee, String nomStationArrivee) throws SQLException {
+public int finLocation (int numLoc, String dateFinLoc, String heureArrivee, String nomStationArrivee) throws SQLException {
 
 		
 		
@@ -702,12 +702,38 @@ public void finLocation (int numLoc, String dateFinLoc, String heureArrivee, Str
 			sttable.executeUpdate(miseAjourStat);
 			String toDate = ("to_date('" + dateFinLoc + "T" + heureArrivee +"Z', 'YYYYMMDD\"T\"HH24:MI:SS\"Z\"')" + "WHERE ( NumLoc = " + numLoc + ")");
 			String miseAjourDate = "UPDATE Locations SET dateFinLocation =" + toDate;				
-			sttable.executeUpdate(miseAjourDate);
-
+			// on verifie que la loc n'a pas depasse la duree max
+			Boolean tempsDepasse = false;
+			// chercher si le temps est depassse + recup caution
+			
+			query = "SELECT DureeMax FROM CategoriesVehicules WHERE CategorieVehicule ='"+categorie + "'";
+			rs = sttable.executeQuery(query);
+			rs.next();
+			int dureeMax = rs.getInt(1);
+			query = "SELECT MontantCaution FROM CategoriesVehicules WHERE CategorieVehicule = '"+categorie+"'";
+			rs = sttable.executeQuery(query);
+			rs.next();
+			int caution = rs.getInt(1);
+			// on cherche la duree d'utilisation du vehicule
+			query = "SELECT (datefinlocation - datelocation)*24 FROM Locations WHERE numloc = 1";
+			rs = sttable.executeQuery(query);
+			rs.next();
+			int duree = rs.getInt(1);
+			if (duree > dureeMax) {
+				tempsDepasse = true;
+			}
+			sttable.close();
+			if (tempsDepasse) {
+				return caution;
+			} else {
+				return 0;
+			}
 			/*String miseAjourHeure = "UPDATE Locations SET heureFin = "+ heureArrivee ;
 			sttable.executeUpdate(miseAjourHeure);*/
 		} else {
-			System.out.println("Pas de places disponibles dans cette station");			
+			System.out.println("Pas de places disponibles dans cette station");	
+			sttable.close();
+			return -1;
 		}
 		
 		
@@ -717,7 +743,7 @@ public void finLocation (int numLoc, String dateFinLoc, String heureArrivee, Str
 				+ "' AND CategorieVehicule ='" + categorie + "')";
 		 */
 		
-		sttable.close();
+		
 	}
 	
 	public int getMaxIdForfait() throws SQLException {
