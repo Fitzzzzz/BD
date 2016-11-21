@@ -729,6 +729,7 @@ public int finLocation (int numLoc, String dateFinLoc, String heureArrivee, Stri
 				rs = sttable.executeQuery(requetePrix);
 				rs.next();
 				int prix = (duree - 1)*rs.getInt(1);
+				this.increaseSolde(prix, CB);
 			}
 			
 			
