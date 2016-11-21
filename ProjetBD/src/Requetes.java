@@ -783,12 +783,13 @@ public void finLocation (int numLoc, String dateFinLoc, String heureArrivee, Str
 		String toDate1 = ("to_date('" + date + "', 'yyyymmdd')");
 		String query = "SELECT * FROM LOCATIONS WHERE (locations.NomStation = Station "
 				+ "AND locations.DateLocation = " + toDate1;
-//		Statement sttable = conn.createStatement();
-//		ResultSet rs = sttable.executeQuery(query);
-//		ResultSetMetaData rsmd = rs.getMetaData();
-//		while (rs.next()){
-//		}
-//	
+		Statement sttable = conn.createStatement();
+		ResultSet rs = sttable.executeQuery(query);
+		ResultSetMetaData rsmd = rs.getMetaData();
+		while (rs.next()){
+			
+		}
+	
 	
 	}	
 
