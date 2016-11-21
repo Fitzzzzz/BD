@@ -479,7 +479,7 @@ public class Initialisation {
 		/////////////////////////////////////////////
 		// INSERTION OF RENTS
 		/////////////////////////////////////////////
-		req.insertLocations(1, "20161116", "21:00:00", 161, 4, "Navet");
+		req.insertLocations(1, "20161116", "15:00:00", 161, 4, "Navet");
 		req.insertLocations(2, "20161120", "06:00:00", 0, 1, "Patate");
 		req.insertLocations(3, "20161119", "13:00:00", 153, 2, "Aubergine");
 		req.insertLocations(4, "20161122", "03:00:00", 136, 3, "Courge");
