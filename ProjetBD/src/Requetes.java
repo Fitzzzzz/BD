@@ -699,8 +699,12 @@ public int finLocation (int numLoc, String dateFinLoc, String heureArrivee, Stri
 			String miseAjourStat = "UPDATE Locations SET nomStationArrivee = '"+ nomStationArrivee +"'";
 			sttable.executeUpdate(miseAjourStat);
 			String toDate = ("to_date('" + dateFinLoc + "T" + heureArrivee +"Z', 'YYYYMMDD\"T\"HH24:MI:SS\"Z\"')" + "WHERE ( NumLoc = " + numLoc + ")");
+<<<<<<< HEAD
 			
 			String miseAjourDate = "UPDATE Locations SET dateFinLocation =" + toDate;				
+=======
+			String miseAjourDate = "UPDATE Locations SET dateFinLocation =" + toDate;	
+>>>>>>> b8a80737b9db5fda4ec1c38f7fec79c6a8cb90ac
 			sttable.executeUpdate(miseAjourDate);
 			// on verifie que la loc n'a pas depasse la duree max
 			Boolean tempsDepasse = false;
@@ -715,7 +719,9 @@ public int finLocation (int numLoc, String dateFinLoc, String heureArrivee, Stri
 			rs.next();
 			int caution = rs.getInt(1);
 			// on cherche la duree d'utilisation du vehicule
+
 			query = "SELECT (datefinlocation - datelocation)*24 FROM Locations WHERE numloc = +numloc";
+
 			rs = sttable.executeQuery(query);
 			rs.next();
 			int duree = rs.getInt(1);
