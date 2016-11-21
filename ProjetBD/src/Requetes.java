@@ -658,14 +658,14 @@ public class Requetes {
 	 * @param heureArrivee : time of arrival
 	 * @param nomStationArriv�e : name of the arrival station
 	 */
-	public void finLocation (int numLoc, String dateFinLoc, String heureArrivee, String nomStationArrivee) throws SQLException {
+public void finLocation (int numLoc, String dateFinLoc, String heureArrivee, String nomStationArrivee) throws SQLException {
 
 		
 		
 		
 		Statement sttable = conn.createStatement();
 		
-		// On r�cup�re l'Id du v�hicule 
+		// On recupere l'Id du vehicule 
 		
 		ResultSet rs = sttable.executeQuery("Select IdVehicule FROM Locations WHERE (NUMLOC = " + numLoc + ")");
 		rs.next();
