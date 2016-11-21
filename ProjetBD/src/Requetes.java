@@ -761,12 +761,13 @@ public int finLocation (int numLoc, String dateFinLoc, String heureArrivee, Stri
 			rs = sttable.executeQuery(requeteCB);
 			rs.next();
 			int CB = rs.getInt(1);
+			System.out.println(categorie);
 			String requetForfait = "SELECT TYPEFORFAIT FROM FORFAITS WHERE (NUMCARTEBANCAIRE = " + CB + " AND CATEGORIEVEHICULE ='" + categorie + "' )";
 			rs = sttable.executeQuery(requetForfait);
 			rs.next(); 
 			int typeForfait = rs.getInt(1);
 			if (typeForfait == 1) {
-				String requetePrix = "SELECT PrixHoraire FROM CategorieVehicules WHERE (CategorieVehicule='" + categorie + "' )";
+				String requetePrix = "SELECT PrixHoraire FROM CategoriesVehicules WHERE (CategorieVehicule='" + categorie + "' )";
 				rs = sttable.executeQuery(requetePrix);
 				rs.next();
 				int prix = (duree - 1)*rs.getInt(1);

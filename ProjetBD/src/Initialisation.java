@@ -477,7 +477,7 @@ public class Initialisation {
 		req.insertLocations(1, "20161116", "15:00:00", 161, 4, "Navet");
 		req.insertLocations(2, "20161120", "06:00:00", 0, 1, "Patate");
 		req.insertLocations(3, "20161119", "13:00:00", 153, 2, "Aubergine");
-		req.insertLocations(4, "20161122", "03:00:00", 136, 3, "Courge");
+		req.insertLocations(4, "20161122", "03:00:00", 136, 4, "Courge");
 		req.insertLocations(5, "20161121", "21:00:00", 20, 14, "Cornichon");
 		req.insertLocations(6, "20160130", "01:00:00", 155, 10, "Epinard");
 		req.insertLocations(7, "20160305", "12:00:00", 105, 37, "Poix Chiche");
