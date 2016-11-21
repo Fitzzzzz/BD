@@ -11,14 +11,26 @@ public class Requetes {
 		
 		this.conn = conn;
 	}
+	
+	
+	/**
+	 * Delete the content of a table
+	 * @param tableName : name of the table
+	 * @throws SQLException
+	 */
 	public void deleteTableContent(String tableName) throws SQLException {
 		
 		String query = "DELETE FROM " + tableName;
 		Statement stmt = this.conn.createStatement();
 		stmt.executeQuery(query);
-		
 	}
 	
+
+	/**
+	 * Delete a vehicule from the table EstDans
+	 * @param idVehicule : identification number of the vehicule to delete
+	 * @throws SQLException
+	 */
 	public void deleteFromEstDans(int idVehicule) throws SQLException {
 		
 		String query = "DELETE FROM EstDans WHERE (IdVehicule = " + idVehicule + " )";
@@ -33,6 +45,7 @@ public class Requetes {
 	
 	/**
 	 * Create Table Categories
+	 * @throws SQLException
 	 */
 	public void createTableCategories() throws SQLException {
 		Statement sttable = conn.createStatement();       
@@ -48,6 +61,7 @@ public class Requetes {
 	
 	/**
 	 * Create Table Stations
+	 * @throws SQLException
 	 */
 	public void createTableStations() throws SQLException{
 		Statement sttable = conn.createStatement();       
@@ -60,6 +74,7 @@ public class Requetes {
 
 	/**
 	 * Create Table Vehicules
+	 * @throws SQLException
 	 */
 	public void createTableVehicules() throws SQLException {
 		Statement sttable = conn.createStatement();       
@@ -76,6 +91,7 @@ public class Requetes {
 	
 	/**
 	 * Create Table Abonnes
+	 * @throws SQLException
 	 */
 	public void createTableAbonnes() throws SQLException {
 		Statement sttable = conn.createStatement();  
@@ -94,14 +110,13 @@ public class Requetes {
 	
 	/**
 	 * Create Table Locations
+	 * @throws SQLException
 	 */
 	public void createTableLocations() throws SQLException {
 		Statement sttable = conn.createStatement(); 
 		String request = "create table Locations (NumLoc int constraint numLocPos check (NumLoc >= 0),"
 				+ "DateLocation date,"
 				+ "DateFinLocation date,"
-				/*+ "heureDebut int,"
-				+ "heureFin int,"*/
 				+ "IdVehicule  int,"
 				+ "numCarteBancaire int,"
 				+ "nomStationDepart varchar(20),"
@@ -120,6 +135,7 @@ public class Requetes {
 	
 	/**
 	 * Create Table Forfaits
+	 * @throws SQLException
 	 */
 	public void createTableForfaits() throws SQLException {
 		Statement sttable = conn.createStatement();  
@@ -139,6 +155,7 @@ public class Requetes {
 	
 	/**
 	 * Create Table Forfaits2
+	 * @throws SQLException
 	 */
 	public void createTableForfaits2() throws SQLException {
 		Statement sttable = conn.createStatement();       
@@ -154,12 +171,12 @@ public class Requetes {
 
 	/**
 	 * Create Table Forfaits1
+	 * @throws SQLException
 	 */
 	public void createTableForfait1() throws SQLException {
 		Statement sttable = conn.createStatement();       
 		sttable.executeUpdate(
 				"create table Forfait1 (IdForfait int primary key,"
-				//+ "DureeForfait int constraint dureeForfPos check (DureeForfait >= 0),"
 				+ "FinValidite date,"
 				+ "constraint IdForfaitForeign foreign key (IdForfait) references Forfaits(IdForfait))"
 				);
@@ -169,6 +186,7 @@ public class Requetes {
 	
 	/**
 	 * Create Table EstDans
+	 * @throws SQLException
 	 */
 	public void createTableEstDans () throws SQLException {
 		Statement sttable = conn.createStatement(); 
@@ -182,6 +200,7 @@ public class Requetes {
 	
 	/**
 	 * Create Table Places
+	 * @throws SQLException
 	 */
 	public void createTablePlacesLibres () throws SQLException {
 		Statement sttable = conn.createStatement();
@@ -203,6 +222,7 @@ public class Requetes {
 	/**
 	 * Drop table in parameters
 	 * @param NomTable : name of the table to drop 
+	 * @throws SQLException
 	 */
 	public void dropTable(String NomTable) throws SQLException {
 		Statement sttable = conn.createStatement();
@@ -214,6 +234,7 @@ public class Requetes {
 	}
 	/**
 	 * Commit
+	 * @throws SQLException
 	 */
 	public void commit() throws SQLException {
 		Statement sttable = conn.createStatement();       
@@ -223,6 +244,7 @@ public class Requetes {
 	
 	/**
 	 * Set an auto commit
+	 * @throws SQLException
 	 */
 	public void setautocommit() throws SQLException {
 		conn.setAutoCommit(false); 
@@ -240,6 +262,7 @@ public class Requetes {
 	 * @param prixHoraire : price for 1 hour of rent
 	 * @param prixMensuel : price for 1 month of rent
 	 * @param caution : amount of the caution
+	 * @throws SQLException
 	 */
 	public void insertCategorieVehicule(String catVehic, 
 									   int dureeMax, 
@@ -263,9 +286,11 @@ public class Requetes {
 	 * Insert values in Table Station
 	 * @param nomStation : name of the station
 	 * @param adresseStation : adress of the station
+	 * @throws SQLException
+	 * @throws SQLException
 	 */
 	public void insertStation(String nomStation, 
-									String adresseStation) throws SQLException {
+							  String adresseStation) throws SQLException {
 			Statement sttable = conn.createStatement();  
 			String request = "insert into Stations values ('"+nomStation+"', '"+adresseStation+"')";
 			System.out.println(request);
@@ -278,10 +303,11 @@ public class Requetes {
 	 * @param idVehicule : identification number of the vehicule
 	 * @param nbPlaces : number of places of the vehicule
 	 * @param categorieVehicule : category of the vehicule
+	 * @throws SQLException
 	 */
 	public void insertVehicules(int idVehicule, 
-									   int nbPlaces , 
-									   String categorieVehicule) throws SQLException {
+								int nbPlaces , 
+								String categorieVehicule) throws SQLException {
 			Statement sttable = conn.createStatement();       
 			sttable.executeUpdate("insert into Vehicules values (" 
 			+ idVehicule+ ", " 
@@ -302,12 +328,13 @@ public class Requetes {
 	 * @param prenomAbonne : first name of the client
 	 * @param dateNaissance : date of birth of the client
 	 * @param adresseabonne : adress of the client
+	 * @throws SQLException
 	 */
 	public void  insertAbonnes (int numCarteBancaire, 
-										String nomAbonne, 
-										String prenomAbonne, 
-										String dateNaissance, 
-										String adresseAbonne) throws SQLException {
+								String nomAbonne, 
+								String prenomAbonne, 
+								String dateNaissance, 
+								String adresseAbonne) throws SQLException {
 		
 		String request = "insert into Abonnes values (" 
 				+ numCarteBancaire + ", '" 
@@ -335,24 +362,21 @@ public class Requetes {
 	 * @param idVehicule : identification nuimber of the vehicule used for the rent
 	 * @param numCarteBancaire : number if the paycard used by the client for the rent 
 	 * @param nomStationDepart : station of departure
+	 * @throws SQLException
 	 */
 	public void insertLocations(int numLoc, 
 								String dateLocation,
 								String heureDebut, 
 								int idVehicule, 
 								int numCarteBancaire,
-								String nomStationDepart)
-									    throws SQLException {
+								String nomStationDepart) throws SQLException {
 		//TO_DATE('20110728T23:54:14Z',  'YYYYMMDD"T"HH24:MI:SS"Z"')
 		String toDate = ("to_date('" + dateLocation + "T" + heureDebut + "Z', 'YYYYMMDD\"T\"HH24:MI:SS\"Z\"')");
 		
 		String request = "insert into Locations values (" 
-				+ numLoc + ", "
-				//+ "to_date('" + dateLocation + "', 'yyyymmdd')" + ", " 				
+				+ numLoc + ", "				
 				+ toDate + "," 
 				+ "null" + ","
-				/*+ heureDebut + ", "
-				+ "null" + ", "*/
 				+ idVehicule + ", "
 				+ numCarteBancaire + ", '"
 				+ nomStationDepart + "', " 
@@ -388,9 +412,6 @@ public class Requetes {
 		String query = "DELETE FROM EstDans WHERE IdVehicule =" + idVehicule;
 		sttable.executeQuery(query);
 		sttable.close() ; 	
-			
-		
-			
 	}
 
 	
@@ -401,9 +422,13 @@ public class Requetes {
 	 * @param debutval : beginning date of the paskage
 	 * @param CatVehicule : category of the vehicule concerned by the package
 	 * @param NumCarteBancaire : number of the user's cash card
+	 * @throws SQLException
 	 */
-	private void insererForfaits (int IdForfait, int TypeForfait, String debutVal,
-			String CatVehicule, int NumCarteBancaire) throws SQLException {
+	private void insererForfaits (int IdForfait, 
+								  int TypeForfait, 
+								  String debutVal,
+								  String CatVehicule, 
+								  int NumCarteBancaire) throws SQLException {
 		Statement sttable = conn.createStatement();       
 		sttable.executeUpdate("insert into Forfaits values (" 
 				+ IdForfait + ", " 
@@ -423,12 +448,13 @@ public class Requetes {
 	 * @param numCB : number of the user's cash card
 	 * @param debutValidite : date of beginning of the package
 	 * @param finValiditï¿½ : date of the end of the package
+	 * @throws SQLException
 	 */
 	public void insertForfaits1(int idForfait, 
-									   String CatVehicule, 
-									   int numCB, 
-									   String debutValidite,
-									   String finValidite)	throws SQLException {
+								String CatVehicule, 
+								int numCB, 
+								String debutValidite,
+								String finValidite)	throws SQLException {
 		
 		
 		String toDate1 = ("to_date('" + debutValidite + "', 'yyyymmdd')");
@@ -436,11 +462,8 @@ public class Requetes {
 		
 		insererForfaits (idForfait, 1, toDate1, CatVehicule, numCB);
 			Statement sttable = conn.createStatement();
-
 			sttable.executeUpdate(" insert into Forfait1 values (" 
 					+ idForfait + ", "
-					//+ dureeForfait + ", "
-					//+ "to_date('" + debutValidite + "', 'yyyymmdd')"
 					+ toDate2
 					+ ")"
 					);
@@ -455,12 +478,13 @@ public class Requetes {
 	 * @param nbMaxLocations : number maximum of locations for this package
 	 * @param nbLocRest : number of remaining locations for the package
 	 * @param debutValiditï¿½ : ate of beginning of the package
+	 * @throws SQLException
 	 */
 	public void insertForfaits2(int idForfait,
-									   String CatVehicule, 
-									   int numCB,
-									   int nbMaxLocations, 
-									   String debutValidite) throws SQLException {
+								String CatVehicule, 
+								int numCB,
+								int nbMaxLocations, 
+								String debutValidite) throws SQLException {
 		String toDate1 = ("to_date('" + debutValidite + "', 'yyyymmdd')");	
 		insererForfaits (idForfait, 2, toDate1, CatVehicule, numCB);
 			Statement sttable = conn.createStatement();
@@ -479,6 +503,7 @@ public class Requetes {
 	 * All vehicules are inserted during the initialisation protocole
 	 * @param IdVehicule : identification number of the vehicule
 	 * @param NomStation : name of the station in which the vehicule is inserted
+	 * @throws SQLException
 	 */
 	public void insertEstDansInit(int IdVehicule, String NomStation) throws SQLException{
 		Statement sttable = conn.createStatement() ; 
@@ -499,6 +524,7 @@ public class Requetes {
 	 * All vehicules are inserted during the initialisation protocole
 	 * @param IdVehicule : identification number of the vehicule
 	 * @param NomStation : name of the station in which the vehicule is inserted
+	 * @throws SQLException
 	 */
 	public void insertEstDans (int IdVehicule, String NomStation) throws SQLException {
 
@@ -516,8 +542,11 @@ public class Requetes {
 	 * @param NomStation : name of the station
 	 * @param places : number of available places in the station
 	 * @param CatVehicule : category of the vehicule 
+	 * @throws SQLException
 	 */
-	public void insertPlacesLibres (String NomStation, int places, String CatVehicule) throws SQLException {
+	public void insertPlacesLibres (String NomStation, 
+									int places, 
+									String CatVehicule) throws SQLException {
 		Statement sttable = conn.createStatement() ; 
 		sttable.executeUpdate(" insert into PlacesLibres values ('"
 				+ NomStation + "', '"
@@ -530,18 +559,18 @@ public class Requetes {
 	
 
 	/**
-	 * 
+	 * Check if the user's package1 is still on validity
 	 * @param CB : number of the user's cash card
 	 * @param categorie : category of the vehicule
+	 * @return 0 if the package's validity is not expired
+	 * @throws SQLException
 	 */
     public int alreadyGotForfait1(int CB, String categorie) throws SQLException {
-
-
-	
-        
         Statement sttable = conn.createStatement();
         String getForfaitId = "SELECT IdForfait FROM Forfaits "
-        		+ "WHERE (NumCarteBancaire=" + CB + " AND TYPEFORFAIT = 1 AND CATEGORIEVEHICULE = '" + categorie + "')";
+        		+ "WHERE (NumCarteBancaire=" 
+        		+ CB + " AND TYPEFORFAIT = 1 AND CATEGORIEVEHICULE = '" 
+        		+ categorie + "')";
         System.out.println(getForfaitId);
         ResultSet rs = sttable.executeQuery(getForfaitId);
         String ID = "";
@@ -549,9 +578,7 @@ public class Requetes {
         if (rs.next()) {
         	ID = "'" + rs.getString(1)+ "'" ; 	
         	while (rs.next()) {
-             	
              	ID = ID + " OR IdForfait='" + rs.getString(1) + "'";
-             	
              }
              String query = "SELECT IdForfait, FINVALIDITE FROM Forfait1 "
              		+ "WHERE (IDFORFAIT = " + ID + ")";
@@ -560,20 +587,23 @@ public class Requetes {
              java.util.Date today = new java.util.Date();
              
              while (rs.next()) {
-            	 
             	 java.util.Date end = new java.util.Date(rs.getDate(2).getTime());
             	 if (today.compareTo(end) < 0) {
             		 return rs.getInt(1);
             	 }
-            	 
              }
         }
         return 0;
-        
-       
     }
     
     
+	/**
+	 * Check if the user's package2 is still on validity
+	 * @param CB : number of the user's cash card
+	 * @param categorie : category of the vehicule
+	 * @return 0 if the package's validity is not expired
+	 * @throws SQLException
+	 */
     public int alreadyGotForfait2(int CB, String categorie) throws SQLException {
     	
     	 Statement sttable = conn.createStatement();
@@ -602,63 +632,66 @@ public class Requetes {
               }
          }
          return 0;
-    	
-    	
     }
-/*
-    "create table Forfait1 (IdForfait int primary key,"
-    + "DureeForfait int constraint dureeForfPos check (DureeForfait >= 0),"
-    + "DebutValidite date,"
-    + "constraint IdForfaitForeign foreign key (IdForfait) references Forfaits(IdForfait))"
-    */
-	/*
-	 * + IdForfait + ", " 
-				+ TypeForfait + ",'" 
-				+ CatVehicule + "', " 
-				+ NumCarteBancaire + ")"
-	 */
-
+    
+    
 
 	/**
 	 * Find a rent from a user's cash card number
 	 * @param CB : number of the user's cash card
-	 * @return 
+	 * @return identification nnumber of the location
+	 * @throws SQLException
 	 */
 	public int findLocation(int CB) throws SQLException {
 		
 		Statement sttable = conn.createStatement();
-		String query = "SELECT numloc FROM locations WHERE (numcartebancaire=" + CB +  " AND datefinlocation = null)";
+		String query = "SELECT numloc FROM locations WHERE (numcartebancaire=" 
+						+ CB +  " AND datefinlocation = null)";
 		ResultSet rs = sttable.executeQuery(query);
 		rs.next();
 		return rs.getInt(1);
-		
-		
 	}
 
+	
+	/**
+	 * Find all available vehicules from a category in a station
+	 * @param station : name of the station
+	 * @param categorie : category of the vehicules to look for
+	 * @return 
+	 * @throws SQLException
+	 */
 	public ResultSet location(String station, String categorie) throws SQLException {
 		
 		Statement sttable = conn.createStatement();
-		String query = "SELECT Vehicules.IdVehicule FROM Vehicules, EstDans WHERE (Vehicules.CategorieVehicule = '" + categorie + "' AND EstDans.NomStation='" + station + "' AND Vehicules.IdVehicule = EstDans.IdVehicule)";
+		String query = "SELECT Vehicules.IdVehicule FROM Vehicules, EstDans WHERE (Vehicules.CategorieVehicule = '" 
+						+ categorie + "' AND EstDans.NomStation='" 
+						+ station + "' AND Vehicules.IdVehicule = EstDans.IdVehicule)";
 		System.out.println(query);
 		ResultSet rs = sttable.executeQuery(query);
-		if (rs.next()) {
-			
+		if (rs.next()) {	
 			return rs;
 		}
 		else {
 			return null;
 		}
-		
 	}
+	
 
 	/**
 	 * Find a rent
 	 * @param numLoc : identification number of the rent
 	 * @param dateFinLoc : date of the end of the rent
 	 * @param heureArrivee : time of arrival
-	 * @param nomStationArrivï¿½e : name of the arrival station
+	 * @param nomStationArrivée : name of the arrival station
+	 * @param CB : number of the user's cash card
+	 * @return 0 if the time of rent is respected, -1 if it is not
+	 * @throws SQLException
 	 */
-public int finLocation (int numLoc, String dateFinLoc, String heureArrivee, String nomStationArrivee, int CB) throws SQLException {
+	public int finLocation (int numLoc, 
+							String dateFinLoc, 
+							String heureArrivee, 
+							String nomStationArrivee, 
+							int CB) throws SQLException {
 
 		
 		
@@ -758,8 +791,6 @@ public int finLocation (int numLoc, String dateFinLoc, String heureArrivee, Stri
 		String ajoutPlace = "UPDATE PlacesLibres SET Places=" + placeLibre + " Where (NomStation ='" + nomStationDepart
 				+ "' AND CategorieVehicule ='" + categorie + "')";
 		 */
-		
-		
 	}
 	
 	public int getMaxIdForfait() throws SQLException {
@@ -787,6 +818,7 @@ public int finLocation (int numLoc, String dateFinLoc, String heureArrivee, Stri
 	 * Check if a table exists or not
 	 * @param tableName : name of the table
 	 * @return true if the table exists
+	 * @throws SQLException
 	 */
 	public  boolean tableExists(String tableName) {
 		String query = "SELECT 1 FROM " + tableName;
@@ -804,6 +836,11 @@ public int finLocation (int numLoc, String dateFinLoc, String heureArrivee, Stri
 	}
 	
 
+	/**
+	 * Print a table and its values
+	 * @param TableName : name of the table
+	 * @throws SQLException
+	 */
 	public void printTable(String TableName) throws SQLException {
 		
 		Statement sttable = conn.createStatement();
@@ -821,19 +858,25 @@ public int finLocation (int numLoc, String dateFinLoc, String heureArrivee, Stri
 		}
 	}
 	
+	/**
+	 * Calculates the occupation rate of a station at a specific date
+	 * @param date : date
+	 * @param Station : name of the station
+	 * @return the rate of occupation
+	 * @throws SQLException
+	 */
 	public int tauxOccupation(int date, String Station) throws SQLException{
 		Statement sttable = conn.createStatement();
 		String toDate1 = ("to_date('" + date + "', 'yyyymmdd')");
 		String querydebut = "SELECT * FROM LOCATIONS WHERE (locations.NomStation = Station "
-				+ "AND locations.DateLocation = " + toDate1;
+				+ "AND locations.DateLocation = " 
+				+ toDate1;
 		ResultSet rsdebut = sttable.executeQuery(querydebut);
 		ResultSetMetaData rsmddebut = rsdebut.getMetaData();
-		
 //		String queryfin = "SELECT * FROM LOCATIONS WHERE (locations.NomStation = Station "
 //				+ "AND locations.DateLocation = " + toDate1;
 //		ResultSet rsfin = sttable.executeQuery(queryfin);
 //		ResultSetMetaData rsmdfin = rsfin.getMetaData();
-		
 		while (rsdebut.next()){
 //			while (rsfin.next()){
 //				if (rsdebut.getBytes(1) == rsfin.next();
@@ -843,16 +886,28 @@ public int finLocation (int numLoc, String dateFinLoc, String heureArrivee, Stri
 		sttable.close();
 		return(1);
 	}	
+	
+	
+	
+	/**
+	 * Make the payment for a package
+	 * @param idForfait : identification number of the package
+	 * @param CB : number of the user's cash card
+	 * @throws SQLException
+	 */
 	public void makePayement(int idForfait, int CB) throws SQLException{
-
-		
-		
 		int coutForfait = facturation(idForfait);
 		System.out.println(coutForfait);
 		this.increaseSolde(coutForfait, CB);
-		
 	}
 	
+	
+	/**
+	 * Increase the amount paid by a user on its personnal account
+	 * @param increase : amount to add to the "Solde"
+	 * @param CB : number of the user's cash card
+	 * @throws SQLException
+	 */
 	public void increaseSolde(int increase, int CB) throws SQLException {
 		
 		Statement sttable = conn.createStatement();
@@ -871,6 +926,12 @@ public int finLocation (int numLoc, String dateFinLoc, String heureArrivee, Stri
 //		
 //		
 //	}
+	
+	/**
+	 * Decrease the number of remaining rents in a package
+	 * @param idForfait : identification number of a package
+	 * @throws SQLException
+	 */
 	public void decreaseLocationsRestantes(int idForfait) throws SQLException {
 		String query = "SELECT NBLocationsRestantes "
 				+ "FROM Forfait2 "
@@ -885,12 +946,12 @@ public int finLocation (int numLoc, String dateFinLoc, String heureArrivee, Stri
 		
 		sta.executeUpdate(update);
 	}
+	
 	/**
 	 * Calculate the price of a rent
 	 * @param IdForfait : identification number of the package
 	 * @return the price of the rent
 	 */
-
 	public int facturation(int IdForfait) throws SQLException{
 		int prix = 0;
 			Statement sttable = conn.createStatement();
