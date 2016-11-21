@@ -1,3 +1,6 @@
+/**
+ * Initialisation of the database's tables
+ */
 import java.sql.*;
 public class Initialisation {
 	public static void initBase (Connection conn) throws SQLException {
@@ -410,20 +413,11 @@ public class Initialisation {
 		req.insertAbonnes(39, "Lefort", "Maxime", "19790114", "23 rue de la Petite Marchande 38000 Grenoble");
 		req.insertAbonnes(40, "Fer", "Odeline", "19910330", "32 Quai des Reveurs 38000 Grenoble");
 
-		// INSERER LES FORFAITS !!!!
-		/*	aits1(int idForfait, 
-				   String CatVehicule, int numCB,
-				   int dureeForfait, 
-				   Date debutValidite,
-
-		 *2(int idForfait,
-									   String CatVehicule, int numCB,
-									   int nbMaxLocations, */
+		
 
 		/////////////////////////////////////////////
 		// INSERTION OF PACKAGES TYPE 1 AND 2
 		/////////////////////////////////////////////
-		
 		req.insertForfaits1 (1, "Utilitaire" , 4, "20161101", "20161201");
 		req.insertForfaits2 (2, "Velo", 1, 4, "20161009");
 		req.insertForfaits2 (3, "VeloRemork", 2, 5, "20161019");
@@ -608,11 +602,5 @@ public class Initialisation {
 		System.out.println(req.facturation(12));		
 
 		req.commit();
-		
-
-	
-		
-
-
 	}
 }
