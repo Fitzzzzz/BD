@@ -1,4 +1,9 @@
+/**
+ * Creation of a driver and opening of the connexion
+ */
+
 import java.sql.*;
+
 public class Utilitaires {
 
 	public static void createRegister() {
@@ -14,7 +19,9 @@ public class Utilitaires {
 	public static Connection openConnection () {
 		try
 		{
-
+			String  url = "jdbc:oracle:thin:@ensioracle1.imag.fr:" + "1521: ensioracle1";
+			String  user = "bagouc";
+			String  passwd = "bagouc";
 			Connection  connection = DriverManager.getConnection(url , user , passwd );
 			return connection;
 		}
