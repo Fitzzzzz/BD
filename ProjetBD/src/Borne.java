@@ -101,7 +101,11 @@ public class Borne {
 		
 			int numLoc = requests.findLocation(CB);
 			
-			
+			if (numLoc == 0) {
+				System.out.println("Vous n'avez pas de location!");
+				this.welcome();
+				return;
+			}
 			DateFormat df = new SimpleDateFormat("HH:mm:ss");
 			Date dateobj = new Date();
 			
@@ -111,7 +115,7 @@ public class Borne {
 			// dans les param de l'appel de finLoc
 			DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
 			Calendar cal = Calendar.getInstance();
-			int caution = requests.finLocation(numLoc, dateFormat.format(cal), df.format(dateobj), this.nomStation, this.CB);
+			int caution = requests.finLocation(numLoc, dateFormat.format(cal), df.format(dateobj), this.nomStation);
 			switch (caution) {
 			case -1:
 				System.out.println("Désolé, il n'y a plus de place ici, choisissez une autre station!");

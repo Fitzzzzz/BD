@@ -629,8 +629,12 @@ public class Requetes {
 		Statement sttable = conn.createStatement();
 		String query = "SELECT numloc FROM locations WHERE (numcartebancaire=" + CB +  " AND datefinlocation = null)";
 		ResultSet rs = sttable.executeQuery(query);
-		rs.next();
-		return rs.getInt(1);
+		if (rs.next()) {
+			return rs.getInt(1);
+		}
+		else {
+			return 0;
+		}
 		
 		
 	}
@@ -658,7 +662,7 @@ public class Requetes {
 	 * @param heureArrivee : time of arrival
 	 * @param nomStationArriv�e : name of the arrival station
 	 */
-public int finLocation (int numLoc, String dateFinLoc, String heureArrivee, String nomStationArrivee, int CB) throws SQLException {
+public int finLocation (int numLoc, String dateFinLoc, String heureArrivee, String nomStationArrivee) throws SQLException {
 
 		
 		
@@ -699,12 +703,10 @@ public int finLocation (int numLoc, String dateFinLoc, String heureArrivee, Stri
 			String miseAjourStat = "UPDATE Locations SET nomStationArrivee = '"+ nomStationArrivee +"'";
 			sttable.executeUpdate(miseAjourStat);
 			String toDate = ("to_date('" + dateFinLoc + "T" + heureArrivee +"Z', 'YYYYMMDD\"T\"HH24:MI:SS\"Z\"')" + "WHERE ( NumLoc = " + numLoc + ")");
-<<<<<<< HEAD
+
 			
 			String miseAjourDate = "UPDATE Locations SET dateFinLocation =" + toDate;				
-=======
-			String miseAjourDate = "UPDATE Locations SET dateFinLocation =" + toDate;	
->>>>>>> b8a80737b9db5fda4ec1c38f7fec79c6a8cb90ac
+
 			sttable.executeUpdate(miseAjourDate);
 			// on verifie que la loc n'a pas depasse la duree max
 			Boolean tempsDepasse = false;
@@ -720,12 +722,15 @@ public int finLocation (int numLoc, String dateFinLoc, String heureArrivee, Stri
 			int caution = rs.getInt(1);
 			// on cherche la duree d'utilisation du vehicule
 
-			query = "SELECT (datefinlocation - datelocation)*24 FROM Locations WHERE numloc = +numloc";
+			query = "SELECT (datefinlocation - datelocation)*24 FROM Locations WHERE numloc = " + numLoc;
 
 			rs = sttable.executeQuery(query);
 			rs.next();
 			int duree = rs.getInt(1);
-			
+			String requeteCB = "Select NumCarteBancaire FROM Locations WHERE NumLoc =" + numLoc;
+			rs = sttable.executeQuery(requeteCB);
+			rs.next();
+			int CB = rs.getInt(1);
 			String requetForfait = "SELECT TYPEFORFAIT FROM FORFAITS WHERE (NUMCARTEBANCAIRE = " + CB + " AND CATEGORIEVEHICULE ='" + categorie + "' )";
 			rs = sttable.executeQuery(requetForfait);
 			rs.next(); 
