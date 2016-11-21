@@ -370,7 +370,6 @@ public class Requetes {
 								int idVehicule, 
 								int numCarteBancaire,
 								String nomStationDepart) throws SQLException {
-		//TO_DATE('20110728T23:54:14Z',  'YYYYMMDD"T"HH24:MI:SS"Z"')
 		String toDate = ("to_date('" + dateLocation + "T" + heureDebut + "Z', 'YYYYMMDD\"T\"HH24:MI:SS\"Z\"')");
 		
 		String request = "insert into Locations values (" 
@@ -915,17 +914,6 @@ public class Requetes {
 		sttable.executeUpdate(query);
 	}
 	
-//	public int getCaution(int CB) throws SQLException {
-//		
-//		int numLoc = this.findLocation(CB);
-//		String query = "SELECT IdVehicule FROM Locations WHERE (numLoc = " + numLoc + " )";
-//		Statement sttable = conn.createStatement();
-//		ResultSet rs = sttable.executeQuery(query);
-//		rs.next();
-//		int idVehicule = rs.getInt(1);
-//		
-//		
-//	}
 	
 	/**
 	 * Decrease the number of remaining rents in a package
