@@ -681,7 +681,7 @@ public class Requetes {
 	 * @param numLoc : identification number of the rent
 	 * @param dateFinLoc : date of the end of the rent
 	 * @param heureArrivee : time of arrival
-	 * @param nomStationArrivée : name of the arrival station
+	 * @param nomStationArrivee : name of the arrival station
 	 * @param CB : number of the user's cash card
 	 * @return 0 if the time of rent is respected, -1 if it is not
 	 * @throws SQLException
