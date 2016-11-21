@@ -24,6 +24,7 @@ public class Requetes {
 		String query = "DELETE FROM EstDans WHERE (IdVehicule = " + idVehicule + " )";
 		Statement stmt = this.conn.createStatement();
 		stmt.executeQuery(query);
+		commit() ; 
 		
 		
 	}
@@ -171,11 +172,11 @@ public class Requetes {
 	 * Create Table EstDans
 	 */
 	public void createTableEstDans () throws SQLException {
-		Statement sttable = conn.createStatement();       
+		Statement sttable = conn.createStatement(); 
 		sttable.executeUpdate(
 				"create table EstDans (IdVehicule int primary key,"
 				+ "NomStation varchar(20))"
-				);
+				); 
 		sttable.close();
 	}
 
@@ -343,7 +344,7 @@ public class Requetes {
 								int numCarteBancaire,
 								String nomStationDepart)
 									    throws SQLException {
-		
+		begin() ; 
 		//TO_DATE('20110728T23:54:14Z',  'YYYYMMDD"T"HH24:MI:SS"Z"')
 		String toDate = ("to_date('" + dateLocation + "T" + heureDebut + "Z', 'YYYYMMDD\"T\"HH24:MI:SS\"Z\"')");
 		
@@ -509,6 +510,7 @@ public class Requetes {
 	sttable.executeUpdate(update) ;
 	//  A FAIRE!! : recuperer le nbre de place libre de la catgorie de IdVehic ds la station 
 				// 
+	commit() ; 
 	sttable.close();
 }
 	
@@ -662,9 +664,8 @@ public void finLocation (int numLoc, String dateFinLoc, String heureArrivee, Str
 
 		
 		
-		
 		Statement sttable = conn.createStatement();
-		
+		begin() ;
 		// On recupere l'Id du vehicule 
 		
 		ResultSet rs = sttable.executeQuery("Select IdVehicule FROM Locations WHERE (NUMLOC = " + numLoc + ")");
