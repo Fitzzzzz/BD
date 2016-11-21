@@ -574,7 +574,7 @@ public class Initialisation {
 		req.finLocation(19, "20160422", "23:00:00", "Courge");
 		req.finLocation(20, "20160622", "23:00:00", "Radis");
 		req.finLocation(21, "20160622", "18:00:00", "Poireau");
-		req.finLocation(22, "20160622", "19:00:00", "Epinard");
+		req.finLocation(22, "20160822", "19:00:00", "Epinard");
 		req.finLocation(23, "20160822", "19:00:00", "Choux Fleur");
 		req.finLocation(24, "20160923", "14:00:00", "Navet");
 		req.finLocation(25, "20161023", "12:00:00", "Patate");
@@ -585,7 +585,7 @@ public class Initialisation {
 		req.finLocation(30, "20160311", "20:00:00", "Navet");
 		req.finLocation(31, "20160411", "15:00:00", "Patate");
 		req.finLocation(32, "20160521", "23:00:00", "Epinard");
-		req.finLocation(33, "20160521", "16:00:00", "Aubergine");
+		req.finLocation(33, "20160621", "16:00:00", "Aubergine");
 		req.finLocation(34, "20160721", "16:00:00", "Patate");
 		req.finLocation(35, "20160721", "16:00:00", "Navet");
 		req.finLocation(36, "20160921", "19:00:00", "Epinard");
@@ -603,12 +603,13 @@ public class Initialisation {
 		req.finLocation(48, "20161006", "10:00:00", "Aubergine");
 		req.finLocation(49, "20161106", "18:00:00", "Patate");
 
-		
+
+		System.out.println(req.facturation(4));
+		System.out.println(req.facturation(12));		
 
 		req.commit();
 		
-		System.out.println(req.facturation(4));
-		System.out.println(req.facturation(12));
+
 	
 		
 
